@@ -91,10 +91,8 @@ address { font-style: normal; }
   padding: 26px var(--gutter);
   font-size: 15px; font-weight: 500;
 }
-/* full-colour logo on a white card-shaped plate: the chip mark is the same orange as the hero */
-.nav-logo { border-radius: 12px; }
-.nav:not(.is-pill) .nav-logo { display: block; background: #fff; padding: 9px 16px 7px 12px; box-shadow: 0 12px 26px -16px rgba(35,31,32,.55); }
-.nav-logo-full { height: 40px; width: auto; }
+/* on the orange hero the chip icon is white (orange-on-orange disappears); the white pill uses the original colours */
+.nav-logo-full { height: 46px; width: auto; }
 .nav-logo-colour { display: none; }
 .nav-links { display: flex; gap: 30px; }
 .nav-links a, .menu a { text-decoration: none; }
@@ -438,8 +436,7 @@ address { font-style: normal; }
 @media (max-width: 760px) {
   body { font-size: 16.5px; }
   .nav { padding-top: 18px; }
-  .nav-logo-full { height: 32px; }
-  .nav:not(.is-pill) .nav-logo { padding: 7px 12px 5px 9px; border-radius: 10px; }
+  .nav-logo-full { height: 38px; }
   .hero { display: flex; flex-direction: column; justify-content: flex-end; padding-top: 44svh; padding-bottom: 112px; }
   .hero-copy { display: contents; }
   .hero-kicker { order: 1; padding-inline: var(--gutter); font-size: 14.5px; position: relative; z-index: 3; }
