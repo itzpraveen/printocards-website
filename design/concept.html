@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Printo concept board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#F26B35; --black:#231F20; --char:#373435; --white:#F6F7F5;
+  --lime:#CBDB3A; --amber:#F79633; --c:#00AEEF; --m:#EC008C; --y:#FFF212;
+  --redline:#2F6BFF; --desk:#D5D8DC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--desk)}
+body{font-family:Archivo,system-ui,sans-serif;color:var(--black);width:1716px;padding:56px 48px 120px;-webkit-font-smoothing:antialiased;transform-origin:0 0}
+img{display:block}
+.d{font-weight:900;font-stretch:125%;letter-spacing:-.035em;line-height:.9}
+.x{font-stretch:75%}
+
+/* ---------- board chrome ---------- */
+.board-head{display:grid;grid-template-columns:1200px 380px;gap:40px;margin-bottom:56px}
+.board-head .meta{font-size:14px;color:#5b5f66;margin-bottom:18px}
+.board-head h1{font-size:88px;font-weight:900;font-stretch:125%;letter-spacing:-.04em;line-height:.9}
+.board-head .intro{font-size:19px;line-height:1.5;max-width:62ch;margin-top:22px;color:#2c2f33}
+.board-head aside{font-size:14px;line-height:1.55;color:#3a3e44;padding-top:40px}
+.board-head aside b{color:var(--black)}
+
+.tokens{display:grid;grid-template-columns:1200px 380px;gap:40px;margin-bottom:88px}
+.tok-panel{background:#fff;border-radius:10px;padding:36px;display:grid;grid-template-columns:1.25fr 1fr;gap:40px}
+.tok-panel h3,.plan h3,.row-label{font-size:13px;font-weight:700;color:#5b5f66;margin-bottom:14px}
+.swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sw{border-radius:8px;height:112px;padding:12px;display:flex;flex-direction:column;justify-content:flex-end;font-size:12.5px;line-height:1.3}
+.sw b{font-size:14px}
+.sw.dk{color:#fff}
+.inks{display:flex;gap:8px;margin-top:10px;align-items:center;font-size:12.5px;color:#5b5f66}
+.inks i{width:22px;height:22px;border-radius:50%;display:inline-block}
+.spec-type .t1{font-size:64px;font-weight:900;font-stretch:125%;letter-spacing:-.04em;line-height:.9}
+.spec-type .t2{font-size:30px;font-weight:800;font-stretch:112%;letter-spacing:-.02em;margin-top:14px}
+.spec-type .t3{font-size:17px;line-height:1.55;margin-top:12px;max-width:44ch}
+.spec-type .t4{font-size:13px;font-stretch:75%;font-weight:600;margin-top:12px;color:#5b5f66;font-variant-numeric:tabular-nums}
+.widths{display:flex;gap:18px;align-items:baseline;margin-top:18px;font-weight:900;font-size:34px;color:var(--orange)}
+.widths small{display:block;font-size:11px;font-weight:600;color:#5b5f66;font-stretch:100%;margin-top:4px}
+.principles{font-size:14px;line-height:1.55;color:#2c2f33}
+.principles li{margin:0 0 12px 18px}
+
+.row{display:grid;grid-template-columns:1200px 380px;gap:40px;margin-bottom:64px;align-items:start}
+.row-label{margin-bottom:10px;display:flex;justify-content:space-between}
+.notes{font-size:14px;line-height:1.55;color:#2c2f33;padding-top:28px}
+.notes h4{font-size:22px;font-weight:800;font-stretch:112%;letter-spacing:-.02em;margin-bottom:14px;color:var(--black)}
+.notes dt{font-size:12px;font-weight:700;color:var(--redline);margin-top:14px}
+.notes dd{margin-top:3px}
+.hint{position:absolute;z-index:40;font-size:12px;font-weight:600;color:#fff;background:var(--redline);border-radius:999px;padding:5px 11px 5px 9px;display:flex;gap:6px;align-items:center;white-space:nowrap;box-shadow:0 4px 12px rgba(47,107,255,.35)}
+.hint::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
+.hint-box{position:absolute;z-index:39;border:1.5px dashed var(--redline);border-radius:8px;pointer-events:none}
+
+/* ---------- frame base ---------- */
+.frame{width:1200px;height:750px;position:relative;overflow:hidden;isolation:isolate;border-radius:10px;box-shadow:0 40px 80px -40px rgba(20,24,30,.45),0 2px 6px rgba(20,24,30,.12)}
+.nav{position:absolute;z-index:30;top:26px;left:48px;right:48px;display:flex;align-items:center;justify-content:space-between;font-size:14.5px;font-weight:500}
+.nav .logo{height:44px}
+.nav ul{display:flex;gap:30px;list-style:none;margin-left:48px;margin-right:auto}
+.nav-cta{display:flex;gap:18px;align-items:center;font-weight:600;font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:15.5px;padding:17px 24px;border-radius:999px;white-space:nowrap}
+.btn.sm{font-size:14px;padding:11px 18px}
+.btn.dark{background:var(--black);color:#fff}
+.btn.ghost{box-shadow:inset 0 0 0 1.5px currentColor}
+.btn.lime{background:var(--lime);color:var(--black)}
+.btn.orange{background:var(--orange);color:var(--black)}
+.btn svg{width:18px;height:18px}
+.chapter-rail{position:absolute;left:40px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:14px;font-size:12.5px;font-weight:600}
+.chapter-rail li{list-style:none;display:flex;gap:10px;align-items:center;opacity:.4}
+.chapter-rail li.on{opacity:1}
+.chapter-rail li i{width:18px;height:1.5px;background:currentColor}
+.chapter-rail li.on i{width:34px}
+.regmark{width:34px;height:34px;margin-bottom:10px}
+.mini-nav{position:absolute;z-index:30;top:22px;right:28px;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.9);border-radius:999px;padding:7px 7px 7px 16px;font-size:13.5px;font-weight:600;color:var(--black);box-shadow:0 6px 24px -10px rgba(0,0,0,.25)}
+.mini-nav img{height:22px}
+.mini-nav .btn{padding:9px 15px;font-size:13px}
+.kicker{font-size:16px;font-weight:600}
+.num{font-size:15px;font-weight:700;font-stretch:75%;font-variant-numeric:tabular-nums}
+.body{font-size:18px;line-height:1.55;max-width:40ch}
+
+/* ---------- card primitives ---------- */
+.card{position:absolute;overflow:hidden;box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 40px 60px -28px rgba(35,31,32,.55),0 10px 20px -10px rgba(35,31,32,.35)}
+.gloss::after{content:"";position:absolute;inset:0;background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.55) 42%,rgba(255,255,255,0) 54%);pointer-events:none}
+.stage3d{position:absolute;inset:0;perspective:1600px;transform-style:preserve-3d}
+
+/* ============ F1 HERO ============ */
+.hero{background:var(--orange)}
+.hero .stage3d{z-index:9}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 68% 32%,rgba(255,196,150,.55),rgba(242,107,53,0) 70%)}
+.hero-copy{position:absolute;left:48px;top:128px;z-index:12;width:440px}
+.hero-copy .kicker{max-width:26ch}
+.hero-copy .body{margin-top:18px;font-size:17px}
+.hero-copy .ctas{display:flex;gap:12px;margin-top:28px}
+.hero-h{position:absolute;left:42px;bottom:84px;z-index:8;font-size:99px;font-stretch:112%;letter-spacing:-.05em;line-height:.86;color:var(--black);white-space:nowrap}
+.hero-h span{display:block}
+.hero-foot{position:absolute;z-index:12;left:48px;right:48px;bottom:30px;display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:600}
+.hero-foot .facts{display:flex;gap:28px}
+.hero-foot .facts span{display:flex;gap:8px;align-items:center}
+.hero-foot .facts span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--black)}
+.scrollcue{display:flex;gap:10px;align-items:center}
+
+.lanyard{position:absolute;left:0;top:0;z-index:9}
+.idcard{left:726px;top:176px;width:214px;height:340px;border-radius:12px;background:#fff;z-index:10;transform:rotateY(-16deg) rotateZ(5deg) rotateX(4deg);transform-origin:50% 0}
+.idcard .band{height:112px;background:var(--black);position:relative}
+.idcard .band img{position:absolute;left:18px;top:30px;height:40px}
+.idcard .slot{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:44px;height:9px;border-radius:5px;background:#b9471c}
+.idcard .photo{position:absolute;left:50%;top:78px;transform:translateX(-50%);width:92px;height:92px;border-radius:50%;background:#E9E4DC;border:4px solid #fff;overflow:hidden}
+.idcard .photo::before{content:"";position:absolute;left:50%;top:18px;width:36px;height:36px;border-radius:50%;background:#9d938a;transform:translateX(-50%)}
+.idcard .photo::after{content:"";position:absolute;left:50%;top:58px;width:70px;height:60px;border-radius:50%;background:#9d938a;transform:translateX(-50%)}
+.idcard .who{position:absolute;top:184px;left:0;right:0;text-align:center}
+.idcard .who b{display:block;font-size:19px;font-weight:800;font-stretch:108%;letter-spacing:-.01em}
+.idcard .who span{display:block;font-size:12px;color:#6a6466;margin-top:3px}
+.idcard .idn{position:absolute;left:18px;right:18px;bottom:52px;display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;font-stretch:75%;letter-spacing:.02em;color:#6a6466}
+.idcard .bar{position:absolute;left:18px;right:18px;bottom:18px;height:26px;background:repeating-linear-gradient(90deg,var(--black) 0 2px,transparent 2px 4px,var(--black) 4px 5px,transparent 5px 8px,var(--black) 8px 11px,transparent 11px 12px)}
+.idcard .stripe{position:absolute;left:0;right:0;top:112px;height:5px;background:var(--orange)}
+
+.nfc{left:972px;top:124px;width:236px;height:148px;border-radius:9px;background:linear-gradient(135deg,#2c2829,#161314);transform:rotateY(24deg) rotateZ(-14deg) translateZ(-120px);z-index:5;color:#fff;padding:16px}
+.nfc svg{position:absolute;right:16px;top:14px;width:30px}
+.nfc b{position:absolute;left:16px;bottom:14px;font-size:13px;font-weight:700;font-stretch:112%}
+.nfc small{position:absolute;right:16px;bottom:14px;font-size:10px;opacity:.6;font-stretch:75%}
+.wood{left:560px;top:190px;width:190px;height:119px;border-radius:8px;z-index:3;filter:blur(1.6px);transform:rotateZ(-22deg) rotateY(-30deg) translateZ(-260px);background:
+  radial-gradient(120% 60% at 30% 40%,rgba(120,70,30,.25),transparent 60%),
+  repeating-linear-gradient(98deg,#c2915d 0 5px,#b8844f 5px 8px,#cc9d6a 8px 13px,#b07a45 13px 15px);}
+.wood span{position:absolute;inset:0;display:grid;place-items:center;font-size:16px;font-weight:800;color:rgba(80,45,15,.55);font-stretch:112%}
+.loyal{left:1010px;top:430px;width:260px;height:163px;border-radius:10px;background:var(--lime);z-index:11;transform:rotateY(-26deg) rotateZ(18deg) translateZ(60px);padding:18px}
+.loyal b{font-size:20px;font-weight:900;font-stretch:125%;letter-spacing:-.03em}
+.loyal .stamps{position:absolute;left:18px;bottom:18px;display:grid;grid-template-columns:repeat(5,22px);gap:8px}
+.loyal .stamps i{width:22px;height:22px;border-radius:50%;border:2px solid var(--black)}
+.loyal .stamps i.f{background:var(--black)}
+.gift{left:1010px;top:318px;width:150px;height:94px;border-radius:7px;z-index:2;filter:blur(2.4px);transform:rotateZ(16deg) translateZ(-340px);background:
+  radial-gradient(circle at 25% 30%,var(--m) 0 22%,transparent 23%),radial-gradient(circle at 70% 70%,var(--c) 0 28%,transparent 29%),radial-gradient(circle at 80% 20%,var(--y) 0 16%,transparent 17%),#fff}
+
+/* ============ F2 BLANK ============ */
+.blank{background:var(--white)}
+.mat{position:absolute;inset:0;background-image:linear-gradient(rgba(35,31,32,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(35,31,32,.06) 1px,transparent 1px),linear-gradient(rgba(35,31,32,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(35,31,32,.035) 1px,transparent 1px);background-size:60px 60px,60px 60px,12px 12px,12px 12px;background-position:-1px -1px}
+.ch-copy{position:absolute;z-index:12;left:150px;top:150px;width:420px}
+.ch-copy h2{font-size:80px;margin:14px 0 22px}
+.ch-copy .body{font-size:18px}
+.specs{margin-top:28px;display:grid;grid-template-columns:auto 1fr;gap:9px 22px;font-size:14.5px;max-width:390px}
+.specs dt{font-weight:700;font-stretch:75%;color:#6a6466}
+.specs dd{font-weight:600;font-variant-numeric:tabular-nums}
+.blankcard{left:640px;top:210px;width:470px;height:295px;border-radius:17px;background:linear-gradient(160deg,#fff,#f1f2ef);transform:rotateX(18deg) rotateZ(-6deg);z-index:6}
+.crop{position:absolute;z-index:7;width:28px;height:28px;border-color:var(--black);border-style:solid;border-width:0}
+.dim{position:absolute;z-index:8;font-size:14px;font-weight:700;font-stretch:75%;display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+.dim .line{height:1.5px;background:var(--black);flex:1;position:relative}
+.dim .line::before,.dim .line::after{content:"";position:absolute;top:-5px;width:1.5px;height:12px;background:var(--black)}
+.dim .line::before{left:0}.dim .line::after{right:0}
+.dimv{position:absolute;z-index:8;width:1.5px;background:var(--black)}
+.dimv::before,.dimv::after{content:"";position:absolute;left:-5px;height:1.5px;width:12px;background:var(--black)}
+.dimv::before{top:0}.dimv::after{bottom:0}
+.loupe{position:absolute;z-index:9;left:956px;top:500px;width:170px;height:170px;border-radius:50%;background:var(--white);box-shadow:0 0 0 1.5px var(--black),0 20px 40px -20px rgba(0,0,0,.4);overflow:hidden}
+.loupe .edge{position:absolute;left:-10px;right:30px;top:74px;height:22px;background:linear-gradient(#fff,#e9eae6);border-radius:0 11px 11px 0;box-shadow:0 1px 0 #cfd0cc,0 8px 14px -8px rgba(0,0,0,.35)}
+.loupe span{position:absolute;left:0;right:0;top:110px;text-align:center;font-size:13px;font-weight:700;font-stretch:75%}
+.loupe .tick{position:absolute;right:38px;top:66px;width:1.5px;height:38px;background:var(--orange)}
+
+/* ============ F3 PRINT ============ */
+.print{background:#fff}
+.printcard{left:600px;top:190px;width:520px;height:327px;border-radius:19px;z-index:6;transform:rotateX(10deg) rotateY(-12deg);background:#fff}
+.printcard .art{position:absolute;inset:0;clip-path:inset(0 42% 0 0);background:
+  radial-gradient(circle at 18% 28%,var(--m) 0 18%,transparent 18.5%),
+  radial-gradient(circle at 56% 90%,var(--c) 0 30%,transparent 30.5%),
+  radial-gradient(circle at 44% 18%,var(--y) 0 12%,transparent 12.5%),
+  linear-gradient(135deg,#fff,#fff)}
+.printcard .art::before{content:"Coastline Club";position:absolute;left:28px;top:30px;font-size:30px;font-weight:900;font-stretch:125%;letter-spacing:-.04em;color:var(--black);width:280px;line-height:.9}
+.printcard .art::after{content:"MEMBER  0427 1180";position:absolute;left:28px;bottom:30px;font-size:15px;font-weight:700;font-stretch:75%;letter-spacing:.06em;color:var(--black)}
+.head{position:absolute;z-index:8;top:-28px;bottom:-28px;left:290px;width:46px;display:flex;gap:3px}
+.head i{flex:1;border-radius:3px}
+.head::after{content:"";position:absolute;inset:-20px -40px;background:radial-gradient(closest-side,rgba(255,255,255,.9),transparent);z-index:-1}
+.reg{position:absolute;z-index:7;width:30px;height:30px}
+.legend{position:absolute;left:150px;bottom:64px;z-index:12;display:flex;gap:22px;font-size:13.5px;font-weight:600}
+.legend span{display:flex;gap:8px;align-items:center}
+.legend i{width:16px;height:16px;border-radius:50%}
+.colourbar{position:absolute;right:0;top:0;bottom:0;width:14px;display:flex;flex-direction:column}
+.colourbar i{flex:1}
+
+/* ============ F4 FINISH ============ */
+.finish{background:var(--lime)}
+.seg{display:inline-flex;background:rgba(35,31,32,.1);border-radius:999px;padding:5px;margin-top:26px;font-size:15px;font-weight:700}
+.seg span{padding:12px 20px;border-radius:999px}
+.seg span.on{background:var(--black);color:#fff}
+.try{margin-top:22px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600}
+.try .field{background:#fff;border-radius:10px;padding:13px 16px;min-width:230px;font-size:15px;box-shadow:inset 0 0 0 1.5px var(--black)}
+.try .field::after{content:"";display:inline-block;width:1.5px;height:17px;background:var(--black);vertical-align:-3px;margin-left:2px}
+.fcard{width:250px;height:157px;border-radius:9px;z-index:6}
+.fcard .lbl{position:absolute;left:0;right:0;bottom:-34px;text-align:center;font-size:13px;font-weight:700}
+.fwrap{position:absolute;z-index:6}
+.fwrap .cap{position:absolute;left:0;top:176px;font-size:13.5px;font-weight:700;width:250px}
+.fwrap .cap small{display:block;font-weight:500;color:rgba(35,31,32,.72);margin-top:2px;font-size:12.5px}
+.fc-name{position:absolute;left:18px;bottom:16px;font-size:17px;font-weight:800;font-stretch:108%}
+.fc-mark{position:absolute;left:18px;top:16px;font-size:22px;font-weight:900;font-stretch:125%;letter-spacing:-.04em}
+.glossy{background:linear-gradient(140deg,#f26b35,#e0521c);color:#fff}
+.glossy::after{content:"";position:absolute;inset:0;background:linear-gradient(112deg,transparent 28%,rgba(255,255,255,.75) 40%,transparent 47%,transparent 60%,rgba(255,255,255,.35) 64%,transparent 68%)}
+.matte{background:#e1622f;color:#fff;box-shadow:0 30px 40px -24px rgba(35,31,32,.5)}
+.matte::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}
+.frosted{background:rgba(255,255,255,.38);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--black);box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 30px 40px -24px rgba(35,31,32,.45)}
+.uv{background:var(--black);color:#fff}
+.uv .pat{position:absolute;inset:0;background:repeating-radial-gradient(circle at 80% 30%,rgba(255,255,255,.0) 0 10px,rgba(255,255,255,.16) 10px 12px);-webkit-mask:linear-gradient(115deg,transparent 20%,#000 45%,#000 60%,transparent 80%);mask:linear-gradient(115deg,transparent 20%,#000 45%,#000 60%,transparent 80%)}
+.behind{position:absolute;z-index:5;width:120px;height:120px;border-radius:50%;background:var(--orange)}
+
+/* ============ F5 CHIP ============ */
+.chip{background:var(--black);color:#fff}
+.chip .body{color:rgba(255,255,255,.82)}
+.chiplist{margin-top:24px;max-width:430px;display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+.chiplist div{padding:10px 0;border-top:1px solid rgba(255,255,255,.2);font-size:14.5px}
+.chiplist.rows{display:block;border-top:1px solid rgba(255,255,255,.18)}
+.chiplist.rows div{display:grid;grid-template-columns:150px 1fr;gap:16px;border-top:0;border-bottom:1px solid rgba(255,255,255,.18)}
+.chiplist dt{font-weight:700}
+.chiplist dd{color:rgba(255,255,255,.75);font-variant-numeric:tabular-nums}
+.explode{position:absolute;left:640px;top:96px;width:360px;height:520px;transform-style:preserve-3d;perspective:2000px;z-index:6}
+.layer{position:absolute;left:0;width:360px;height:227px;border-radius:14px;transform:rotateX(60deg) rotateZ(-38deg);transform-origin:50% 50%}
+.layer .lab{position:absolute;font-size:13px;font-weight:700;white-space:nowrap}
+.l-front{top:0;background:linear-gradient(135deg,rgba(242,107,53,.92),rgba(247,150,51,.92));box-shadow:0 0 0 1px rgba(255,255,255,.3) inset}
+.l-front::after{content:"printo";position:absolute;left:24px;top:22px;font-size:40px;font-weight:900;font-stretch:125%;color:rgba(35,31,32,.85);letter-spacing:-.04em}
+.l-core{top:105px;background:rgba(246,247,245,.18);box-shadow:0 0 0 1.5px rgba(255,255,255,.5) inset}
+.l-inlay{top:210px;background:rgba(255,255,255,.05);box-shadow:0 0 0 1px rgba(203,219,58,.45) inset}
+.l-back{top:315px;background:#e9eae6}
+.l-back::after{content:"";position:absolute;left:0;right:0;top:34px;height:42px;background:var(--black)}
+.coil{position:absolute;inset:18px}
+.antenna-glow{filter:drop-shadow(0 0 6px rgba(247,150,51,.9)) drop-shadow(0 0 16px rgba(247,150,51,.5))}
+.waves{position:absolute;z-index:4;left:750px;top:250px;width:420px;height:420px}
+.leader{position:absolute;z-index:8;height:1px;background:rgba(255,255,255,.55);transform-origin:0 50%}
+.leadlab{position:absolute;z-index:8;font-size:13px;font-weight:700;white-space:nowrap}
+.leadlab small{display:block;font-weight:500;color:rgba(255,255,255,.6);font-size:12px}
+
+/* ============ F6 WORK ============ */
+.work{background:var(--white)}
+.work .top{position:absolute;left:150px;top:92px;right:48px;z-index:10;display:flex;justify-content:space-between;align-items:flex-end}
+.work h2{font-size:72px}
+.track{position:absolute;left:150px;top:260px;display:flex;gap:28px;z-index:6}
+.panel{width:430px;height:430px;border-radius:18px;position:relative;overflow:hidden;flex:none}
+.panel .place{position:absolute;left:28px;top:24px;font-size:58px;z-index:3}
+.panel .plate{position:absolute;left:28px;right:28px;top:104px;height:200px;border-radius:12px;background:#fff;overflow:hidden;display:grid;place-items:center}
+.panel .plate img{max-width:100%;max-height:100%;object-fit:contain}
+.panel .uses{position:absolute;left:28px;right:28px;bottom:26px;font-size:14px;line-height:1.5}
+.panel .uses b{display:block;font-size:15.5px;margin-bottom:4px}
+.p1{background:var(--orange)}
+.p2{background:var(--black);color:#fff}
+.p3{background:var(--lime)}
+.trackbar{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:700;white-space:nowrap}
+.trackbar i{width:44px;height:4px;border-radius:2px;background:rgba(35,31,32,.15)}
+.trackbar i.on{background:var(--black)}
+
+/* ============ F7 RANGE ============ */
+.range{background:#fff}
+.range .head2{position:absolute;left:48px;top:96px;right:48px;display:flex;justify-content:space-between;align-items:flex-end;z-index:10}
+.range h2{font-size:72px}
+.range .head2 p{font-size:17px;max-width:34ch;line-height:1.5}
+.idx{position:absolute;left:48px;right:48px;top:250px;border-top:1.5px solid var(--black)}
+.idx .r{display:grid;grid-template-columns:60px 500px 1fr 56px;align-items:center;padding:0 16px;height:88px;border-bottom:1.5px solid var(--black);position:relative}
+.idx .r .n{font-size:15px;font-weight:700;font-stretch:75%}
+.idx .r h3{font-size:40px;white-space:nowrap;font-weight:900;font-stretch:118%;letter-spacing:-.035em}
+.idx .r p{font-size:14px;color:#57514f;line-height:1.45;max-width:52ch}
+.idx .r .go{width:44px;height:44px;border-radius:50%;box-shadow:inset 0 0 0 1.5px currentColor;display:grid;place-items:center}
+.idx .r.on{background:var(--black);color:#fff}
+.idx .r.on p{color:rgba(255,255,255,.75)}
+.idx .r.on .go{background:var(--orange);box-shadow:none;color:var(--black)}
+.floatimg{position:absolute;z-index:20;width:250px;height:190px;border-radius:12px;background:#fff;overflow:hidden;transform:rotate(-6deg);box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.floatimg img{width:100%;height:100%;object-fit:cover}
+
+/* ============ F8 TWO WAYS ============ */
+.ways{background:var(--char);color:#fff}
+.ways h2{position:absolute;left:48px;top:92px;font-size:72px;z-index:10;width:1100px}
+.way{position:absolute;top:290px;bottom:48px;width:540px}
+.way.a{left:48px}
+.way.b{left:612px}
+.way h3{font-size:28px;font-weight:800;font-stretch:112%;letter-spacing:-.02em}
+.way p{font-size:15.5px;line-height:1.5;color:rgba(255,255,255,.8);margin-top:10px;max-width:42ch}
+.way .btn{margin-top:18px}
+.way .shot{position:absolute;left:0;right:0;bottom:0;height:200px;border-radius:14px;background:#fff;overflow:hidden}
+.printers{position:absolute;left:0;right:0;bottom:0;height:200px}
+.pr{position:absolute;bottom:0;width:176px;height:176px;border-radius:14px;background:#fff;overflow:hidden;display:grid;place-items:center}
+.pr img{width:92%;height:92%;object-fit:contain}
+.pr small{position:absolute;left:10px;bottom:8px;font-size:11.5px;font-weight:700;color:var(--black)}
+.brands{display:flex;gap:26px;margin-top:16px;font-size:18px;font-weight:800;font-stretch:112%;color:rgba(255,255,255,.55);letter-spacing:-.01em}
+.eject{position:absolute;z-index:4;width:92px;height:58px;border-radius:5px;background:linear-gradient(135deg,var(--orange),var(--amber));box-shadow:0 10px 20px -8px rgba(0,0,0,.5)}
+
+/* ============ F9 PROOF ============ */
+.proof{background:var(--white)}
+.proof h2{position:absolute;left:48px;top:92px;font-size:64px;z-index:10;width:1000px}
+.ticket{position:absolute;left:48px;top:262px;width:500px;height:392px;background:#fff;border-radius:6px;padding:28px 30px;box-shadow:0 24px 50px -30px rgba(0,0,0,.4);z-index:6;transform:rotate(-1.5deg)}
+.ticket::before{content:"";position:absolute;left:0;right:0;top:-8px;height:16px;background:radial-gradient(circle at 8px 8px,var(--white) 6px,transparent 6.5px) 0 0/16px 16px repeat-x}
+.ticket .th{display:flex;justify-content:space-between;font-size:13px;font-weight:700;font-stretch:75%;padding-bottom:12px;border-bottom:1.5px dashed #b8b3ae}
+.ticket ul{list-style:none;margin-top:6px}
+.ticket li{display:flex;gap:14px;align-items:center;padding:9.5px 0;border-bottom:1px solid #ecebe8;font-size:15px;font-weight:600}
+.ticket li i{width:22px;height:22px;border-radius:50%;background:var(--black);display:grid;place-items:center}
+.ticket li i svg{width:12px}
+.stamp{position:absolute;right:26px;bottom:44px;width:170px;height:170px;border-radius:50%;border:3px solid var(--orange);color:var(--orange);display:grid;place-items:center;text-align:center;transform:rotate(-14deg);font-weight:900;font-stretch:112%;font-size:20px;line-height:1.05;letter-spacing:-.01em;background:rgba(246,247,245,.55)}
+.stamp::before{content:"";position:absolute;inset:8px;border-radius:50%;border:1.5px solid var(--orange)}
+.stamp small{display:block;font-size:12px;font-weight:700;font-stretch:100%;margin-top:4px}
+.photo-need{position:absolute;right:48px;top:262px;width:540px;height:250px;border-radius:14px;background:repeating-linear-gradient(-45deg,#e5e6e3 0 10px,#eeefec 10px 20px);display:grid;place-items:center;text-align:center;font-size:15px;font-weight:600;color:#6a6466;z-index:5}
+.photo-need b{display:block;color:var(--black);font-size:18px;margin-bottom:4px}
+.places{position:absolute;right:48px;top:540px;width:540px;display:grid;grid-template-columns:1fr 1fr;gap:28px;font-size:14.5px;line-height:1.5;z-index:6}
+.places b{display:block;font-size:13px;color:#6a6466;margin-bottom:4px}
+.sectors{position:absolute;left:0;right:0;bottom:0;height:64px;background:var(--black);color:#fff;display:flex;align-items:center;gap:40px;padding-left:48px;font-size:26px;font-weight:900;font-stretch:125%;letter-spacing:-.03em;white-space:nowrap;z-index:8}
+.sectors i{width:10px;height:10px;border-radius:50%;background:var(--orange);flex:none}
+
+/* ============ F10 FAQ ============ */
+.faq{height:480px;background:#fff}
+.faq h2{position:absolute;left:48px;top:64px;font-size:56px;width:420px}
+.faq .qs{position:absolute;left:560px;right:48px;top:64px;border-top:1.5px solid var(--black)}
+.faq .q{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1.5px solid var(--black);font-size:19px;font-weight:700}
+.faq .q span{font-size:28px;font-weight:400}
+.faq .q.open{flex-wrap:wrap}
+.faq .q.open p{flex-basis:100%;font-size:15px;font-weight:500;line-height:1.5;color:#57514f;margin-top:8px;max-width:64ch}
+
+/* ============ F11 CONTACT ============ */
+.contact{height:980px;background:var(--orange)}
+.contact h2{position:absolute;left:44px;top:64px;font-size:120px;font-stretch:112%;letter-spacing:-.05em;line-height:.86;width:1100px;z-index:5}
+.qform{position:absolute;left:48px;top:340px;width:560px;background:#fff;border-radius:16px;padding:28px;z-index:6;box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.qform .f{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qform label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px}
+.qform .in{border-radius:9px;box-shadow:inset 0 0 0 1.5px #cfcac5;padding:12px 14px;font-size:15px;display:flex;justify-content:space-between}
+.qform .full{grid-column:1/-1}
+.qform .btn{margin-top:18px;width:100%;justify-content:center}
+.qform small{display:block;text-align:center;font-size:12.5px;color:#6a6466;margin-top:10px}
+.clist{position:absolute;left:660px;top:352px;right:48px;z-index:6;display:grid;grid-template-columns:1fr 1fr;gap:26px 32px}
+.clist div b{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.clist div p{font-size:19px;font-weight:700;line-height:1.35;font-variant-numeric:tabular-nums}
+.clist div p.sm{font-size:15px;font-weight:600;line-height:1.5}
+.foot{position:absolute;left:0;right:0;bottom:0;height:220px;background:var(--black);color:#fff;padding:40px 48px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;font-size:13.5px;line-height:1.7;z-index:7}
+.foot img{height:44px;margin-bottom:14px}
+.foot b{display:block;font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:8px}
+.foot p{color:rgba(255,255,255,.8)}
+
+/* ============ MOBILE ============ */
+.phones{display:flex;gap:40px;margin-bottom:24px}
+.phone{width:360px;height:760px;border-radius:44px;background:#1b1b1d;padding:10px;box-shadow:0 40px 80px -40px rgba(20,24,30,.55);flex:none}
+.screen{width:100%;height:100%;border-radius:36px;overflow:hidden;position:relative}
+.screen .mnav{position:absolute;z-index:20;top:40px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center}
+.screen .mnav img{height:32px}
+.burger{width:44px;height:44px;border-radius:50%;background:var(--black);display:grid;place-items:center}
+.burger i{display:block;width:16px;height:2px;background:#fff;box-shadow:0 5px 0 #fff,0 -5px 0 #fff}
+.sticky{position:absolute;z-index:25;left:12px;right:12px;bottom:12px;display:grid;grid-template-columns:1.4fr 1fr;gap:8px}
+.sticky span{border-radius:999px;padding:15px 0;text-align:center;font-size:14.5px;font-weight:700}
+.p-caption{width:360px;font-size:13.5px;line-height:1.5;color:#2c2f33;margin-top:14px}
+.p-caption b{display:block;color:var(--black);font-size:15px;margin-bottom:2px}
+
+/* ============ PLAN ============ */
+.plan{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin-top:40px}
+.plan section{background:#fff;border-radius:10px;padding:30px}
+.plan h2{font-size:30px;font-weight:900;font-stretch:118%;letter-spacing:-.03em;margin-bottom:18px}
+.plan table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.45}
+.plan th{text-align:left;font-size:12px;color:#5b5f66;font-weight:700;padding:0 8px 8px 0;border-bottom:1.5px solid var(--black)}
+.plan td{padding:9px 8px 9px 0;border-bottom:1px solid #e6e6e3;vertical-align:top}
+.plan td:first-child{font-weight:700;white-space:nowrap}
+.plan ul{list-style:none;font-size:13.5px;line-height:1.55}
+.plan li{padding:7px 0;border-bottom:1px solid #eee}
+.plan li b{font-weight:700}
+.tree{font-size:13.5px;line-height:1.75;font-variant-numeric:tabular-nums}
+.tree div{padding-left:18px;position:relative}
+.tree div::before{content:"";position:absolute;left:4px;top:0;bottom:0;border-left:1.5px solid #cfcfcb}
+.tree code{font-family:inherit;font-weight:700}
+.tree span{color:#6a6466}
+.need{margin-top:28px;background:var(--black);color:#fff;border-radius:10px;padding:30px;display:grid;grid-template-columns:320px 1fr;gap:40px}
+.need h2{font-size:30px;font-weight:900;font-stretch:118%;letter-spacing:-.03em}
+.need ol{columns:2;column-gap:40px;font-size:14.5px;line-height:1.55;padding-left:20px}
+.need li{margin-bottom:10px;break-inside:avoid}
+.section-title{font-size:46px;font-weight:900;font-stretch:125%;letter-spacing:-.04em;margin:96px 0 28px}
+</style>
+</head>
+<body>
+
+<!-- ============ BOARD HEADER ============ -->
+<header class="board-head">
+  <div>
+    <p class="meta">Printo Cards &amp; Technologies, printocards.com redesign. Concept board, draft 1, 30 September 2026</p>
+    <h1>The life of a card</h1>
+    <p class="intro">One real-size PVC card is the main character. As the visitor scrolls, it goes through production: blank sheet, full-colour print, finish, chip inlay, and out into offices, hospitals and hotels. By the time they reach the product range, they understand what Printo makes and why it's made well. Every chapter ends one tap away from a WhatsApp quote.</p>
+  </div>
+  <aside>
+    <p><b>Read this board top to bottom.</b> Frames are the desktop home page at 1200 × 750, in scroll order. Blue chips and dashed boxes are annotations for motion and interaction; they are not part of the design.</p>
+    <p style="margin-top:12px"><b>Content</b> comes from your Website.zip (26 products, specs, finishes), the current printocards.com pages, and your logo colours. Nothing is invented except sample names printed on the demo cards.</p>
+  </aside>
+</header>
+
+<!-- ============ TOKENS ============ -->
+<section class="tokens">
+  <div class="tok-panel">
+    <div>
+      <h3>Colour, taken from the logo and from the press</h3>
+      <div class="swatches">
+        <div class="sw" style="background:#F26B35"><b>Printo orange</b>#F26B35 · hero and contact stage, primary actions</div>
+        <div class="sw dk" style="background:#231F20"><b>Process black</b>#231F20 · 100% K ink. Text, chip chapter</div>
+        <div class="sw dk" style="background:#373435"><b>Logo charcoal</b>#373435 · secondary dark surface</div>
+        <div class="sw" style="background:#F6F7F5;box-shadow:inset 0 0 0 1px #ddd"><b>PVC white</b>#F6F7F5 · cool card-stock white, never cream</div>
+        <div class="sw" style="background:#CBDB3A"><b>Swoosh lime</b>#CBDB3A · finish stage, NFC signal, focus rings</div>
+        <div class="sw" style="background:#F79633"><b>Chip amber</b>#F79633 · antenna glow, secondary highlight</div>
+      </div>
+      <div class="inks"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFF212"></i><i style="background:#231F20"></i>&nbsp;CMYK process inks appear only in the print chapter. The yellow is already in your logo.</div>
+    </div>
+    <div class="spec-type">
+      <h3>Type: Archivo, one variable family</h3>
+      <div class="t1">Made in Kerala.</div>
+      <div class="t2">Some cards carry a chip.</div>
+      <p class="t3">Body at 17–18px, normal width. Headlines at weight 900 and wide width, like the embossed lettering on a card.</p>
+      <p class="t4">86 × 54 mm · 0.76 mm · 13.56 MHz · NTAG 215 (condensed width for specs)</p>
+      <div class="widths"><div>Aa<small>wdth 62</small></div><div style="font-stretch:88%">Aa<small>wdth 88</small></div><div style="font-stretch:112%">Aa<small>wdth 112</small></div><div style="font-stretch:125%">Aa<small>wdth 125</small></div><span style="font-size:13px;color:#5b5f66;font-weight:500;align-self:center;max-width:24ch">Headlines widen from 62 to 125 as they scroll in, as if pressed.</span></div>
+    </div>
+  </div>
+  <div class="principles">
+    <h3 style="font-size:13px;font-weight:700;color:#5b5f66;margin-bottom:14px">Principles</h3>
+    <ul>
+      <li><b>The card is the hero, everywhere.</b> One WebGL card, one memorable thing. The rest of the page stays quiet so it lands.</li>
+      <li><b>Print vocabulary is structure, not decoration.</b> Crop marks show real dimensions. The registration mark shows story progress. Chapter numbers exist because production really is a sequence.</li>
+      <li><b>Colour changes with the story.</b> Orange stage, PVC white, lime finishes, black for the chip x-ray, then back to orange to ask for the order.</li>
+      <li><b>Every word stays in HTML.</b> WebGL is decoration layered on real text, so Google and screen readers get everything.</li>
+      <li><b>Business first.</b> WhatsApp and call are one tap away on every screen. No fake checkout, no invented prices.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- F1 HERO -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>1. Hero, first screen</span><span>Printo orange</span></div>
+    <div class="frame hero">
+      <nav class="nav">
+        <img class="logo" src="../public/brand/printo-logo-mono.svg" alt="Printo Cards &amp; Technologies">
+        <ul><li>Products</li><li>Smart cards</li><li>Industries</li><li>Card printers</li><li>About</li></ul>
+        <div class="nav-cta"><span class="btn sm dark">WhatsApp us</span></div>
+      </nav>
+
+      <div class="hero-copy">
+        <p class="kicker">PVC, ID and smart card manufacturer in Calicut, Kerala</p>
+        <p class="body">ID cards, NFC and RFID cards, hotel key cards, lanyards and card printers for offices, schools, hospitals, hotels and events.</p>
+        <div class="ctas">
+          <span class="btn dark"><svg viewBox="0 0 24 24" fill="#CBDB3A"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.2c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .3-3.3-.7a11.4 11.4 0 0 1-4.5-4c-.4-.5-1.1-1.6-1.1-3s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.4.8 1.4 1.8 2.3 1.3 1.1 2.3 1.5 2.7 1.6.3.2.5.1.7-.1l1-1.2c.2-.3.4-.3.7-.2l2 1c.3.1.5.2.6.3 0 .2 0 .8-.2 1.3Z"/></svg>Get a quote on WhatsApp</span>
+          <span class="btn ghost">See all 26 products</span>
+        </div>
+      </div>
+
+      <h1 class="d hero-h"><span>Made in Kerala.</span><span>Carried everywhere.</span></h1>
+
+      <div class="stage3d">
+        <div class="card gift"></div>
+        <div class="card wood"><span>Room 204</span></div>
+        <div class="card nfc gloss">
+          <svg viewBox="0 0 30 30" fill="none" stroke="#CBDB3A" stroke-width="2.4" stroke-linecap="round"><path d="M9 9c3 3.5 3 8.5 0 12M14 5.5c5 5.5 5 13.5 0 19M19 2c7 7.5 7 18.5 0 26"/></svg>
+          <b>Tap to enter</b><small>NTAG 215</small>
+        </div>
+        <svg class="lanyard" width="1200" height="760" viewBox="0 0 1200 760">
+          <defs>
+            <path id="strapL" d="M776 -20 L828 186"/>
+            <path id="strapR" d="M906 -20 L846 186"/>
+          </defs>
+          <use href="#strapR" stroke="#2b2728" stroke-width="30"/>
+          <text font-family="Archivo" font-size="13" font-weight="900" font-stretch="125%" fill="#CBDB3A" letter-spacing="1"><textPath href="#strapR" startOffset="4">printo  printo  printo  printo</textPath></text>
+          <use href="#strapL" stroke="#373435" stroke-width="30"/>
+          <text font-family="Archivo" font-size="13" font-weight="900" font-stretch="125%" fill="#CBDB3A" letter-spacing="1" dy="4"><textPath href="#strapL" startOffset="4">printo  printo  printo  printo</textPath></text>
+          <rect x="825" y="172" width="26" height="30" rx="5" fill="#b9b9b6"/>
+          <rect x="831" y="194" width="14" height="14" rx="3" fill="none" stroke="#9a9a97" stroke-width="3"/>
+        </svg>
+        <div class="card idcard gloss">
+          <div class="band"><img src="../public/brand/printo-logo-light.svg" alt=""><div class="slot"></div></div>
+          <div class="stripe"></div>
+          <div class="photo"></div>
+          <div class="who"><b>Anjali Menon</b><span>Production team</span></div>
+          <div class="idn"><span>EMP 0427</span><span>VALID 2027</span></div>
+          <div class="bar"></div>
+        </div>
+        <div class="card loyal gloss">
+          <b>Stamp card</b>
+          <div class="stamps"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      <div class="hero-foot">
+        <div class="facts"><span>ISO 9001:2015 certified</span><span>16+ years of card printing</span><span>Own factory at Omanoor</span></div>
+        <div class="scrollcue">Scroll to follow a card
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#231F20" stroke-width="1.6"><circle cx="13" cy="13" r="7"/><path d="M13 1v24M1 13h24"/></svg>
+        </div>
+      </div>
+
+      <span class="hint" style="left:958px;top:296px">Drag the ID card, it swings on the lanyard</span>
+      <span class="hint" style="left:520px;top:150px">Cards drift at 4 depths as you scroll</span>
+      <span class="hint" style="left:48px;top:462px">Headline widens 62→112 on load</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Open on the product, in the brand colour</h4>
+    <dl>
+      <dt>Says</dt><dd>What Printo makes and where, in the first line. Search engines read the small line above the poster headline as the H1 keyword phrase. The big line gives people something to remember.</dd>
+      <dt>Moves</dt><dd>A real ID card hangs on a printed lanyard. Visitors can drag it, and rope physics lets it swing back. Behind it, a hotel key, NFC, gift and loyalty card float at four depths and separate as you scroll, like parallax layers. The headline widens once on load.</dd>
+      <dt>Built with</dt><dd>Three.js with MeshPhysicalMaterial clearcoat for the gloss. A Verlet rope for the lanyard. Card faces are drawn on canvas textures, so names and logos stay sharp. GSAP ScrollTrigger drives the depth layers.</dd>
+      <dt>Fallback</dt><dd>With reduced motion, no WebGL or a slow device, a still render of this exact scene loads instead. The text never waits for 3D.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F2 CHAPTER 01 BLANK -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>2. Story chapter 01, pinned</span><span>PVC white on a cutting-mat grid</span></div>
+    <div class="frame blank">
+      <div class="mat"></div>
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <ul class="chapter-rail">
+        <svg class="regmark" viewBox="0 0 34 34"><path d="M17 17V3A14 14 0 0 1 31 17Z" fill="#00AEEF"/><circle cx="17" cy="17" r="14" fill="none" stroke="#231F20" stroke-width="1.5"/><path d="M17 0v34M0 17h34" stroke="#231F20" stroke-width="1.5"/></svg>
+        <li class="on"><i></i>Blank</li><li><i></i>Print</li><li><i></i>Finish</li><li><i></i>Chip</li><li><i></i>Work</li>
+      </ul>
+      <div class="ch-copy">
+        <span class="num">01 of 05</span>
+        <h2 class="d">A blank, to start.</h2>
+        <p class="body">Every card starts as white PVC, cut to 86 × 54 mm and 0.76 mm thick. That's CR80, the size of the bank card in your wallet, so it fits every holder, lanyard and reader.</p>
+        <dl class="specs">
+          <dt>Materials</dt><dd>PVC, composite PVC/PET, wood</dd>
+          <dt>Size</dt><dd>86 × 54 mm (CR80)</dd>
+          <dt>Thickness</dt><dd>30 mil, 0.76 mm</dd>
+          <dt>Blank packs</dt><dd>Boxes of 100, 250 or 500 cards</dd>
+        </dl>
+      </div>
+      <div class="stage3d">
+        <div class="card blankcard gloss"></div>
+      </div>
+      <!-- crop marks -->
+      <div class="crop" style="left:612px;top:170px;border-left-width:1.5px;border-top-width:1.5px"></div>
+      <div class="crop" style="left:1118px;top:170px;border-right-width:1.5px;border-top-width:1.5px"></div>
+      <div class="crop" style="left:612px;top:540px;border-left-width:1.5px;border-bottom-width:1.5px"></div>
+      <div class="crop" style="left:1118px;top:540px;border-right-width:1.5px;border-bottom-width:1.5px"></div>
+      <div class="dim" style="left:640px;top:132px;width:478px"><span class="line"></span><span>86 mm</span><span class="line"></span></div>
+      <div class="dimv" style="left:1170px;top:198px;height:330px"></div>
+      <div class="dim" style="left:1140px;top:352px;transform:rotate(90deg);transform-origin:0 0"><span>54 mm</span></div>
+      <div class="loupe"><div class="edge"></div><div class="tick"></div><span>0.76 mm</span></div>
+      <span class="hint" style="left:640px;top:600px">Scroll scrubs the camera round to the edge</span>
+      <span class="hint" style="left:150px;top:660px">Rail and registration mark fill one ink per chapter</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Chapter 01: the blank</h4>
+    <dl>
+      <dt>Says</dt><dd>The standard card size in plain words, then the spec table your buyers actually ask about.</dd>
+      <dt>Moves</dt><dd>The page pins while the hero ID card flies in, loses its print and becomes a bare white blank. As the camera swings to the edge, the loupe shows the 0.76 mm thickness. Dimension lines draw themselves in.</dd>
+      <dt>Why print marks</dt><dd>The crop marks and dimension lines show real measurements. The progress mark on the left is a printer's registration target. It fills with cyan, magenta, yellow and black as you move through the chapters.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F3 CHAPTER 02 PRINT -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>3. Story chapter 02, pinned</span><span>White, CMYK print head</span></div>
+    <div class="frame print">
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <ul class="chapter-rail">
+        <svg class="regmark" viewBox="0 0 34 34"><path d="M17 17V3A14 14 0 0 1 31 17Z" fill="#00AEEF"/><path d="M17 17h14A14 14 0 0 1 17 31Z" fill="#EC008C"/><circle cx="17" cy="17" r="14" fill="none" stroke="#231F20" stroke-width="1.5"/><path d="M17 0v34M0 17h34" stroke="#231F20" stroke-width="1.5"/></svg>
+        <li><i></i>Blank</li><li class="on"><i></i>Print</li><li><i></i>Finish</li><li><i></i>Chip</li><li><i></i>Work</li>
+      </ul>
+      <div class="ch-copy">
+        <span class="num">02 of 05</span>
+        <h2 class="d">Colour, on both sides.</h2>
+        <p class="body">Full colour, edge to edge, front and back. Pre-printed runs for hospitals, shops and clubs. Personalised runs where every card gets its own name, photo, number, barcode or QR code.</p>
+      </div>
+      <div class="stage3d">
+        <div class="card printcard"><div class="art"></div>
+          <div class="head"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFF212"></i><i style="background:#231F20"></i></div>
+        </div>
+      </div>
+      <svg class="reg" style="left:586px;top:150px" viewBox="0 0 30 30"><circle cx="15" cy="15" r="8" fill="none" stroke="#231F20" stroke-width="1.3"/><path d="M15 0v30M0 15h30" stroke="#231F20" stroke-width="1.3"/></svg>
+      <svg class="reg" style="left:1130px;top:150px" viewBox="0 0 30 30"><circle cx="15" cy="15" r="8" fill="none" stroke="#231F20" stroke-width="1.3"/><path d="M15 0v30M0 15h30" stroke="#231F20" stroke-width="1.3"/></svg>
+      <svg class="reg" style="left:586px;top:560px" viewBox="0 0 30 30"><circle cx="15" cy="15" r="8" fill="none" stroke="#231F20" stroke-width="1.3"/><path d="M15 0v30M0 15h30" stroke="#231F20" stroke-width="1.3"/></svg>
+      <svg class="reg" style="left:1130px;top:560px" viewBox="0 0 30 30"><circle cx="15" cy="15" r="8" fill="none" stroke="#231F20" stroke-width="1.3"/><path d="M15 0v30M0 15h30" stroke="#231F20" stroke-width="1.3"/></svg>
+      <div class="legend"><span><i style="background:#00AEEF"></i>Cyan</span><span><i style="background:#EC008C"></i>Magenta</span><span><i style="background:#FFF212;box-shadow:inset 0 0 0 1px #d8cf00"></i>Yellow</span><span><i style="background:#231F20"></i>Key black</span></div>
+      <div class="colourbar"><i style="background:#00AEEF"></i><i style="background:#EC008C"></i><i style="background:#FFF212"></i><i style="background:#231F20"></i><i style="background:#F26B35"></i><i style="background:#CBDB3A"></i></div>
+      <span class="hint" style="left:720px;top:600px">Print head sweeps with scroll: C, then M, Y, K build up</span>
+      <span class="hint" style="left:760px;top:120px">Card flips to show the back being printed too</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Chapter 02: print</h4>
+    <dl>
+      <dt>Says</dt><dd>Two kinds of printing in one sentence each. Pre-printed and personalised is how buyers already think about ordering.</dd>
+      <dt>Moves</dt><dd>A four-ink print head crosses the card as you scroll. The shader lays down cyan, then magenta, yellow and black, so the design builds up the way it does in the press. At the end the card flips and the back prints.</dd>
+      <dt>Built with</dt><dd>A custom GLSL shader mixes four ink masks with a scroll-driven sweep. The design artwork is a real texture, so we can swap in any customer design later.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F4 CHAPTER 03 FINISH -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>4. Story chapter 03, interactive</span><span>Lime stage</span></div>
+    <div class="frame finish">
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <ul class="chapter-rail">
+        <svg class="regmark" viewBox="0 0 34 34"><path d="M17 17V3A14 14 0 0 1 31 17Z" fill="#00AEEF"/><path d="M17 17h14A14 14 0 0 1 17 31Z" fill="#EC008C"/><path d="M17 17v14A14 14 0 0 1 3 17Z" fill="#FFF212"/><circle cx="17" cy="17" r="14" fill="none" stroke="#231F20" stroke-width="1.5"/><path d="M17 0v34M0 17h34" stroke="#231F20" stroke-width="1.5"/></svg>
+        <li><i></i>Blank</li><li><i></i>Print</li><li class="on"><i></i>Finish</li><li><i></i>Chip</li><li><i></i>Work</li>
+      </ul>
+      <div class="ch-copy" style="top:104px;width:440px">
+        <span class="num">03 of 05</span>
+        <h2 class="d">Choose how it feels.</h2>
+        <p class="body">The same design, finished four ways. Tap one to see it catch the light.</p>
+        <div class="seg"><span class="on">Glossy</span><span>Matte</span><span>Frosted</span><span>UV spot</span></div>
+        <div class="try"><span>Try your name</span><span class="field">Anjali Menon</span></div>
+      </div>
+      <div class="stage3d" style="z-index:6">
+        <div class="behind" style="left:700px;top:430px"></div>
+        <div class="behind" style="left:790px;top:470px;width:70px;height:70px;background:var(--black)"></div>
+        <div class="fwrap" style="left:630px;top:118px;transform:rotateZ(-4deg)"><div class="card fcard glossy" style="position:relative"><span class="fc-mark">printo</span><span class="fc-name">Anjali Menon</span></div><div class="cap">Glossy<small>Bright colour, mirror shine</small></div></div>
+        <div class="fwrap" style="left:910px;top:150px;transform:rotateZ(3deg)"><div class="card fcard matte" style="position:relative"><span class="fc-mark">printo</span><span class="fc-name">Anjali Menon</span></div><div class="cap">Matte<small>Soft, low glare</small></div></div>
+        <div class="fwrap" style="left:650px;top:410px;transform:rotateZ(4deg)"><div class="card fcard frosted" style="position:relative"><span class="fc-mark">printo</span><span class="fc-name">Anjali Menon</span></div><div class="cap">Frosted<small>Translucent, lets light through</small></div></div>
+        <div class="fwrap" style="left:925px;top:440px;transform:rotateZ(-3deg)"><div class="card fcard uv" style="position:relative"><div class="pat"></div><span class="fc-mark">printo</span><span class="fc-name">Anjali Menon</span></div><div class="cap">UV spot<small>Raised gloss on chosen areas</small></div></div>
+      </div>
+      <span class="hint" style="left:150px;top:640px">Live build: one card, material swaps on tap, drag to tilt</span>
+      <span class="hint" style="left:620px;top:672px">Typed name prints onto the card texture live</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Chapter 03: finish</h4>
+    <dl>
+      <dt>Says</dt><dd>Your four finishes from the catalogue: glossy, matte, frosted (your "frozen") and UV. One short line each on what they look like, with no claims we can't back.</dd>
+      <dt>Moves</dt><dd>This is the first chapter visitors play with. In the live site there is one card, not four. Tapping a finish changes its material: reflection, roughness and translucency. Dragging tilts it under a moving light. Typing a name prints it onto the card right away.</dd>
+      <dt>Business hook</dt><dd>"Try your name" carries over into the quote form, so the enquiry arrives with finish and sample text already filled in.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F5 CHAPTER 04 CHIP -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>5. Story chapter 04, pinned</span><span>Process black, x-ray view</span></div>
+    <div class="frame chip">
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <ul class="chapter-rail" style="color:#fff">
+        <svg class="regmark" viewBox="0 0 34 34"><path d="M17 17V3A14 14 0 0 1 31 17Z" fill="#00AEEF"/><path d="M17 17h14A14 14 0 0 1 17 31Z" fill="#EC008C"/><path d="M17 17v14A14 14 0 0 1 3 17Z" fill="#FFF212"/><path d="M17 17H3A14 14 0 0 1 17 3Z" fill="#fff"/><circle cx="17" cy="17" r="14" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M17 0v34M0 17h34" stroke="#fff" stroke-width="1.5"/></svg>
+        <li><i></i>Blank</li><li><i></i>Print</li><li><i></i>Finish</li><li class="on"><i></i>Chip</li><li><i></i>Work</li>
+      </ul>
+      <div class="ch-copy" style="top:92px;width:470px">
+        <span class="num">04 of 05</span>
+        <h2 class="d" style="font-size:68px;margin:12px 0 18px">Some cards carry a chip.</h2>
+        <p class="body" style="font-size:17px">Inside sits a copper antenna and a tiny chip. Tap it on a reader to open a door, check in a guest or log attendance.</p>
+        <dl class="chiplist">
+          <div><dt>Proximity RFID</dt><dd>125 kHz, TK4100</dd></div>
+          <div><dt>MIFARE, HF RFID</dt><dd>13.56 MHz, 1K and 4K</dd></div>
+          <div><dt>NFC</dt><dd>NTAG 213, 215 and 216</dd></div>
+          <div><dt>UHF</dt><dd>Long-range tags, on request</dd></div>
+        </dl>
+        <div style="display:flex;gap:16px;align-items:center;margin-top:22px">
+          <span class="btn lime">Check my reader or lock</span>
+          <span style="font-size:14px;color:rgba(255,255,255,.7);max-width:24ch;line-height:1.4">Send us the model. We'll match the chip.</span>
+        </div>
+      </div>
+
+      <svg class="waves" viewBox="0 0 420 420" fill="none" stroke="#CBDB3A" stroke-width="2">
+        <circle cx="120" cy="80" r="80" opacity=".7"/><circle cx="120" cy="80" r="140" opacity=".45"/><circle cx="120" cy="80" r="200" opacity=".25"/><circle cx="120" cy="80" r="260" opacity=".12"/>
+      </svg>
+      <div class="explode">
+        <div class="layer l-back"></div>
+        <div class="layer l-inlay">
+          <svg class="coil antenna-glow" viewBox="0 0 324 191" fill="none" stroke="#F79633" stroke-width="2.2">
+            <rect x="4" y="4" width="316" height="183" rx="10"/><rect x="12" y="12" width="300" height="167" rx="8"/><rect x="20" y="20" width="284" height="151" rx="6"/><rect x="28" y="28" width="268" height="135" rx="4"/>
+            <path d="M28 95 H150"/><rect x="146" y="80" width="30" height="30" rx="3" fill="#F79633" stroke="none"/>
+          </svg>
+        </div>
+        <div class="layer l-core"></div>
+        <div class="layer l-front"></div>
+      </div>
+      <!-- leader labels -->
+      <div class="leadlab" style="left:950px;top:112px">Printed overlay<small>your design, sealed</small></div>
+      <div class="leadlab" style="left:966px;top:236px">PVC core</div>
+      <div class="leadlab" style="left:966px;top:338px;color:#F79633">Antenna and chip<small>copper coil, the smart part</small></div>
+      <div class="leadlab" style="left:966px;top:462px">Printed back</div>
+      <span class="hint" style="left:640px;top:664px">Scroll splits the card into its 4 layers, antenna lights up</span>
+      <span class="hint" style="left:900px;top:704px">Tap mode: waves pulse from a reader</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Chapter 04: the chip</h4>
+    <dl>
+      <dt>Says</dt><dd>What a smart card is, in one plain sentence. Then the frequencies and chips from your catalogue, laid out so an admin or hotel manager can match them to their reader.</dd>
+      <dt>Moves</dt><dd>The card turns flat and x-rays itself. As you scroll, its layers separate like your MIFARE product photo: overlay, core, antenna inlay and back. The copper coil glows, and lime waves pulse out as if tapped on a reader.</dd>
+      <dt>Honesty</dt><dd>Your catalogue says "suitable for all door locks". We'd sell that as "send us your lock model and we'll match it". It's more believable, and every one of those questions becomes a lead.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F6 CHAPTER 05 WORK -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>6. Story chapter 05, horizontal scroll</span><span>PVC white, colour panels</span></div>
+    <div class="frame work">
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <ul class="chapter-rail">
+        <svg class="regmark" viewBox="0 0 34 34"><path d="M17 17V3A14 14 0 0 1 31 17Z" fill="#00AEEF"/><path d="M17 17h14A14 14 0 0 1 17 31Z" fill="#EC008C"/><path d="M17 17v14A14 14 0 0 1 3 17Z" fill="#FFF212"/><path d="M17 17H3A14 14 0 0 1 17 3Z" fill="#231F20"/><circle cx="17" cy="17" r="14" fill="none" stroke="#231F20" stroke-width="1.5"/><path d="M17 0v34M0 17h34" stroke="#231F20" stroke-width="1.5"/></svg>
+        <li><i></i>Blank</li><li><i></i>Print</li><li><i></i>Finish</li><li><i></i>Chip</li><li class="on"><i></i>Work</li>
+      </ul>
+      <div class="top">
+        <div><span class="num">05 of 05</span><h2 class="d" style="margin-top:12px">Then it goes to work.</h2></div>
+        <div class="trackbar"><span style="margin-right:10px">Hospitals, 2 of 7</span><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="track">
+        <div class="panel p1">
+          <div class="place d">Offices</div>
+          <div class="plate"><img src="../public/images/multicolour-lanyards.webp" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+          <div class="uses"><b>Staff ID, access and visitor passes</b>PVC ID cards, RFID access cards, lanyards, holders and yoyo reels</div>
+        </div>
+        <div class="panel p2">
+          <div class="place d">Hospitals</div>
+          <div class="plate"><img src="../public/images/hospital-op-cards.webp" alt=""></div>
+          <div class="uses"><b>Patient registration and OP cards</b>Pre-printed OP cards, staff ID cards, visitor badges</div>
+        </div>
+        <div class="panel p3">
+          <div class="place d">Hotels</div>
+          <div class="plate"><img src="../public/images/pvc-hotel-key-cards.webp" alt=""></div>
+          <div class="uses"><b>Room keys guests remember</b>PVC and wooden key cards, LF and HF</div>
+        </div>
+      </div>
+      <span class="hint" style="left:470px;top:250px">Vertical scroll moves the track sideways</span>
+      <span class="hint" style="left:770px;top:420px">Photos drift slower than panels (parallax)</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Chapter 05: out into the world</h4>
+    <dl>
+      <dt>Says</dt><dd>Seven places your cards end up: offices, hospitals, hotels, schools and colleges, gyms and clubs, shops and brands, events. Each shows the products that place actually orders, using your own product photos.</dd>
+      <dt>Moves</dt><dd>The page pins and vertical scroll pans a horizontal track. Inside each panel the photo moves slower than the frame, and the place name moves faster. That is the main parallax moment after the hero.</dd>
+      <dt>SEO</dt><dd>Each panel links to its own landing page, for example "Hospital OP cards in Kerala". These pages rank for industry searches the current site misses completely.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F7 RANGE -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>7. Product range, after the story</span><span>White index</span></div>
+    <div class="frame range">
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <div class="head2">
+        <h2 class="d">Everything around the card.</h2>
+        <p>26 products in five families, from blank cards to the printers that personalise them.</p>
+      </div>
+      <div class="idx">
+        <div class="r"><span class="n">5</span><h3>Card printers</h3><p>Evolis Primacy 2, Evolis Agilia, Evolis Zenius, Zebra ZC 300, IDP Solid 510D</p><span class="go"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13 13 3M5 3h8v8"/></svg></span></div>
+        <div class="r"><span class="n">9</span><h3>PVC cards</h3><p>ID cards, Zebra and Pacto ID blanks, pre-printed, hospital OP, privilege, loyalty, membership, gift</p><span class="go"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13 13 3M5 3h8v8"/></svg></span></div>
+        <div class="r on"><span class="n">5</span><h3>Smart cards</h3><p>MIFARE and HF RFID, proximity, NFC, hotel key cards, wooden cards</p><span class="go"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13 13 3M5 3h8v8"/></svg></span></div>
+        <div class="r"><span class="n">3</span><h3>Card accessories</h3><p>Multicolour lanyards, card holders, yoyo reels</p><span class="go"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13 13 3M5 3h8v8"/></svg></span></div>
+        <div class="r"><span class="n">4</span><h3>Event accessories</h3><p>Button badges, event badges, keychains, RFID silicone wristbands</p><span class="go"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13 13 3M5 3h8v8"/></svg></span></div>
+      </div>
+      <div class="floatimg" style="left:880px;top:318px"><img src="../public/images/pvc-nfc-card.webp" alt=""></div>
+      <span class="hint" style="left:880px;top:528px">Photo follows the cursor, swaps per row</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>The range, as an index</h4>
+    <dl>
+      <dt>Says</dt><dd>All five families on one screen, with every product named, so the page is useful even without clicking. Each row opens a category page with the full catalogue grid and filters.</dd>
+      <dt>Moves</dt><dd>On hover, the row turns black and a tilted product photo follows the pointer. On touch screens, rows open as an accordion with a photo strip. This replaces a wall of identical product tiles.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F8 TWO WAYS -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>8. Two ways to buy</span><span>Logo charcoal</span></div>
+    <div class="frame ways">
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <h2 class="d">Printed for you,<br>or by you.</h2>
+      <div class="way a">
+        <h3>We print for you</h3>
+        <p>Send your design or your staff list. We print, finish, check and pack the cards, ready to hand out.</p>
+        <span class="btn orange">Start a print order</span>
+        <div class="shot"><img src="../public/images/pvc-id-cards.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 40%"></div>
+      </div>
+      <div class="way b">
+        <h3>Print in-house</h3>
+        <p>Card printers, ribbons and blank cards for teams that issue cards every day.</p>
+        <div class="brands"><span>Evolis</span><span>Zebra</span><span>IDP</span><span>Pacto ID</span></div>
+        <div class="printers">
+          <div class="pr" style="left:0;bottom:24px"><img src="../public/images/evolis-primacy-2.webp" alt=""><small>Evolis Primacy 2</small></div>
+          <div class="pr" style="left:184px;bottom:0"><img src="../public/images/zebra-zc-300.webp" alt=""><small>Zebra ZC 300</small></div>
+          <div class="pr" style="left:368px;bottom:40px"><img src="../public/images/solid-idp-510d.webp" alt=""><small>IDP Solid 510D</small></div>
+          <div class="eject" style="left:250px;bottom:168px;transform:rotate(-8deg)"></div>
+        </div>
+      </div>
+      <span class="hint" style="left:790px;top:470px">A card slides out of the printer on scroll</span>
+      <span class="hint" style="left:980px;top:700px">3 printer photos, 3 parallax speeds</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Two customers, two paths</h4>
+    <dl>
+      <dt>Says</dt><dd>Your buyers either want finished cards or want to print their own. Splitting them here sends each to the right page and the right WhatsApp message.</dd>
+      <dt>Moves</dt><dd>Printer photos rise at different speeds. As the section scrolls in, a card slides out of the Zebra's slot, a small callback to the story above.</dd>
+      <dt>Careful</dt><dd>Printer brands appear as products you supply, not as partners, unless you confirm authorised-dealer status.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F9 PROOF -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>9. Proof</span><span>PVC white, job ticket</span></div>
+    <div class="frame proof">
+      <div class="mini-nav"><img src="../public/brand/printo-logo.svg" alt="">Menu<span class="btn dark">Get a quote</span></div>
+      <h2 class="d">16 years of cards, checked at every stage.</h2>
+      <div class="ticket">
+        <div class="th"><span>QUALITY TICKET</span><span>JOB 2026-0930</span></div>
+        <ul>
+          <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6"/></svg></i>Design and artwork</li>
+          <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6"/></svg></i>Print registration</li>
+          <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6"/></svg></i>Fusing</li>
+          <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6"/></svg></i>Thickness, 0.76 mm</li>
+          <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6"/></svg></i>Scratch-free surface</li>
+          <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6"/></svg></i>Waterproof surface</li>
+          <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6"/></svg></i>Tear resistance</li>
+        </ul>
+        <div class="stamp"><div>ISO<br>9001:2015<small>certified</small></div></div>
+      </div>
+      <div class="photo-need"><div><b>Photo needed</b>Omanoor factory floor or the<br>production team at work</div></div>
+      <div class="places">
+        <div><b>Office</b>C-19, 3rd Floor, Darussalam Complex, Mavoor Road, Calicut 673 004, Kerala</div>
+        <div><b>Factory</b>CP25 A, Omanoor 673 645, Kerala</div>
+      </div>
+      <div class="sectors"><span>Corporate</span><i></i><span>Education</span><i></i><span>Health</span><i></i><span>Press</span><i></i><span>Retail</span><i></i><span>Government</span><i></i><span>Finance</span><i></i><span>Hotels</span></div>
+      <span class="hint" style="left:300px;top:236px">Ticks stamp in one by one, then the ISO stamp lands</span>
+      <span class="hint" style="left:900px;top:640px">Sectors you serve, slow marquee</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Proof, in the language of the shop floor</h4>
+    <dl>
+      <dt>Says</dt><dd>The quality checks listed on your About page, set as a real print-job ticket instead of a row of big-number stats. It shows both addresses, so visitors know it's a real local business, and it helps local search.</dd>
+      <dt>Moves</dt><dd>One orchestrated moment: each check ticks in turn, then the ISO stamp presses down with a small shake.</dd>
+      <dt>Gap</dt><dd>There are no real factory or team photos yet. That's the biggest trust upgrade available, and it's cheap to fix.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F10 FAQ -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>10. FAQ</span><span>FAQPage schema</span></div>
+    <div class="frame faq">
+      <h2 class="d">Questions buyers ask first.</h2>
+      <div class="qs">
+        <div class="q open">Will your RFID cards work with our door locks?<span>–</span><p>Tell us the lock or reader brand and model. We'll confirm the right chip (125 kHz, 13.56 MHz MIFARE or NFC) before you order.</p></div>
+        <div class="q">What is the minimum order quantity?<span>+</span></div>
+        <div class="q">How long does printing and delivery take?<span>+</span></div>
+        <div class="q">Can you print our staff photos and names on each card?<span>+</span></div>
+        <div class="q">Do you deliver outside Kerala?<span>+</span></div>
+      </div>
+      <span class="hint" style="left:560px;top:436px">Answers needed from you: MOQ, lead time, delivery area</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Answers that rank</h4>
+    <dl>
+      <dt>Says</dt><dd>The five questions every buyer asks before WhatsApping you. Answering them on the page cuts back-and-forth and earns Google FAQ results.</dd>
+      <dt>Needs</dt><dd>Only the first answer can be written from what you supplied. I won't invent minimum orders, lead times or delivery areas.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- F11 CONTACT + FOOTER -->
+<!-- ======================================================= -->
+<div class="row">
+  <div>
+    <div class="row-label"><span>11. Ask for the order, then the footer</span><span>Back to Printo orange</span></div>
+    <div class="frame contact">
+      <h2 class="d">Tell us what you need printed.</h2>
+      <div class="qform">
+        <div class="f">
+          <div class="full"><label>What do you need?</label><div class="in">PVC ID cards, glossy<span>▾</span></div></div>
+          <div><label>How many?</label><div class="in">500</div></div>
+          <div><label>Needed by</label><div class="in">15 Oct 2026</div></div>
+          <div><label>Your name</label><div class="in">Anjali Menon</div></div>
+          <div><label>Phone</label><div class="in">+91</div></div>
+        </div>
+        <span class="btn dark">Send on WhatsApp</span>
+        <small>Opens WhatsApp with your message filled in. Nothing is sent until you tap send.</small>
+      </div>
+      <div class="clist">
+        <div><b>WhatsApp</b><p>+91 92078 06661</p></div>
+        <div><b>Office phone</b><p>0495 406 0457</p></div>
+        <div><b>Mobile</b><p class="sm">+91 92078 06661<br>+91 94955 32310<br>+91 92078 06662</p></div>
+        <div><b>Email</b><p class="sm">sales@printocards.com<br>printogroup@gmail.com</p></div>
+      </div>
+      <footer class="foot">
+        <div><img src="../public/brand/printo-logo-light.svg" alt=""><p>PVC, ID and smart card manufacturer in Calicut, Kerala. ISO 9001:2015 certified.</p></div>
+        <div><b>Products</b><p>Card printers<br>PVC cards<br>Smart cards<br>Card accessories<br>Event accessories</p></div>
+        <div><b>Industries</b><p>Corporate ID cards<br>Hospital OP cards<br>Hotel key cards<br>School ID cards<br>Event badges</p></div>
+        <div><b>Visit</b><p>C-19, 3rd Floor, Darussalam Complex,<br>Mavoor Road, Calicut 673 004<br>Factory: CP25 A, Omanoor 673 645</p></div>
+      </footer>
+      <span class="hint" style="left:650px;top:290px">Headline widens in as it enters, the same move as the hero</span>
+      <span class="hint" style="left:660px;top:600px">Pre-filled from "Try your name" and the finish picker</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>Close the loop</h4>
+    <dl>
+      <dt>Says</dt><dd>One headline, one short form and every number you have. The button says exactly what it does.</dd>
+      <dt>How it works</dt><dd>No backend needed. The form builds a WhatsApp message with the product, quantity, date and name, and opens WhatsApp. Email works the same way. Later we can add a real form endpoint if you want enquiries logged.</dd>
+      <dt>Footer SEO</dt><dd>The full address and phone numbers, matched to your Google Business Profile, plus links to every product family and industry page.</dd>
+    </dl>
+  </aside>
+</div>
+
+<!-- ======================================================= -->
+<!-- MOBILE -->
+<!-- ======================================================= -->
+<h2 class="section-title">On a phone</h2>
+<div class="phones">
+  <!-- M1 hero -->
+  <div>
+    <div class="phone"><div class="screen" style="background:var(--orange)">
+      <div class="mnav"><img src="../public/brand/printo-logo-mono.svg" alt=""><span class="burger"><i></i></span></div>
+      <svg style="position:absolute;left:0;top:0" width="340" height="300" viewBox="0 0 340 300"><path d="M130 -10 L162 118" stroke="#373435" stroke-width="20"/><path d="M210 -10 L176 118" stroke="#2b2728" stroke-width="20"/><rect x="159" y="108" width="20" height="22" rx="4" fill="#b9b9b6"/></svg>
+      <div class="card idcard gloss" style="left:112px;top:122px;width:120px;height:190px;border-radius:8px;transform:rotateZ(4deg)">
+        <div class="band" style="height:62px"><img src="../public/brand/printo-logo-light.svg" alt="" style="height:22px;left:10px;top:18px"></div>
+        <div class="photo" style="width:52px;height:52px;top:40px;border-width:3px"></div>
+        <div class="who" style="top:98px"><b style="font-size:11px">Anjali Menon</b><span style="font-size:8px">Production team</span></div>
+        <div class="bar" style="left:10px;right:10px;bottom:10px;height:14px"></div>
+      </div>
+      <div class="card nfc" style="left:238px;top:210px;width:120px;height:75px;border-radius:6px;transform:rotateZ(-14deg)"></div>
+      <div class="card loyal" style="left:-30px;top:250px;width:120px;height:75px;border-radius:6px;transform:rotateZ(12deg);filter:blur(1px)"></div>
+      <div style="position:absolute;left:20px;right:20px;top:352px">
+        <p style="font-size:13px;font-weight:600">PVC, ID and smart card manufacturer in Calicut, Kerala</p>
+        <p class="d" style="font-size:44px;font-stretch:100%;letter-spacing:-.05em;line-height:.88;margin-top:10px">Made in Kerala. Carried everywhere.</p>
+        <p style="font-size:14.5px;line-height:1.5;margin-top:14px">ID, NFC, RFID and hotel key cards, lanyards and card printers.</p>
+      </div>
+      <div class="sticky"><span style="background:var(--black);color:#fff">WhatsApp a quote</span><span style="background:#fff">Call</span></div>
+    </div></div>
+    <p class="p-caption"><b>Hero</b>The lanyard card sits above the headline. On phones it swings with the device tilt instead of drag. WhatsApp and Call stay pinned to the bottom on every page.</p>
+  </div>
+  <!-- M2 chip -->
+  <div>
+    <div class="phone"><div class="screen" style="background:var(--black);color:#fff">
+      <div class="mnav"><img src="../public/brand/printo-logo-light.svg" alt=""><span class="burger" style="background:#fff"><i style="background:var(--black);box-shadow:0 5px 0 var(--black),0 -5px 0 var(--black)"></i></span></div>
+      <div style="position:absolute;left:20px;right:20px;top:104px">
+        <span class="num">04 of 05</span>
+        <p class="d" style="font-size:40px;font-stretch:108%;margin-top:8px">Some cards carry a chip.</p>
+      </div>
+      <div style="position:absolute;left:40px;top:250px;width:260px;height:260px;perspective:900px">
+        <div class="layer l-back" style="width:220px;height:139px;top:150px;left:20px"></div>
+        <div class="layer l-inlay" style="width:220px;height:139px;top:100px;left:20px"><svg class="coil antenna-glow" viewBox="0 0 324 191" fill="none" stroke="#F79633" stroke-width="3"><rect x="4" y="4" width="316" height="183" rx="10"/><rect x="16" y="16" width="292" height="159" rx="8"/><rect x="28" y="28" width="268" height="135" rx="6"/><rect x="146" y="80" width="30" height="30" rx="3" fill="#F79633" stroke="none"/></svg></div>
+        <div class="layer l-core" style="width:220px;height:139px;top:50px;left:20px"></div>
+        <div class="layer l-front" style="width:220px;height:139px;top:0;left:20px"></div>
+      </div>
+      <dl class="chiplist rows" style="position:absolute;left:20px;right:20px;top:530px;margin:0">
+        <div style="grid-template-columns:120px 1fr;font-size:13px"><dt>Proximity</dt><dd>125 kHz, TK4100</dd></div>
+        <div style="grid-template-columns:120px 1fr;font-size:13px"><dt>MIFARE</dt><dd>13.56 MHz</dd></div>
+        <div style="grid-template-columns:120px 1fr;font-size:13px"><dt>NFC</dt><dd>NTAG 213, 215, 216</dd></div>
+      </dl>
+      <div class="sticky"><span style="background:var(--lime);color:var(--black)">WhatsApp a quote</span><span style="background:#fff;color:var(--black)">Call</span></div>
+    </div></div>
+    <p class="p-caption"><b>Story chapters</b>Same pinned scenes, stacked vertically: copy on top, 3D below. The canvas renders at a lower resolution, and a still image loads first.</p>
+  </div>
+  <!-- M3 work -->
+  <div>
+    <div class="phone"><div class="screen" style="background:var(--white)">
+      <div class="mnav"><img src="../public/brand/printo-logo.svg" alt=""><span class="burger"><i></i></span></div>
+      <div style="position:absolute;left:20px;right:20px;top:104px">
+        <span class="num">05 of 05</span>
+        <p class="d" style="font-size:40px;font-stretch:108%;margin-top:8px">Then it goes to work.</p>
+      </div>
+      <div class="panel p2" style="position:absolute;left:20px;top:230px;width:290px;height:400px">
+        <div class="place d" style="font-size:40px;left:20px">Hospitals</div>
+        <div class="plate" style="left:20px;right:20px;top:80px;height:180px"><img src="../public/images/hospital-op-cards.webp" alt=""></div>
+        <div class="uses" style="left:20px;right:20px;bottom:20px;font-size:13px"><b style="font-size:14px">Patient registration and OP cards</b>Pre-printed OP cards, staff ID, visitor badges</div>
+      </div>
+      <div class="panel p3" style="position:absolute;left:322px;top:230px;width:290px;height:400px"></div>
+      <div class="trackbar" style="position:absolute;left:20px;top:650px"><i class="on" style="width:24px"></i><i class="on" style="width:24px"></i><i style="width:24px"></i><i style="width:24px"></i><i style="width:24px"></i><i style="width:24px"></i><i style="width:24px"></i></div>
+      <div class="sticky"><span style="background:var(--black);color:#fff">WhatsApp a quote</span><span style="background:#fff;box-shadow:inset 0 0 0 1.5px var(--black)">Call</span></div>
+    </div></div>
+    <p class="p-caption"><b>Industries</b>The horizontal track becomes a native swipe carousel with snap points. There's no scroll-jacking on touch.</p>
+  </div>
+  <!-- M4 contact -->
+  <div>
+    <div class="phone"><div class="screen" style="background:var(--orange)">
+      <div class="mnav"><img src="../public/brand/printo-logo-mono.svg" alt=""><span class="burger"><i></i></span></div>
+      <p class="d" style="position:absolute;left:18px;right:18px;top:100px;font-size:46px;font-stretch:100%;letter-spacing:-.05em;line-height:.88">Tell us what you need printed.</p>
+      <div class="qform" style="left:14px;right:14px;top:270px;width:auto;padding:18px;border-radius:14px">
+        <div class="f" style="gap:10px">
+          <div class="full"><label>What do you need?</label><div class="in" style="font-size:14px">PVC ID cards, glossy<span>▾</span></div></div>
+          <div><label>How many?</label><div class="in" style="font-size:14px">500</div></div>
+          <div><label>Needed by</label><div class="in" style="font-size:14px">15 Oct</div></div>
+          <div class="full"><label>Your name</label><div class="in" style="font-size:14px">Anjali Menon</div></div>
+        </div>
+        <span class="btn dark" style="padding:15px">Send on WhatsApp</span>
+      </div>
+      <div style="position:absolute;left:20px;right:20px;top:600px;font-size:14px;line-height:1.6;font-weight:600">0495 406 0457<br>sales@printocards.com</div>
+      <div class="sticky"><span style="background:var(--black);color:#fff">WhatsApp a quote</span><span style="background:#fff">Call</span></div>
+    </div></div>
+    <p class="p-caption"><b>Contact</b>Tapping a phone number calls it. The form keeps anything picked earlier in the story.</p>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PLAN -->
+<!-- ======================================================= -->
+<h2 class="section-title">How it's built</h2>
+<div class="plan">
+  <section>
+    <h2>Motion map</h2>
+    <table>
+      <tr><th>Where</th><th>What moves</th><th>Tool</th></tr>
+      <tr><td>Whole site</td><td>Smooth, inertia scrolling, synced to all scroll effects</td><td>Lenis</td></tr>
+      <tr><td>Hero</td><td>Lanyard ID card with rope physics, 4-depth card parallax, headline width on load</td><td>Three.js, GSAP</td></tr>
+      <tr><td>Chapters 01–04</td><td>One pinned WebGL card: blank, then CMYK print shader, finish materials, exploded x-ray</td><td>Three.js, GLSL, ScrollTrigger</td></tr>
+      <tr><td>Chapter 05</td><td>Horizontal pinned track, photo and title parallax</td><td>ScrollTrigger</td></tr>
+      <tr><td>Headlines</td><td>Variable-font width 62→125 as they enter</td><td>GSAP, CSS</td></tr>
+      <tr><td>Range</td><td>Cursor-follow photo on hover, accordion on touch</td><td>GSAP quickTo</td></tr>
+      <tr><td>Proof</td><td>Ticks, then the ISO stamp</td><td>GSAP timeline</td></tr>
+      <tr><td>Pages</td><td>Card-shaped wipe between pages</td><td>View Transitions API</td></tr>
+      <tr><td>Reduced motion</td><td>Everything static, still renders, no pinning</td><td>CSS and JS check</td></tr>
+    </table>
+  </section>
+  <section>
+    <h2>Pages and SEO</h2>
+    <div class="tree">
+      <code>/</code> <span>home, the story</span>
+      <div><code>/products/</code> <span>catalogue with filters</span>
+        <div><code>/products/card-printers/</code> … <span>5 family pages</span></div>
+        <div><code>/products/pvc-nfc-card/</code> … <span>26 product pages</span></div>
+      </div>
+      <div><code>/industries/</code>
+        <div><span>offices, hospitals, hotels, schools, gyms, retail, events: 7 pages</span></div>
+      </div>
+      <div><code>/smart-cards/</code> <span>RFID, MIFARE and NFC guide (long-form)</span></div>
+      <div><code>/card-printers/</code> <span>compare the 5 printers</span></div>
+      <div><code>/about/</code> <code>/contact/</code> <code>/faq/</code></div>
+    </div>
+    <ul style="margin-top:16px">
+      <li><b>Static HTML for every page</b>, pre-rendered, so all copy is crawlable. WebGL never holds the content.</li>
+      <li><b>Structured data:</b> LocalBusiness with both addresses, Product for each item, FAQPage, BreadcrumbList.</li>
+      <li><b>Page titles aimed at real searches</b>, e.g. "PVC ID Card Printing in Calicut", "Hotel Key Cards in Kerala", "NFC Cards, NTAG 213/215/216".</li>
+      <li><b>Speed:</b> Three.js loads after the first paint, with a still-image placeholder. Targets: LCP under 2.5 s on 4G, CLS near 0.</li>
+      <li>sitemap.xml, canonical URLs, Open Graph images per page, redirects from the old /about, /services and /contact.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Stack</h2>
+    <ul>
+      <li><b>Astro</b> generates plain, fast HTML for every page and ships JavaScript only where there is motion. It's a better SEO fit than the current single-page React build.</li>
+      <li><b>Three.js</b> for the card scenes, with custom GLSL for the print sweep and x-ray.</li>
+      <li><b>GSAP with ScrollTrigger and SplitText</b>, all free since 2025, for scroll scenes and type.</li>
+      <li><b>Lenis</b> for smooth scrolling.</li>
+      <li><b>Archivo</b> variable font, self-hosted, one file.</li>
+      <li>Reuses your current product data, all 26 optimised images, the logos and the catalogue PDF.</li>
+      <li>Deploys as static files to any host, including Vercel, Netlify, Cloudflare Pages or your current server.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="need">
+  <div><h2>What would make this better, from you</h2><p style="margin-top:12px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.75)">None of these block the build. Where something is missing, I'll leave a clearly marked gap instead of making it up.</p></div>
+  <ol>
+    <li><b>Real photos</b> of the Omanoor factory, the machines and the team. This is the biggest trust upgrade.</li>
+    <li><b>FAQ answers:</b> minimum order, usual lead time and where you deliver.</li>
+    <li><b>Founding year</b>, to replace "16+ years" with a date that never goes stale.</li>
+    <li><b>Confirm WhatsApp</b> is +91 92078 06661.</li>
+    <li><b>Google Business Profile link</b> and your Facebook and Instagram URLs.</li>
+    <li><b>Client logos</b> you have permission to show, if any.</li>
+    <li><b>Authorised-dealer status</b> for Evolis, Zebra or IDP, if you have it in writing.</li>
+  </ol>
+</div>
+
+<script>
+  // Fit the fixed-width board to the window.
+  function fit(){ const z = Math.min(1, window.innerWidth / 1716); document.body.style.zoom = z; }
+  fit(); addEventListener('resize', fit);
+</script>
+</body>
+</html>

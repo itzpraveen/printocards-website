@@ -1,0 +1,184 @@
+{
+  "checked_on": "2026-09-30",
+  "sources": [
+    "https://printocards.com/",
+    "https://printocards.com/about/",
+    "https://printocards.com/services/",
+    "https://printocards.com/contact/",
+    "/home/itz/Downloads/Website.zip",
+    "/home/itz/Downloads/printo_cards.svg"
+  ],
+  "coverage": [
+    {
+      "original_terms": "PVC, ID and smart card manufacturing in Kerala",
+      "destinations": [
+        "/",
+        "/services",
+        "/about"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "ISO 9001:2015 and 16+ years of experience",
+      "destinations": [
+        "/",
+        "/services",
+        "/about"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Skilled technicians, manufacturing capability, high-speed production, quality control, competitive pricing and pre/post-sales support",
+      "destinations": [
+        "/services",
+        "/about"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Corporate, education, health, press, retail, government and financial applications; student and professional ID printing",
+      "destinations": [
+        "/services",
+        "/solutions",
+        "/products/pvc-id-cards"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "PVC cards, pre-printed cards, hospital OP cards, membership, privilege, loyalty/customer and gift cards",
+      "destinations": [
+        "/products",
+        "/services"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Standard CR80 blank cards, magnetic stripe variants and technology cards",
+      "destinations": [
+        "/products/standard-blank-cards"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Colour PVC cards and monochrome printing guidance",
+      "destinations": [
+        "/products/colour-pvc-cards"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Composite PVC/Poly stock and laminating / reverse-transfer applications",
+      "destinations": [
+        "/products/composite-pvc-poly-cards"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Metallic PVC cards, 20–30 mil stock, 30 mil / 0.76 mm blank cards, 500 cards/box",
+      "destinations": [
+        "/products/metallic-pvc-cards",
+        "/products/pvc-id-cards",
+        "/products/standard-blank-cards"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "MIFARE 1K/4K contactless read/write, RFID proximity cards, key fobs, adhesive tags",
+      "destinations": [
+        "/products/pvc-mifare-card-hf-rfid-card",
+        "/products/pvc-rfid-proximity-card"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Hotel keycards, Ving lock enquiries, LF/HF and matte/gloss finishes",
+      "destinations": [
+        "/products/pvc-hotel-key-cards"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Satin multicolour lanyards and keychains; metal/plastic hooks and fittings",
+      "destinations": [
+        "/products/multicolour-lanyards",
+        "/products/multicolour-keychains"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Card holders in plastic/acrylic/glass/metal/polycarbonate, clips and pins, ID reels / yoyo with dome sticker in round/oval/square",
+      "destinations": [
+        "/products/card-holders",
+        "/products/yoyo",
+        "/services"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "YMCKO, YMCKT-KT, monochrome and half-panel printer ribbons / consumables",
+      "destinations": [
+        "/products/printer-consumables",
+        "/services"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Entrust EM2, Zebra ZC 300 and supplied Evolis / IDP printer ranges",
+      "destinations": [
+        "/products/entrust-em2",
+        "/products/zebra-zc-300",
+        "/products?category=printers"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "RFID silicone wristbands, badges and event accessories",
+      "destinations": [
+        "/products/rfid-silicon-wristband",
+        "/products?category=events"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Quality assurance, original thick PVC cards, scratch-free surface, waterproof surface, dual-side multicolour print, durability and tear resistance",
+      "destinations": [
+        "/about",
+        "/services"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "All four phone numbers, both email addresses, office and factory locations",
+      "destinations": [
+        "/contact"
+      ],
+      "status": "restored or retained"
+    },
+    {
+      "original_terms": "Original supplied logo, orange and lime-green palette, transparent logo-symbol favicon",
+      "destinations": [
+        "/",
+        "/studio",
+        "/favicon.svg"
+      ],
+      "status": "restored or retained"
+    }
+  ],
+  "editorial_decisions": [
+    "Kept all 26 supplied catalogue products and added six original-site ranges, for 32 total entries.",
+    "Restored a dedicated /services page, including direct/static visits, navigation and sitemap entry; removed its previous redirect to /products.",
+    "The old home page describes NFC with generic proximity copy. NFC and 125 kHz proximity use cases are now separate.",
+    "The old services page labels the printer-ribbon entry Card Holders. It is now Printer ribbons & consumables.",
+    "The old 1K/4K smart-card entry conflicts with its listed 125 kHz frequency. MIFARE Classic 1K/4K uses 13.56 MHz, verified against NXP; 125 kHz remains on proximity cards.",
+    "ISO certification is an original company claim, not independently verified from a certificate. The old narrative says 16+ years while its counter says 15+. Retained the narrative, without inventing a founding year.",
+    "Did not replicate template filler, spelling mistakes, universal reader-compatibility promises, exclusivity/biggest/best superlatives, or the unsubstantiated 100% satisfaction counter. Manufacturing strengths and customer-care intent are preserved.",
+    "Surface-quality wording describes inspection criteria rather than promising that a card can never be scratched or damaged.",
+    "The original product PDF is kept unchanged as supplied; restored website-only products appear in the online catalogue."
+  ],
+  "technical_reference": "https://www.nxp.com/products/rfid-nfc/mifare-hf/mifare-classic/mifare-classic-ev1-1k-4k:MF1S50YYX_V1",
+  "source_images": {
+    "original_site": "public/images/legacy/",
+    "supplied_materials": "public/images/",
+    "note": "Existing example artwork is not presented as a client endorsement."
+  }
+}

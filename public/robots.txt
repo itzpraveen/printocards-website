@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://printocards.com/sitemap.xml
