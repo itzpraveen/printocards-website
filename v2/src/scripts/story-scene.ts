@@ -269,6 +269,10 @@ export async function initStory(section: HTMLElement) {
   const p = new THREE.Vector3(), r = new THREE.Vector3();
   applyFinish(state.finish, true);
   spin = 0;
+  // if the GPU drops the context, show the chapter photos; rebuild lighting when it returns
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); section.classList.add('is-fallback'); });
+  canvas.addEventListener('webglcontextrestored', () => { scene.environment = studioEnvironment(renderer); section.classList.remove('is-fallback'); });
+
   loopWhileVisible(section, (dt, t) => {
     s += (story.s - s) * (1 - Math.exp(-dt * 7));
     pose(s, p, r);

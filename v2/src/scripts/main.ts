@@ -33,6 +33,24 @@ $('[data-menu-close]')!.addEventListener('click', () => menu.close());
 menu.addEventListener('close', () => lenis?.start());
 
 /* ---------- in-page links ---------- */
+// Story chapters live inside a sticky stage, so a chapter's scroll position is its slice of the section.
+function chapterY(i: number) {
+  const sec = $('[data-story]')!;
+  return sec.offsetTop + (sec.offsetHeight - innerHeight) * ((i + 0.55) / 4);
+}
+function targetY(el: HTMLElement) {
+  const ch = el.closest<HTMLElement>('.chapter');
+  if (motion && ch) return chapterY(Number(ch.dataset.i ?? 0));
+  return el.getBoundingClientRect().top + window.scrollY;
+}
+function goTo(el: HTMLElement, immediate = false) {
+  const y = targetY(el);
+  if (lenis) lenis.scrollTo(y, { duration: 1.5, immediate, force: true });
+  else window.scrollTo({ top: y });
+  // move the keyboard starting point to the target, as a normal anchor jump would
+  if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+  el.focus({ preventScroll: true });
+}
 document.addEventListener('click', (e) => {
   const a = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
   if (!a) return;
@@ -40,18 +58,15 @@ document.addEventListener('click', (e) => {
   const el = id.length > 1 ? document.querySelector<HTMLElement>(id) : null;
   if (!el) return;
   e.preventDefault();
-  if (menu.open) menu.close();
-  let y = el.getBoundingClientRect().top + window.scrollY;
-  const storySec = $('[data-story]')!;
-  if (motion && storySec.contains(el)) {
-    // chapters live inside a sticky stage: scroll to the chapter's slice of the section
-    const i = Number(el.closest<HTMLElement>('.chapter')?.dataset.i ?? 0);
-    y = storySec.offsetTop + (storySec.offsetHeight - innerHeight) * ((i + 0.55) / 4);
-  }
-  if (lenis) lenis.scrollTo(y, { duration: 1.5 });
-  else window.scrollTo({ top: y });
+  if (menu.open) { menu.close(); lenis?.start(); }
+  goTo(el);
   history.replaceState(null, '', id);
 });
+// arriving with a hash (e.g. /#chip) lands on the right chapter once layout has settled
+if (location.hash.length > 1) {
+  const el = document.querySelector<HTMLElement>(location.hash);
+  if (el) document.fonts.ready.then(() => requestAnimationFrame(() => { ScrollTrigger.refresh(); goTo(el, true); }));
+}
 
 /* ---------- headlines press in ---------- */
 if (motion) {
@@ -87,6 +102,16 @@ if (motion) {
     onUpdate: (self) => { story.s = self.progress * 4; setChapter(Math.min(3, Math.floor(story.s))); },
   });
   setChapter(0);
+}
+
+// keyboard focus inside a hidden chapter brings that chapter on screen
+if (motion) {
+  storySec.addEventListener('focusin', (e) => {
+    const ch = (e.target as Element).closest<HTMLElement>('.chapter');
+    if (!ch || ch.classList.contains('is-active')) return;
+    const y = chapterY(Number(ch.dataset.i));
+    if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo({ top: y });
+  });
 }
 
 const finishNote = $('[data-finish-note]');
@@ -142,6 +167,8 @@ $<HTMLInputElement>('[data-try-name]')?.addEventListener('input', (e) => setName
     const row = $<HTMLButtonElement>('[data-fam-row]', fam)!;
     const panel = $('[data-fam-panel]', fam)!;
     row.addEventListener('click', () => {
+      const cards = $$('.product', panel);
+      gsap.killTweensOf([panel, ...cards]);
       const open = row.getAttribute('aria-expanded') === 'true';
       row.setAttribute('aria-expanded', String(!open));
       hideFloat();
@@ -150,7 +177,8 @@ $<HTMLInputElement>('[data-try-name]')?.addEventListener('input', (e) => setName
       } else {
         panel.hidden = false;
         gsap.fromTo(panel, { height: 0 }, { height: 'auto', duration: motion ? 0.6 : 0, ease: 'power3.out', onComplete: () => { panel.style.height = ''; ScrollTrigger.refresh(); } });
-        if (motion) gsap.from($$('.product', panel), { y: 30, opacity: 0, duration: 0.55, ease: 'power3.out', stagger: 0.05 });
+        if (motion) gsap.fromTo(cards, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', stagger: 0.05 });
+        else gsap.set(cards, { y: 0, opacity: 1 });
       }
     });
   });
@@ -202,9 +230,16 @@ if (motion) {
   });
 }
 
+/* ---------- sectors: drift with the scroll instead of looping on their own ---------- */
+if (motion) {
+  gsap.fromTo('.sectors-track', { xPercent: 0 }, { xPercent: -30, ease: 'none', scrollTrigger: { trigger: '.sectors', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+}
+
 /* ---------- quote form → WhatsApp ---------- */
 {
   const form = $<HTMLFormElement>('[data-quote]')!;
+  const dateInput = $<HTMLInputElement>('#q-date');
+  if (dateInput) { const d = new Date(); dateInput.min = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
   const carry = $('[data-carry]')!;
   const err = $('[data-form-error]')!;
   const finishName: Record<Finish, string> = { glossy: 'Glossy', matte: 'Matte', frosted: 'Frosted', uv: 'UV spot' };
@@ -232,7 +267,7 @@ if (motion) {
     const d = new FormData(form);
     const get = (k: string) => String(d.get(k) ?? '').trim();
     const lines = ['Hi Printo, I would like a quote.', `Product: ${get('product')}`, `Quantity: ${get('qty')}`];
-    if (get('date')) lines.push(`Needed by: ${new Date(get('date')).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}`);
+    if (get('date')) lines.push(`Needed by: ${new Date(`${get('date')}T00:00`).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}`);
     lines.push(`Name: ${get('name')}`);
     if (get('org')) lines.push(`Organisation: ${get('org')}`);
     if (state.touched) lines.push(`Finish: ${finishName[state.finish]}`);
@@ -269,7 +304,7 @@ if (motion) {
     const near = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
       near.disconnect();
-      import('./story-scene').then((m) => m.initStory(storySec)).catch((e) => console.warn('story scene', e));
+      import('./story-scene').then((m) => m.initStory(storySec)).catch((e) => { console.warn('story scene', e); storySec.classList.add('is-fallback'); });
     }, { rootMargin: '100% 0px' });
     near.observe(storySec);
   };

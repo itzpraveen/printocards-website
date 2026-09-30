@@ -294,6 +294,10 @@ export async function initHero(hero: HTMLElement) {
   const proj = new THREE.Vector3();
   let first = true;
   let t0 = -1;
+  // if the GPU drops the context, show the still badge again; rebuild lighting when it returns
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); hero.classList.remove('is-ready'); first = true; });
+  canvas.addEventListener('webglcontextrestored', () => { scene.environment = studioEnvironment(renderer); });
+
   loopWhileVisible(hero, (dt, t) => {
     acc += dt;
     let n = 0;

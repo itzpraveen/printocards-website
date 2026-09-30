@@ -83,7 +83,7 @@ const faqPage = {
         var d = document.documentElement;
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var gl = false;
-        gl = 'WebGLRenderingContext' in window; // cheap check; creating a context here would cost start-up time
+        gl = 'WebGL2RenderingContext' in window; // three.js needs WebGL2; a cheap check, no context created
         d.classList.add(reduce || !gl ? 'is-static' : 'is-motion');
       })();
     </script>
