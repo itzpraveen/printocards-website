@@ -186,21 +186,29 @@ $<HTMLInputElement>('[data-try-name]')?.addEventListener('input', (e) => setName
   const float = $('[data-range-float]')!;
   const img = $<HTMLImageElement>('img', float)!;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
-  function hideFloat() { gsap.to(float, { opacity: 0, scale: 0.85, duration: 0.25 }); }
+  // The photo is shown only while the pointer is really over a closed family row. Enter/leave events
+  // aren't enough: scrolling moves rows under a still pointer without firing them.
+  let shown = false;
+  let currentFam: HTMLElement | null = null;
+  function hideFloat() {
+    if (!shown) return;
+    shown = false;
+    gsap.to(float, { opacity: 0, scale: 0.85, duration: 0.25, overwrite: 'auto' });
+  }
   if (fine && motion) {
     gsap.set(float, { scale: 0.85, rotate: -6 });
     const xTo = gsap.quickTo(float, 'x', { duration: 0.55, ease: 'power3' });
     const yTo = gsap.quickTo(float, 'y', { duration: 0.55, ease: 'power3' });
-    addEventListener('pointermove', (e) => { xTo(e.clientX + 28); yTo(e.clientY - 100); }, { passive: true });
-    fams.forEach((fam) => {
-      const row = $('[data-fam-row]', fam)!;
-      row.addEventListener('pointerenter', () => {
-        if (row.getAttribute('aria-expanded') === 'true') return;
-        img.src = fam.dataset.img!;
-        gsap.to(float, { opacity: 1, scale: 1, duration: 0.3 });
-      });
-      row.addEventListener('pointerleave', hideFloat);
-    });
+    addEventListener('pointermove', (e) => {
+      xTo(e.clientX + 28); yTo(e.clientY - 100);
+      const row = (e.target as Element).closest?.<HTMLElement>('[data-fam-row]');
+      const fam = row?.closest<HTMLElement>('[data-fam]');
+      if (!row || !fam || row.getAttribute('aria-expanded') === 'true') { hideFloat(); return; }
+      if (fam !== currentFam) { currentFam = fam; img.src = fam.dataset.img!; }
+      if (!shown) { shown = true; gsap.to(float, { opacity: 1, scale: 1, duration: 0.3, overwrite: 'auto' }); }
+    }, { passive: true });
+    addEventListener('scroll', hideFloat, { passive: true });
+    document.documentElement.addEventListener('mouseleave', hideFloat);
   }
 }
 
