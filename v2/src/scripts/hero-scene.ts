@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { cardGeometry, makeRenderer, studioEnvironment, loopWhileVisible, clamp01, CARD_W, CARD_H } from './card';
-import { loadAssets, texture, idFront, idBack, nfcCard, woodCard, strap } from './textures';
+import { loadAssets, texture, badgeFront, badgeBack, nfcCard, woodCard, strap } from './textures';
 
 const FOV = 30;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -28,20 +28,34 @@ export async function initHero(hero: HTMLElement) {
   scene.fog = fog;
   const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 400);
 
-  const key = new THREE.DirectionalLight(0xfff1e4, 1.7);
+  const key = new THREE.DirectionalLight(0xfff1e4, 1.25);
   key.position.set(-8, 12, 14);
-  scene.add(key, new THREE.AmbientLight(0xffffff, 0.3));
+  scene.add(key, new THREE.AmbientLight(0xffffff, 0.22));
 
   /* ---------- the ID card ---------- */
   const edge = new THREE.MeshPhysicalMaterial({ color: 0xf2f2ef, roughness: 0.45, clearcoat: 0.6 });
-  const idMat = new THREE.MeshPhysicalMaterial({ map: texture(idFront(assets), renderer), roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.05 });
-  const idBackMat = new THREE.MeshPhysicalMaterial({ map: texture(idBack(), renderer), roughness: 0.35, clearcoat: 0.8, clearcoatRoughness: 0.1 });
+  // data maps stay linear: foil mask drives iridescence (R), surface map drives roughness (G) and metalness (B)
+  const data = (cv: HTMLCanvasElement) => { const t = new THREE.CanvasTexture(cv); t.anisotropy = 8; return t; };
+  const front = badgeFront(assets);
+  const back = badgeBack();
+  const idMat = new THREE.MeshPhysicalMaterial({
+    map: texture(front.color, renderer),
+    roughnessMap: data(front.surface), metalnessMap: data(front.surface), roughness: 1, metalness: 1,
+    iridescence: 1, iridescenceMap: data(front.foil), iridescenceIOR: 1.35, iridescenceThicknessRange: [120, 900],
+    iridescenceThicknessMap: data(front.thickness),
+    clearcoat: 0.7, clearcoatRoughness: 0.08, envMapIntensity: 0.75,
+  });
+  const idBackMat = new THREE.MeshPhysicalMaterial({
+    map: texture(back.color, renderer),
+    roughnessMap: data(back.surface), metalnessMap: data(back.surface), roughness: 1, metalness: 0,
+    clearcoat: 0.8, clearcoatRoughness: 0.1,
+  });
   const idCard = new THREE.Mesh(cardGeometry(IW, IH, 0.1), [idMat, edge, idBackMat]);
   idCard.rotation.order = 'ZYX';
   scene.add(idCard);
 
   const clip = new THREE.Group();
-  const metal = new THREE.MeshStandardMaterial({ color: 0xc4c4c0, metalness: 0.9, roughness: 0.22 });
+  const metal = new THREE.MeshStandardMaterial({ color: 0x77777a, metalness: 0.85, roughness: 0.32 });
   const clipBody = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.62, 0.2), metal);
   const clipRing = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.05, 8, 24), metal);
   clipRing.position.y = -0.42;
@@ -94,6 +108,7 @@ export async function initHero(hero: HTMLElement) {
   let segLen = 1;
   let ropeTotal = 1;
   let dragging = false;
+  let lastW = 0, lastH = 0;
   let twist = 0, twistV = 0;
 
   let camZ = 36, vh = 20, vw = 30, mobile = false, heroH = 1;
@@ -102,6 +117,8 @@ export async function initHero(hero: HTMLElement) {
 
   function layout() {
     const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1;
+    if (Math.abs(w - lastW) < 2 && Math.abs(h - lastH) < 2) return;
+    lastW = w; lastH = h;
     renderer.setSize(w, h, false);
     const aspect = w / h;
     camera.aspect = aspect;
@@ -263,6 +280,14 @@ export async function initHero(hero: HTMLElement) {
   hero.addEventListener('pointerup', release);
   hero.addEventListener('pointercancel', release);
 
+  // entrance: the badge is held out to the side, then released to swing down onto its lanyard
+  function swingIn() {
+    const cx = anchor.x;
+    const dx = Math.cos(0.62) * segLen, dy = Math.sin(0.62) * segLen;
+    for (let i = 0; i <= N; i++) { rope[i].set(cx + i * dx, anchor.y - i * dy); ropePrev[i].copy(rope[i]); }
+    cardP.set(rope[N].x + HANG * 0.8, rope[N].y - HANG * 0.6); cardPrev.copy(cardP);
+  }
+
   new ResizeObserver(layout).observe(hero);
   layout();
 
@@ -272,6 +297,7 @@ export async function initHero(hero: HTMLElement) {
   let first = true;
   loopWhileVisible(hero, (dt, t) => {
     acc += dt;
+    if (first) swingIn();
     let n = 0;
     while (acc >= STEP && n++ < 8) { step(t); acc -= STEP; }
 
@@ -299,6 +325,10 @@ export async function initHero(hero: HTMLElement) {
     // scroll + pointer parallax: moving the camera shifts near cards more than far ones
     const p = clamp01(window.scrollY / heroH);
     if (!mobile) camOffset.lerp(pointer, 0.05);
+    // the light follows the pointer so the foil and gold chip catch it; it drifts on its own on touch screens
+    key.position.set(-8 + camOffset.x * 16, 12 - camOffset.y * 10, 14);
+    if (!mobile) { hero.style.setProperty('--gx', `${68 + camOffset.x * 16}%`); hero.style.setProperty('--gy', `${32 + camOffset.y * 18}%`); }
+    scene.environmentRotation.y = camOffset.x * 1.1 + Math.sin(t * 0.3) * 0.35;
     camera.position.set(camOffset.x * 0.9, -camOffset.y * 0.6 - p * vh * 0.32, camZ);
     renderer.render(scene, camera);
 

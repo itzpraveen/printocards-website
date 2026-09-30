@@ -242,6 +242,19 @@ if (motion) {
   });
 }
 
+/* ---------- phone bottom bar: only once the hero button is gone, never over the contact form ---------- */
+{
+  const bar = $('[data-sticky-bar]');
+  const heroCtas = $('.hero .ctas');
+  const contactSec = $('#contact');
+  if (bar && heroCtas && contactSec) {
+    let pastHero = false, atContact = false;
+    const sync = () => bar.classList.toggle('is-on', pastHero && !atContact);
+    new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; sync(); }).observe(heroCtas);
+    new IntersectionObserver(([e]) => { atContact = e.isIntersecting; sync(); }, { rootMargin: '0px 0px -30% 0px' }).observe(contactSec);
+  }
+}
+
 /* ---------- WebGL scenes load after first paint ---------- */
 if (motion) {
   const go = () => {

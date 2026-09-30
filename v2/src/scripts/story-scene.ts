@@ -281,7 +281,8 @@ export async function initStory(section: HTMLElement) {
     spin *= 0.95;
     hoverS.lerp(hover, 0.05);
 
-    card.position.set(base.x + p.x, base.y + p.y + Math.sin(t * 1.1) * 0.07, p.z);
+    const chipDrop = narrow ? smooth(2.95, 3.3, s) * vh * 0.1 : 0;
+    card.position.set(base.x + p.x * (narrow ? 0.1 : 1), base.y + p.y - chipDrop + Math.sin(t * 1.1) * 0.07, p.z);
     card.rotation.set(
       r.x + user.x + hoverS.y * 0.08,
       r.y + user.y + spin * Math.sin(t * 2) * 0.3 + hoverS.x * 0.12,
