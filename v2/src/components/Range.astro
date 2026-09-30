@@ -1,4 +1,5 @@
 ---
+import { asset } from '../data/url';
 import { families, productCount, waLink } from '../data/site';
 import { dims } from '../data/dims';
 ---
@@ -10,7 +11,7 @@ import { dims } from '../data/dims';
 
   <div class="fams">
     {families.map((f) => (
-      <div class="fam" data-fam data-img={f.image}>
+      <div class="fam" data-fam data-img={asset(f.image)}>
         <h3 class="fam-title">
           <button class="fam-row" type="button" aria-expanded="false" aria-controls={`fam-${f.id}`} data-fam-row>
             <span class="fam-count">{f.products.length}</span>
@@ -25,7 +26,7 @@ import { dims } from '../data/dims';
           <ul class="products">
             {f.products.map((p) => (
               <li class="product">
-                <div class="product-img"><img src={p.image} {...dims(p.image)} alt={p.name} loading="lazy" /></div>
+                <div class="product-img"><img src={asset(p.image)} {...dims(p.image)} alt={p.name} loading="lazy" /></div>
                 <h4>{p.name}</h4>
                 <p>{p.spec}</p>
                 <a href={waLink(`Hi Printo, I'd like a quote for ${p.name}.`)} target="_blank" rel="noopener">Ask about {p.name}</a>

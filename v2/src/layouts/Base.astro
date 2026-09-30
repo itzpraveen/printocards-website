@@ -1,20 +1,25 @@
 ---
+import { asset, isPreview } from '../data/url';
 import '../styles/global.css';
 import { site, contact, faqs } from '../data/site';
 
 interface Props { title?: string; description?: string; path?: string; faq?: boolean; noindex?: boolean }
 const { title = site.title, description = site.description, path = '/', faq = false, noindex = false } = Astro.props;
-const canonical = new URL(path, site.url).href;
-const ogImage = new URL('/og.jpg', site.url).href;
+// Absolute URLs follow the build's site + base (printocards.com in production, GitHub Pages for previews)
+const origin = Astro.site ?? new URL(site.url);
+const abs = (p: string) => new URL(asset(p), origin).href;
+const canonical = abs(path);
+const ogImage = abs('/og.jpg');
+const home = abs('/');
 
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  '@id': `${site.url}/#business`,
+  '@id': `${home}#business`,
   name: site.name,
-  url: site.url,
+  url: home,
   image: ogImage,
-  logo: new URL('/brand/printo-logo.svg', site.url).href,
+  logo: abs('/brand/printo-logo.svg'),
   description: site.description,
   telephone: contact.office.tel,
   email: contact.emails[0],
@@ -57,10 +62,11 @@ const faqPage = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#F26B35" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    {noindex && <meta name="robots" content="noindex" />}
-    <link rel="preload" href="/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/svg+xml" href={asset("/favicon.svg")} />
+    <link rel="apple-touch-icon" href={asset("/apple-touch-icon.png")} />
+    {(noindex || isPreview) && <meta name="robots" content="noindex" />}
+    <style is:inline set:html={`@font-face{font-family:'Archivo';src:url('${asset('/fonts/archivo-latin-var.woff2')}') format('woff2');font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}`} />
+    <link rel="preload" href={asset("/fonts/archivo-latin-var.woff2")} as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />

@@ -1,4 +1,5 @@
 ---
+import { asset } from '../data/url';
 import { industries } from '../data/site';
 import { dims } from '../data/dims';
 ---
@@ -19,7 +20,7 @@ import { dims } from '../data/dims';
         <li class={`panel tone-${ind.tone}`} data-panel>
           <h3 class="panel-place display" data-speed-x>{ind.name}</h3>
           <div class={`plate fit-${ind.fit}`}>
-            <img src={ind.image} {...dims(ind.image)} alt={`${ind.lead}: ${ind.uses}`} loading="lazy" data-plate-img />
+            <img src={asset(ind.image)} {...dims(ind.image)} alt={`${ind.lead}: ${ind.uses}`} loading="lazy" data-plate-img />
           </div>
           <p class="panel-uses"><b>{ind.lead}</b>{ind.uses}</p>
         </li>

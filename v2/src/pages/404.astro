@@ -1,15 +1,16 @@
 ---
+import { asset } from '../data/url';
 import Base from '../layouts/Base.astro';
 import { waLink } from '../data/site';
 ---
 <Base title="Page not found | Printo Cards" path="/404" noindex>
   <main id="main" class="notfound">
-    <a class="nf-logo" href="/" aria-label="Printo Cards & Technologies, home"><img src="/brand/printo-logo.svg" alt="" width="142" height="48" /></a>
+    <a class="nf-logo" href={asset("/")} aria-label="Printo Cards & Technologies, home"><img src={asset("/brand/printo-logo.svg")} alt="" width="142" height="48" /></a>
     <p class="nf-code">404</p>
     <h1 class="display">This card isn't in the deck.</h1>
     <p class="nf-text">The page you're looking for has moved or doesn't exist. Everything we make is on the home page.</p>
     <div class="nf-actions">
-      <a class="btn btn-dark" href="/">Go to the home page</a>
+      <a class="btn btn-dark" href={asset("/")}>Go to the home page</a>
       <a class="btn btn-ghost" href={waLink('Hi Printo, I could not find a page on your website.')} target="_blank" rel="noopener">Ask us on WhatsApp</a>
     </div>
   </main>

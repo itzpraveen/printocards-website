@@ -1,4 +1,5 @@
 ---
+import { asset } from '../data/url';
 import { waLink } from '../data/site';
 const chipWa = waLink('Hi Printo, I want to check which RFID/NFC card works with my reader or lock. Brand and model: ');
 const finishes = [
@@ -52,7 +53,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
           <dt>Thickness</dt><dd>30 mil, 0.76 mm</dd>
           <dt>Blank packs</dt><dd>Boxes of 100, 250 or 500 cards</dd>
         </dl>
-        <img class="still" src="/images/legacy/standard-blank-cards.webp" alt="A blank white PVC card held between two fingers" loading="lazy" width="500" height="500" />
+        <img class="still" src={asset("/images/legacy/standard-blank-cards.webp")} alt="A blank white PVC card held between two fingers" loading="lazy" width="500" height="500" />
       </article>
 
       <article class="chapter" data-i="1">
@@ -65,7 +66,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
           <li><i style="background:#FFF212"></i>Yellow</li>
           <li><i style="background:#231F20"></i>Key black</li>
         </ul>
-        <img class="still" src="/images/pvc-membership-card.webp" alt="Printed PVC membership cards in blue and white" loading="lazy" width="1200" height="800" />
+        <img class="still" src={asset("/images/pvc-membership-card.webp")} alt="Printed PVC membership cards in blue and white" loading="lazy" width="1200" height="800" />
       </article>
 
       <article class="chapter" data-i="2">
@@ -83,7 +84,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
           <span>Try your name</span>
           <input type="text" data-try-name value="Anjali Menon" maxlength="22" autocomplete="off" spellcheck="false" />
         </label>
-        <img class="still" src="/images/pvc-privilege-card.webp" alt="A gold privilege card with a gloss finish" loading="lazy" width="1200" height="1200" />
+        <img class="still" src={asset("/images/pvc-privilege-card.webp")} alt="A gold privilege card with a gloss finish" loading="lazy" width="1200" height="1200" />
       </article>
 
       <article class="chapter" data-i="3" id="chip">
@@ -100,7 +101,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
           <a class="btn btn-lime" href={chipWa} target="_blank" rel="noopener">Check my reader or lock</a>
           <p>Send us the model and we'll match the chip.</p>
         </div>
-        <img class="still" src="/images/pvc-mifare-card-hf-rfid-card.webp" alt="An RFID card shown in layers: printed front, core, chip and antenna, and back" loading="lazy" width="1200" height="800" />
+        <img class="still" src={asset("/images/pvc-mifare-card-hf-rfid-card.webp")} alt="An RFID card shown in layers: printed front, core, chip and antenna, and back" loading="lazy" width="1200" height="800" />
       </article>
     </div>
 

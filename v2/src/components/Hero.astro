@@ -1,4 +1,5 @@
 ---
+import { asset } from '../data/url';
 import { waLink, productCount } from '../data/site';
 const wa = waLink('Hi Printo, I would like a quote for cards.');
 ---
@@ -13,7 +14,7 @@ const wa = waLink('Hi Printo, I would like a quote for cards.');
       <polygon points="0.83,0 1.57,0 2.45,100 1.71,100" fill="#373435" />
     </svg>
     <span class="hs-clip"></span>
-    <img class="hs-card" data-hero-card src="/images/badge-front.webp" srcset="/images/badge-front-360.webp 360w, /images/badge-front.webp 640w" sizes="(max-width: 760px) 42vw, 24vh" alt="" width="640" height="1019" fetchpriority="high" />
+    <img class="hs-card" data-hero-card src={asset("/images/badge-front.webp")} srcset={`${asset("/images/badge-front-360.webp")} 360w, ${asset("/images/badge-front.webp")} 640w`} sizes="(max-width: 760px) 42vw, 24vh" alt="" width="640" height="1019" fetchpriority="high" />
   </div>
 
   <canvas class="hero-canvas" data-hero-canvas aria-hidden="true"></canvas>

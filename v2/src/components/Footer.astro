@@ -1,12 +1,13 @@
 ---
+import { asset } from '../data/url';
 import { contact, families, industries, waLink } from '../data/site';
 ---
 <footer class="footer">
   <div class="wrap footer-grid">
     <div>
-      <img src="/brand/printo-logo-light.svg" alt="Printo Cards & Technologies" width="142" height="48" />
+      <img src={asset("/brand/printo-logo-light.svg")} alt="Printo Cards & Technologies" width="142" height="48" />
       <p>PVC, ID and smart card manufacturer in Calicut, Kerala. ISO 9001:2015 certified.</p>
-      <a class="footer-cat" href="/printo-product-catalogue.pdf">Download the catalogue (PDF)</a>
+      <a class="footer-cat" href={asset("/printo-product-catalogue.pdf")}>Download the catalogue (PDF)</a>
     </div>
     <div>
       <b>Products</b>

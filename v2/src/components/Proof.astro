@@ -1,4 +1,5 @@
 ---
+import { asset } from '../data/url';
 import { contact, qualityChecks, sectors } from '../data/site';
 import { dims } from '../data/dims';
 ---
@@ -18,7 +19,7 @@ import { dims } from '../data/dims';
       <div class="proof-side">
         <p class="proof-text">Every order is checked by our quality inspectors, from artwork to fusing. We've been making cards for businesses and institutions across Kerala for more than 16 years.</p>
         <figure class="proof-photo">
-          <img src="/images/legacy/id-solutions.webp" {...dims("/images/legacy/id-solutions.webp")} alt="A stack of printed PVC cards" loading="lazy" />
+          <img src={asset("/images/legacy/id-solutions.webp")} {...dims("/images/legacy/id-solutions.webp")} alt="A stack of printed PVC cards" loading="lazy" />
           <!-- Replace with a photo of the Omanoor factory floor or team when available -->
         </figure>
         <div class="places">

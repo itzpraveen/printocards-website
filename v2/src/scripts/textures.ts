@@ -52,7 +52,7 @@ export async function loadAssets() {
     document.fonts.load('500 40px Archivo'),
   ]).catch(() => {});
   const img = new Image();
-  img.src = '/brand/printo-logo-light.svg';
+  img.src = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/brand/printo-logo-light.svg`;
   await img.decode().catch(() => {});
   return { logoLight: img };
 }
