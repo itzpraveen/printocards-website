@@ -84,20 +84,22 @@ address { font-style: normal; }
 .btn-ghost-light:hover { background: #fff; color: var(--black); }
 .btn .wa { width: 19px; height: 19px; fill: var(--lime); }
 
-/* ---------- nav ---------- */
+/* ---------- nav: a white floating pill with the original colour logo.
+   Full width with links over the hero, compact at the right once you scroll ---------- */
 .nav {
-  position: absolute; z-index: 40; top: 0; left: 0; right: 0;
-  display: flex; align-items: center; gap: 48px;
-  padding: 26px var(--gutter);
+  position: absolute; z-index: 40; top: 18px; left: var(--gutter); right: var(--gutter);
+  display: flex; align-items: center; gap: 40px;
+  padding: 8px 8px 8px 24px; border-radius: 999px;
+  background: rgba(255,255,255,.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 34px -14px rgba(35,31,32,.4);
   font-size: 15px; font-weight: 500;
 }
-/* on the orange hero the chip icon is white (orange-on-orange disappears); the white pill uses the original colours */
-.nav-logo-full { height: 46px; width: auto; }
-.nav-logo-colour { display: none; }
+.nav-logo { display: block; flex: none; }
+.nav-logo img { height: 36px; width: auto; }
 .nav-links { display: flex; gap: 30px; }
 .nav-links a, .menu a { text-decoration: none; }
 .nav-links a { position: relative; }
-.nav-links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
+.nav-links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
 .nav-links a:hover::after { transform: scaleX(1); }
 .nav-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 .nav-cta-short { display: none; }
@@ -107,13 +109,11 @@ address { font-style: normal; }
 
 .nav.is-pill {
   position: fixed; left: auto; right: 16px; top: 14px; gap: 14px;
-  padding: 7px 7px 7px 18px; border-radius: 999px;
-  background: rgba(255,255,255,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 30px -12px rgba(0,0,0,.35);
+  padding: 7px 7px 7px 18px;
   animation: pill-in .45s var(--ease) both;
 }
-.nav.is-pill .nav-links, .nav.is-pill .nav-logo-full, .nav.is-pill .nav-cta-long { display: none; }
-.nav.is-pill .nav-logo-colour { display: block; height: 26px; width: auto; }
+.nav.is-pill .nav-logo img { height: 26px; }
+.nav.is-pill .nav-links, .nav.is-pill .nav-cta-long { display: none; }
 .nav.is-pill .nav-cta-short { display: inline; }
 .nav.is-pill .nav-menu { display: inline-flex; }
 .nav.is-pill .burger { display: none; }
@@ -435,8 +435,9 @@ address { font-style: normal; }
 }
 @media (max-width: 760px) {
   body { font-size: 16.5px; }
-  .nav { padding-top: 18px; }
-  .nav-logo-full { height: 38px; }
+  .nav { top: 12px; gap: 16px; padding: 6px 6px 6px 16px; }
+  .nav-logo img { height: 30px; }
+  .nav .burger { width: 40px; height: 40px; }
   .hero { display: flex; flex-direction: column; justify-content: flex-end; padding-top: 44svh; padding-bottom: 112px; }
   .hero-copy { display: contents; }
   .hero-kicker { order: 1; padding-inline: var(--gutter); font-size: 14.5px; position: relative; z-index: 3; }
