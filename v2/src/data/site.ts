@@ -7,9 +7,9 @@ export const site = {
   name: 'Printo Cards & Technologies',
   short: 'Printo',
   url: 'https://printocards.com',
-  title: 'PVC, ID & Smart Card Manufacturer in Calicut, Kerala | Printo Cards',
+  title: 'Biggest PVC Card Manufacturer in Kerala | Printo Cards, Calicut',
   description:
-    'Printo Cards & Technologies makes PVC ID cards, NFC and RFID smart cards, hotel key cards, lanyards and supplies card printers from Calicut, Kerala. ISO 9001:2015 certified, 16+ years.',
+    'Printo Cards & Technologies, the biggest PVC card manufacturer in Kerala: PVC ID cards, NFC and RFID smart cards, hotel key cards, lanyards and card printers from Calicut. ISO 9001:2015 certified, 16+ years.',
 };
 
 export const contact = {

@@ -136,7 +136,7 @@ export async function initStory(section: HTMLElement) {
 
   // radio waves for the smart card
   const waves: THREE.Mesh[] = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3; i++) {
     const m = new THREE.Mesh(
       new THREE.RingGeometry(0.985, 1, 128),
       new THREE.MeshBasicMaterial({ color: 0xcbdb3a, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }),
@@ -307,7 +307,7 @@ export async function initStory(section: HTMLElement) {
     waves.forEach((m, i) => {
       const ph = (t * 0.32 + i / waves.length) % 1;
       m.scale.setScalar(4.8 + ph * 8);
-      (m.material as THREE.MeshBasicMaterial).opacity = w * (1 - ph) * 0.55;
+      (m.material as THREE.MeshBasicMaterial).opacity = w * (1 - ph) * 0.42;
       m.visible = w > 0.001;
     });
 

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { cardGeometry, makeRenderer, studioEnvironment, loopWhileVisible, clamp01, CARD_W, CARD_H } from './card';
-import { loadAssets, texture, idFront, idBack, nfcCard, woodCard, loyaltyCard, giftCard, strap } from './textures';
+import { loadAssets, texture, idFront, idBack, nfcCard, woodCard, strap } from './textures';
 
 const FOV = 30;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -78,10 +78,8 @@ export async function initHero(hero: HTMLElement) {
     return new THREE.Mesh(floatGeo, [face, floatEdge, face]);
   };
   const floaters: Floater[] = [
-    { mesh: mk(nfcCard(), 0.35), z: -5, desk: [0.87, 0.24], mob: [0.88, 0.1], rot: new THREE.Euler(0.25, -0.6, -0.28), phase: 0.3, speed: 0.8, base: new THREE.Vector3() },
-    { mesh: mk(woodCard(), 0.7), z: -15, desk: [0.47, 0.3], mob: [0.13, 0.15], rot: new THREE.Euler(0.4, 0.62, 0.42), phase: 1.9, speed: 0.6, base: new THREE.Vector3() },
-    { mesh: mk(giftCard()), z: -26, desk: [0.43, 0.56], mob: [0.14, 0.33], rot: new THREE.Euler(-0.3, 0.5, 0.25), phase: 3.1, speed: 0.5, base: new THREE.Vector3() },
-    { mesh: mk(loyaltyCard()), z: 5, desk: [0.955, 0.5], mob: [0.93, 0.29], rot: new THREE.Euler(-0.25, 0.55, 0.42), phase: 4.2, speed: 0.9, base: new THREE.Vector3() },
+    { mesh: mk(nfcCard(), 0.35), z: -5, desk: [0.86, 0.3], mob: [0.88, 0.1], rot: new THREE.Euler(0.25, -0.6, -0.28), phase: 0.3, speed: 0.8, base: new THREE.Vector3() },
+    { mesh: mk(woodCard(), 0.7), z: -15, desk: [0.47, 0.36], mob: [0.13, 0.15], rot: new THREE.Euler(0.4, 0.62, 0.42), phase: 1.9, speed: 0.6, base: new THREE.Vector3() },
   ];
   floaters.forEach((f) => { f.mesh.scale.setScalar(0.62); scene.add(f.mesh); });
 
@@ -108,7 +106,7 @@ export async function initHero(hero: HTMLElement) {
     const aspect = w / h;
     camera.aspect = aspect;
     mobile = aspect < 0.9;
-    camZ = mobile ? IW / 0.42 / aspect / (2 * TAN) : Math.max(28, IH / 0.41 / (2 * TAN));
+    camZ = mobile ? IW / 0.42 / aspect / (2 * TAN) : Math.max(28, IH / 0.38 / (2 * TAN));
     camera.position.set(0, 0, camZ);
     camera.updateProjectionMatrix();
     vh = 2 * camZ * TAN;
@@ -118,7 +116,7 @@ export async function initHero(hero: HTMLElement) {
     heroH = hero.offsetHeight;
 
     const cx = mobile ? 0 : (0.63 - 0.5) * vw;
-    const cy = mobile ? (0.5 - 0.235) * vh : (0.5 - 0.405) * vh;
+    const cy = mobile ? (0.5 - 0.235) * vh : (0.5 - 0.41) * vh;
     anchor.set(cx, vh / 2 + 2.5);
     ropeTotal = anchor.y - (cy + HANG);
     segLen = ropeTotal / N;
