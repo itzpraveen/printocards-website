@@ -13,7 +13,7 @@ import { industries } from '../data/site';
         <span class="ticks">{industries.map((_, i) => <i data-tick={i} class={i === 0 ? 'on' : ''}></i>)}</span>
       </div>
     </div>
-    <ul class="track" data-track>
+    <ul class="track" data-track tabindex="0" aria-label="Industries, scroll sideways for more">
       {industries.map((ind) => (
         <li class={`panel tone-${ind.tone}`} data-panel>
           <h3 class="panel-place display" data-speed-x>{ind.name}</h3>
