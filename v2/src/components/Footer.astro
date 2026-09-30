@@ -1,0 +1,37 @@
+---
+import { contact, families, industries, waLink } from '../data/site';
+---
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <img src="/brand/printo-logo-light.svg" alt="Printo Cards & Technologies" width="142" height="48" />
+      <p>PVC, ID and smart card manufacturer in Calicut, Kerala. ISO 9001:2015 certified.</p>
+      <a class="footer-cat" href="/printo-product-catalogue.pdf">Download the catalogue (PDF)</a>
+    </div>
+    <div>
+      <b>Products</b>
+      <ul>{families.map((f) => <li><a href="#products">{f.name}</a></li>)}</ul>
+    </div>
+    <div>
+      <b>Industries</b>
+      <ul>{industries.map((i) => <li><a href="#industries">{i.name}</a></li>)}</ul>
+    </div>
+    <div>
+      <b>Visit</b>
+      <address>
+        {contact.officeAddress.lines.map((l) => <span>{l}</span>)}
+        <span class="gap">Factory: {contact.factoryAddress.lines[0]}</span>
+      </address>
+      <p><a href={`tel:${contact.office.tel}`}>{contact.office.display}</a><br /><a href={`mailto:${contact.emails[0]}`}>{contact.emails[0]}</a></p>
+    </div>
+  </div>
+  <div class="wrap footer-base">
+    <span>© 2026 Printo Cards &amp; Technologies</span>
+    <span>Printer brands are named as products we supply.</span>
+  </div>
+</footer>
+
+<div class="sticky-bar" aria-label="Quick contact">
+  <a class="btn btn-dark" href={waLink('Hi Printo, I would like a quote for cards.')} target="_blank" rel="noopener">WhatsApp a quote</a>
+  <a class="btn btn-light" href={`tel:${contact.office.tel}`}>Call</a>
+</div>

@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+import { site, contact, faqs } from '../data/site';
+
+interface Props { title?: string; description?: string; path?: string }
+const { title = site.title, description = site.description, path = '/' } = Astro.props;
+const canonical = new URL(path, site.url).href;
+const ogImage = new URL('/images/pvc-nfc-card.webp', site.url).href;
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${site.url}/#business`,
+  name: site.name,
+  url: site.url,
+  image: ogImage,
+  logo: new URL('/brand/printo-logo.svg', site.url).href,
+  description: site.description,
+  telephone: contact.office.tel,
+  email: contact.emails[0],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.officeAddress.street,
+    addressLocality: contact.officeAddress.locality,
+    postalCode: contact.officeAddress.postalCode,
+    addressRegion: 'Kerala',
+    addressCountry: 'IN',
+  },
+  department: {
+    '@type': 'LocalBusiness',
+    name: `${site.name} factory`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: contact.factoryAddress.street,
+      addressLocality: contact.factoryAddress.locality,
+      postalCode: contact.factoryAddress.postalCode,
+      addressRegion: 'Kerala',
+      addressCountry: 'IN',
+    },
+  },
+  areaServed: 'IN',
+  contactPoint: contact.mobiles.map((m) => ({ '@type': 'ContactPoint', telephone: m.tel, contactType: 'sales' })),
+};
+
+const faqPage = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#F26B35" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="geo.region" content="IN-KL" />
+    <meta name="geo.placename" content="Kozhikode" />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqPage)} />
+    <script is:inline>
+      // Decide the motion tier before first paint so no layout jumps later.
+      (function () {
+        var d = document.documentElement;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var gl = false;
+        try { var c = document.createElement('canvas'); gl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) {}
+        d.classList.add(reduce || !gl ? 'is-static' : 'is-motion');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

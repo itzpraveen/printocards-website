@@ -1,0 +1,36 @@
+---
+import { contact, qualityChecks, sectors } from '../data/site';
+---
+<section class="proof" id="about" aria-labelledby="proof-title" data-proof>
+  <div class="wrap">
+    <h2 class="display" id="proof-title" data-press="125">16 years of cards, checked at every stage.</h2>
+    <div class="proof-grid">
+      <div class="ticket" data-ticket>
+        <div class="ticket-head"><span>Quality ticket</span><span>ISO 9001:2015</span></div>
+        <ul>
+          {qualityChecks.map((c) => (
+            <li><i aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="#CBDB3A" stroke-width="2"><path d="M2 6.5 5 9l5-6" /></svg></i>{c}</li>
+          ))}
+        </ul>
+        <div class="stamp" data-stamp aria-hidden="true"><div>ISO<br />9001:2015<small>certified</small></div></div>
+      </div>
+      <div class="proof-side">
+        <p class="proof-text">Every order is checked by our quality inspectors, from artwork to fusing. We've been making cards for businesses and institutions across Kerala for more than 16 years.</p>
+        <figure class="proof-photo">
+          <img src="/images/legacy/id-solutions.webp" alt="A stack of printed PVC cards" loading="lazy" />
+          <figcaption>Placeholder. The Omanoor factory photo goes here.</figcaption>
+        </figure>
+        <div class="places">
+          <address><b>Office</b>{contact.officeAddress.lines.map((l) => <span>{l}</span>)}</address>
+          <address><b>Factory</b>{contact.factoryAddress.lines.map((l) => <span>{l}</span>)}</address>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sectors" aria-label="Sectors we serve">
+    <div class="sectors-track">
+      <ul>{sectors.map((s) => <li>{s}</li>)}</ul>
+      <ul aria-hidden="true">{sectors.map((s) => <li>{s}</li>)}</ul>
+    </div>
+  </div>
+</section>
