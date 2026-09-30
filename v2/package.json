@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
-    "preview": "astro preview --host 0.0.0.0"
+    "preview": "astro preview --host 0.0.0.0",
+    "deploy:pages": "bash scripts/deploy-pages.sh"
   },
   "dependencies": {
     "astro": "^7.3.5",
