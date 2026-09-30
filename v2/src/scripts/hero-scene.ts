@@ -72,8 +72,11 @@ export async function initHero(hero: HTMLElement) {
   /* ---------- floating product cards ---------- */
   const floatGeo = cardGeometry(CARD_W, CARD_H, 0.08);
   const floatEdge = new THREE.MeshPhysicalMaterial({ color: 0xeeeeea, roughness: 0.5 });
-  const mk = (c: HTMLCanvasElement, rough = 0.3) =>
-    new THREE.Mesh(floatGeo, [new THREE.MeshPhysicalMaterial({ map: texture(c, renderer), roughness: rough, clearcoat: 1, clearcoatRoughness: 0.08 }), floatEdge, floatEdge]);
+  const mk = (c: HTMLCanvasElement, rough = 0.3) => {
+    // printed on both sides, so a turning card never shows a blank face
+    const face = new THREE.MeshPhysicalMaterial({ map: texture(c, renderer), roughness: rough, clearcoat: 1, clearcoatRoughness: 0.08 });
+    return new THREE.Mesh(floatGeo, [face, floatEdge, face]);
+  };
   const floaters: Floater[] = [
     { mesh: mk(nfcCard(), 0.35), z: -5, desk: [0.87, 0.24], mob: [0.88, 0.1], rot: new THREE.Euler(0.25, -0.6, -0.28), phase: 0.3, speed: 0.8, base: new THREE.Vector3() },
     { mesh: mk(woodCard(), 0.7), z: -15, desk: [0.47, 0.3], mob: [0.13, 0.15], rot: new THREE.Euler(0.4, 0.62, 0.42), phase: 1.9, speed: 0.6, base: new THREE.Vector3() },
@@ -252,6 +255,10 @@ export async function initHero(hero: HTMLElement) {
   const release = (e: PointerEvent) => {
     if (!dragging) return;
     dragging = false;
+    // a hard fling would launch the card off screen: cap the release speed
+    const vx = cardP.x - cardPrev.x, vy = cardP.y - cardPrev.y;
+    const v = Math.hypot(vx, vy), max = 0.06;
+    if (v > max) cardPrev.set(cardP.x - (vx / v) * max, cardP.y - (vy / v) * max);
     hero.classList.remove('is-dragging');
     if (hero.hasPointerCapture(e.pointerId)) hero.releasePointerCapture(e.pointerId);
   };
@@ -286,7 +293,7 @@ export async function initHero(hero: HTMLElement) {
       );
       f.mesh.rotation.set(
         f.rot.x + Math.sin(t * 0.4 + f.phase) * 0.12,
-        f.rot.y + t * 0.05 * f.speed,
+        f.rot.y + Math.sin(t * 0.25 * f.speed + f.phase) * 0.4,
         f.rot.z + Math.cos(t * 0.3 + f.phase) * 0.06,
       );
     }

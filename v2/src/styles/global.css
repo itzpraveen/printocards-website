@@ -472,6 +472,22 @@ address { font-style: normal; }
   .sticky-bar .btn { padding: 15px 10px; box-shadow: 0 10px 30px -10px rgba(0,0,0,.45); }
 }
 
+/* very wide screens (4K at desktop scaling): scale the type and UI, not the WebGL */
+@media (min-width: 1900px) {
+  .nav, .hero-copy, .hero-foot, .hero-poster, .chapters, .rail, .work-head, .range, .ways > .wrap, .proof > .wrap, .sectors, .faq, .contact > .wrap, .footer, .story-drag { zoom: 1.3; }
+  .panel { width: clamp(300px, 30vw, 640px); height: clamp(420px, 58svh, 700px); }
+  .panel-place { font-size: clamp(40px, 4vw, 86px); }
+  .panel-uses { font-size: 18px; }
+  .panel-uses b { font-size: 20px; }
+  .story-marks text { font-size: 19px; }
+  .layer-labels span { font-size: 19px; }
+  .layer-labels small { font-size: 16px; }
+  .hero-hint { font-size: 17px; padding: 8px 16px; }
+}
+@media (min-width: 2500px) {
+  .nav, .hero-copy, .hero-foot, .hero-poster, .chapters, .rail, .work-head, .range, .ways > .wrap, .proof > .wrap, .sectors, .faq, .contact > .wrap, .footer, .story-drag { zoom: 1.6; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
