@@ -206,6 +206,7 @@ export async function initStory(section: HTMLElement) {
   }
   new ResizeObserver(layout).observe(stage);
   layout();
+  await renderer.compileAsync(scene, camera).catch(() => {});
 
   /* ---------- print marks and layer labels, projected from 3D ---------- */
   const crop = [...marks.querySelectorAll<SVGPathElement>('[data-crop] path')];

@@ -1,5 +1,6 @@
 ---
 import { waLink } from '../data/site';
+import { dims } from '../data/dims';
 ---
 <section class="ways" id="card-printers" aria-labelledby="ways-title" data-ways>
   <div class="wrap">
@@ -9,19 +10,19 @@ import { waLink } from '../data/site';
         <h3>We print for you</h3>
         <p>Send your design or your staff list. We print, finish, check and pack the cards, ready to hand out.</p>
         <a class="btn btn-orange" href={waLink('Hi Printo, I would like you to print cards for us.')} target="_blank" rel="noopener">Start a print order</a>
-        <div class="way-shot" data-speed="0.9"><img src="/images/pvc-id-cards.webp" alt="Printed PVC employee ID cards with photos, names and QR codes" loading="lazy" /></div>
+        <div class="way-shot" data-speed="0.9"><img src="/images/pvc-id-cards.webp" {...dims("/images/pvc-id-cards.webp")} alt="Printed PVC employee ID cards with photos, names and QR codes" loading="lazy" /></div>
       </div>
       <div class="way">
         <h3>Print in-house</h3>
         <p>Card printers, ribbons and blank cards for teams that issue cards every day.</p>
         <p class="brands"><span>Evolis</span><span>Zebra</span><span>IDP</span><span>Pacto ID</span></p>
         <div class="printers">
-          <figure class="pr" data-speed="0.75"><img src="/images/evolis-primacy-2.webp" alt="Evolis Primacy 2 card printer" loading="lazy" /><figcaption>Evolis Primacy 2</figcaption></figure>
+          <figure class="pr" data-speed="0.75"><img src="/images/evolis-primacy-2.webp" {...dims("/images/evolis-primacy-2.webp")} alt="Evolis Primacy 2 card printer" loading="lazy" /><figcaption>Evolis Primacy 2</figcaption></figure>
           <figure class="pr pr-mid" data-speed="1.15">
             <div class="eject" data-eject aria-hidden="true"></div>
-            <img src="/images/zebra-zc-300.webp" alt="Zebra ZC 300 card printer" loading="lazy" /><figcaption>Zebra ZC 300</figcaption>
+            <img src="/images/zebra-zc-300.webp" {...dims("/images/zebra-zc-300.webp")} alt="Zebra ZC 300 card printer" loading="lazy" /><figcaption>Zebra ZC 300</figcaption>
           </figure>
-          <figure class="pr" data-speed="0.95"><img src="/images/solid-idp-510d.webp" alt="IDP Solid 510D card printer" loading="lazy" /><figcaption>IDP Solid 510D</figcaption></figure>
+          <figure class="pr" data-speed="0.95"><img src="/images/solid-idp-510d.webp" {...dims("/images/solid-idp-510d.webp")} alt="IDP Solid 510D card printer" loading="lazy" /><figcaption>IDP Solid 510D</figcaption></figure>
         </div>
         <a class="btn btn-ghost-light" href={waLink('Hi Printo, I would like help choosing a card printer.')} target="_blank" rel="noopener">Help me choose a printer</a>
       </div>

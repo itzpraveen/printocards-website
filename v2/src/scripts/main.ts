@@ -257,11 +257,23 @@ if (motion) {
 
 /* ---------- WebGL scenes load after first paint ---------- */
 if (motion) {
-  const go = () => {
+  // First paint shows the still badge. The 3D engine loads on the first sign of a person
+  // (pointer, touch, scroll, key), so nobody pays for WebGL before they engage with the page.
+  const wake = ['pointermove', 'pointerdown', 'touchstart', 'wheel', 'keydown', 'scroll'] as const;
+  let awake = false;
+  const start = () => {
+    if (awake) return;
+    awake = true;
+    wake.forEach((ev) => removeEventListener(ev, start));
     import('./hero-scene').then((m) => m.initHero(hero)).catch((e) => console.warn('hero scene', e));
-    import('./story-scene').then((m) => m.initStory(storySec)).catch((e) => console.warn('story scene', e));
+    const near = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      near.disconnect();
+      import('./story-scene').then((m) => m.initStory(storySec)).catch((e) => console.warn('story scene', e));
+    }, { rootMargin: '100% 0px' });
+    near.observe(storySec);
   };
-  if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 1200 });
-  else setTimeout(go, 300);
+  wake.forEach((ev) => addEventListener(ev, start, { passive: true }));
+  if (window.scrollY > 0) start();
   document.fonts.ready.then(() => ScrollTrigger.refresh());
 }

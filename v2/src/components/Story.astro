@@ -71,7 +71,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
       <article class="chapter" data-i="2">
         <p class="num">03 of 05</p>
         <h2 class="display" data-press="125">Choose how it feels.</h2>
-        <p class="lead">The same design, finished four ways. Pick one and tilt the card to see it catch the light.</p>
+        <p class="lead">The same design, finished four ways.<span class="motion-only"> Pick one and tilt the card to see it catch the light.</span></p>
         <fieldset class="finishes" data-finishes>
           <legend class="sr-only">Card finish</legend>
           {finishes.map((f, i) => (
@@ -105,5 +105,6 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
     </div>
 
     <p class="story-drag" data-story-drag>Drag to tilt</p>
+    <a class="story-skip" href="#products">Skip to products</a>
   </div>
 </section>

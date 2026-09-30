@@ -5,19 +5,15 @@ const wa = waLink('Hi Printo, I would like a quote for cards.');
 <section class="hero" id="top" data-hero>
   <div class="hero-glow" aria-hidden="true"></div>
 
-  <!-- Static stand-in: shown before WebGL is ready, and instead of it with reduced motion -->
-  <div class="hero-fallback" aria-hidden="true">
-    <svg class="hf-lanyard" viewBox="0 0 300 260" preserveAspectRatio="xMidYMin meet">
-      <path d="M90 -10 L143 222" stroke="#373435" stroke-width="30" />
-      <path d="M220 -10 L163 222" stroke="#2b2728" stroke-width="30" />
-      <rect x="140" y="206" width="26" height="30" rx="5" fill="#b9b9b6" />
+  <!-- The first paint shows the real badge artwork as a still. The 3D card starts on the first
+       interaction and places itself exactly over this still, then crossfades in. -->
+  <div class="hero-still" aria-hidden="true">
+    <svg class="hs-straps" viewBox="0 0 4.4 100" preserveAspectRatio="none">
+      <polygon points="3.57,0 2.83,0 1.95,100 2.69,100" fill="#2b2728" />
+      <polygon points="0.83,0 1.57,0 2.45,100 1.71,100" fill="#373435" />
     </svg>
-    <div class="hf-card">
-      <img src="/brand/printo-logo-light.svg" alt="" />
-      <b>Anjali<br />Menon</b>
-      <span>Production team</span>
-      <div class="hf-foot"><small>Staff ID</small>0427</div>
-    </div>
+    <span class="hs-clip"></span>
+    <img class="hs-card" data-hero-card src="/images/badge-front.webp" srcset="/images/badge-front-360.webp 360w, /images/badge-front.webp 640w" sizes="(max-width: 760px) 42vw, 24vh" alt="" width="640" height="1019" fetchpriority="high" />
   </div>
 
   <canvas class="hero-canvas" data-hero-canvas aria-hidden="true"></canvas>

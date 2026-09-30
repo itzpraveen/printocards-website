@@ -1,5 +1,6 @@
 ---
 import { industries } from '../data/site';
+import { dims } from '../data/dims';
 ---
 <section class="work" id="industries" data-work aria-labelledby="work-title">
   <div class="work-pin" data-work-pin>
@@ -18,7 +19,7 @@ import { industries } from '../data/site';
         <li class={`panel tone-${ind.tone}`} data-panel>
           <h3 class="panel-place display" data-speed-x>{ind.name}</h3>
           <div class={`plate fit-${ind.fit}`}>
-            <img src={ind.image} alt={`${ind.lead}: ${ind.uses}`} loading="lazy" data-plate-img />
+            <img src={ind.image} {...dims(ind.image)} alt={`${ind.lead}: ${ind.uses}`} loading="lazy" data-plate-img />
           </div>
           <p class="panel-uses"><b>{ind.lead}</b>{ind.uses}</p>
         </li>

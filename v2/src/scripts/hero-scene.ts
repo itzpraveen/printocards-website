@@ -123,17 +123,22 @@ export async function initHero(hero: HTMLElement) {
     const aspect = w / h;
     camera.aspect = aspect;
     mobile = aspect < 0.9;
-    camZ = mobile ? IW / 0.42 / aspect / (2 * TAN) : Math.max(28, IH / 0.38 / (2 * TAN));
+    // place the camera so the 3D card lands exactly on the still badge that CSS positioned
+    const still = hero.querySelector<HTMLElement>('[data-hero-card]');
+    const ch = still?.offsetHeight || h * 0.38;
+    const cxPx = still ? still.offsetLeft + still.offsetWidth / 2 : w * 0.63;
+    const cyPx = still ? still.offsetTop + ch / 2 : h * 0.41;
+    vh = (IH * h) / ch;
+    vw = vh * aspect;
+    camZ = vh / (2 * TAN);
     camera.position.set(0, 0, camZ);
     camera.updateProjectionMatrix();
-    vh = 2 * camZ * TAN;
-    vw = vh * aspect;
     fog.near = camZ - 2;
     fog.far = camZ + 42;
     heroH = hero.offsetHeight;
 
-    const cx = mobile ? 0 : (0.63 - 0.5) * vw;
-    const cy = mobile ? (0.5 - 0.235) * vh : (0.5 - 0.41) * vh;
+    const cx = (cxPx / w - 0.5) * vw;
+    const cy = (0.5 - cyPx / h) * vh;
     anchor.set(cx, vh / 2 + 2.5);
     ropeTotal = anchor.y - (cy + HANG);
     segLen = ropeTotal / N;
@@ -280,31 +285,27 @@ export async function initHero(hero: HTMLElement) {
   hero.addEventListener('pointerup', release);
   hero.addEventListener('pointercancel', release);
 
-  // entrance: the badge is held out to the side, then released to swing down onto its lanyard
-  function swingIn() {
-    const cx = anchor.x;
-    const dx = Math.cos(0.62) * segLen, dy = Math.sin(0.62) * segLen;
-    for (let i = 0; i <= N; i++) { rope[i].set(cx + i * dx, anchor.y - i * dy); ropePrev[i].copy(rope[i]); }
-    cardP.set(rope[N].x + HANG * 0.8, rope[N].y - HANG * 0.6); cardPrev.copy(cardP);
-  }
-
   new ResizeObserver(layout).observe(hero);
   layout();
+  await renderer.compileAsync(scene, camera).catch(() => {});
 
   /* ---------- frame ---------- */
   let acc = 0;
   const proj = new THREE.Vector3();
   let first = true;
+  let t0 = -1;
   loopWhileVisible(hero, (dt, t) => {
     acc += dt;
-    if (first) swingIn();
     let n = 0;
     while (acc >= STEP && n++ < 8) { step(t); acc -= STEP; }
 
     const a = rope[N];
     const ang = Math.atan2(cardP.x - a.x, -(cardP.y - a.y));
     idCard.position.set(cardP.x, cardP.y, 0);
-    idCard.rotation.set(0.04, twist + Math.sin(t * 0.55) * 0.18, ang);
+    // idle sway eases in from zero, so the handover from the still badge is invisible
+    if (t0 < 0) t0 = t;
+    const sway = Math.min(1, (t - t0) / 2.5);
+    idCard.rotation.set(0.04 * sway, twist + Math.sin((t - t0) * 0.55) * 0.18 * sway, ang);
     clip.position.set(a.x + Math.sin(ang) * 0.22, a.y - Math.cos(ang) * 0.22, 0.02);
     clip.rotation.set(0, 0, ang);
     updateStraps();
