@@ -8,22 +8,20 @@ const LIME = '#CBDB3A';
 const C = '#00AEEF', M = '#EC008C', Y = '#FFF212';
 
 type Ctx = CanvasRenderingContext2D;
-type Stretch = 'condensed' | 'normal' | 'semi-expanded' | 'expanded';
 
 function make(w: number, h: number): [HTMLCanvasElement, Ctx] {
   const c = document.createElement('canvas');
   c.width = w; c.height = h;
   return [c, c.getContext('2d')!];
 }
-function font(ctx: Ctx, spec: string, stretch: Stretch = 'normal', spacing = 0) {
-  ctx.font = `${spec} Archivo, system-ui, sans-serif`;
-  if ('fontStretch' in ctx) (ctx as Ctx & { fontStretch: string }).fontStretch = stretch;
+function font(ctx: Ctx, spec: string, spacing = 0) {
+  ctx.font = `${spec} 'Titillium Web', system-ui, sans-serif`;
   if ('letterSpacing' in ctx) (ctx as Ctx & { letterSpacing: string }).letterSpacing = `${spacing}px`;
 }
-function fitText(ctx: Ctx, text: string, maxW: number, size: number, spec: (s: number) => string, stretch: Stretch) {
+function fitText(ctx: Ctx, text: string, maxW: number, size: number, spec: (s: number) => string) {
   let s = size;
-  font(ctx, spec(s), stretch);
-  while (ctx.measureText(text).width > maxW && s > 20) { s -= 2; font(ctx, spec(s), stretch); }
+  font(ctx, spec(s));
+  while (ctx.measureText(text).width > maxW && s > 20) { s -= 2; font(ctx, spec(s)); }
   return s;
 }
 function barcode(ctx: Ctx, x: number, y: number, w: number, h: number, seed = 7) {
@@ -48,8 +46,7 @@ function nfcArcs(ctx: Ctx, x: number, y: number, s: number, colour: string, lw: 
 
 export async function loadAssets() {
   await Promise.all([
-    document.fonts.load('900 100px Archivo'),
-    document.fonts.load('500 40px Archivo'),
+    ...[400, 600, 700].map((w) => document.fonts.load(`${w} 100px 'Titillium Web'`)),
   ]).catch(() => {});
   const img = new Image();
   img.src = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/brand/printo-logo-light.svg`;
@@ -102,7 +99,7 @@ function qr(ctx: Ctx, x: number, y: number, size: number, seed = 42) {
   }
 }
 
-export function badgeFront(assets: Assets, name = 'Anjali Menon') {
+export function badgeFront(assets: Assets, name = 'John Doe') {
   const [c, ctx] = make(BW, BH);
   const [f, fx] = make(BW, BH);
   const [s, sx] = make(BW, BH);
@@ -148,7 +145,7 @@ export function badgeFront(assets: Assets, name = 'Anjali Menon') {
     const t = (a / 48) * Math.PI * 2;
     ctx.beginPath(); ctx.moveTo(cx + Math.cos(t) * 30, cy + Math.sin(t) * 30); ctx.lineTo(cx + Math.cos(t) * (R - 6), cy + Math.sin(t) * (R - 6)); ctx.stroke();
   }
-  ctx.fillStyle = 'rgba(35,31,32,0.75)'; font(ctx, '900 58px', 'expanded', -2); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgba(35,31,32,0.75)'; font(ctx, '700 58px', -1); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillText('P', cx, cy + 2);
   ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
   const holo = ctx.createConicGradient(0.6, cx, cy);
@@ -162,9 +159,9 @@ export function badgeFront(assets: Assets, name = 'Anjali Menon') {
   const [first, ...rest] = name.trim().split(/\s+/);
   const last = rest.join(' ');
   ctx.fillStyle = '#fff';
-  const s1 = fitText(ctx, first, 860, 152, (z) => `900 ${z}px`, 'expanded');
+  const s1 = fitText(ctx, first, 860, 152, (z) => `700 ${z}px`);
   ctx.fillText(first, 80, 800);
-  if (last) { fitText(ctx, last, 860, s1, (z) => `900 ${z}px`, 'expanded'); ctx.fillText(last, 80, 800 + s1 * 0.95); }
+  if (last) { fitText(ctx, last, 860, s1, (z) => `700 ${z}px`); ctx.fillText(last, 80, 800 + s1 * 0.95); }
   ctx.fillStyle = LIME; font(ctx, '700 50px');
   ctx.fillText('Production team', 84, last ? 800 + s1 * 0.95 + 88 : 888);
 
@@ -173,8 +170,9 @@ export function badgeFront(assets: Assets, name = 'Anjali Menon') {
   const strip = ctx.createLinearGradient(0, fy, BW, fy + fh);
   strip.addColorStop(0, '#d9dadc'); strip.addColorStop(0.5, '#f5f5f6'); strip.addColorStop(1, '#cfd0d2');
   ctx.fillStyle = strip; ctx.fillRect(0, fy, BW, fh);
-  ctx.fillStyle = 'rgba(35,31,32,0.35)'; font(ctx, '700 20px', 'condensed', 3);
-  for (let x = 10; x < BW; x += 250) ctx.fillText('PRINTO  SECURE  CARD', x, fy + 29);
+  ctx.fillStyle = 'rgba(35,31,32,0.35)'; font(ctx, '700 20px', 3);
+  const micro = 'PRINTO  SECURE  CARD', step = ctx.measureText(micro).width + 36;
+  for (let x = 10; x < BW; x += step) ctx.fillText(micro, x, fy + 29);
   const band = ctx.createLinearGradient(0, 0, BW, 0);
   ['#ff9ad5', '#9ee7ff', '#fff59a', '#b9a4ff', '#9affc8', '#ff9ad5', '#9ee7ff'].forEach((h, i, a) => band.addColorStop(i / (a.length - 1), h));
   ctx.save(); ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = 0.5; ctx.fillStyle = band; ctx.fillRect(0, fy, BW, fh); ctx.restore();
@@ -185,7 +183,7 @@ export function badgeFront(assets: Assets, name = 'Anjali Menon') {
   ctx.fillStyle = ORANGE; ctx.fillRect(0, 1126, BW, BH - 1126);
   ctx.fillStyle = INK;
   font(ctx, '600 38px'); ctx.fillText('Staff ID', 80, 1250);
-  font(ctx, '900 124px', 'expanded', -3); ctx.fillText('0427', 72, 1382);
+  font(ctx, '700 124px', -1); ctx.fillText('0427', 72, 1382);
   font(ctx, '600 38px'); ctx.fillText('Valid to Dec 2027', 80, 1460);
   barcode(ctx, 80, 1500, 440, 70, 9);
   ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(640, 1196, 304, 304, 24); ctx.fill();
@@ -209,12 +207,12 @@ export function badgeBack() {
   ctx.fillStyle = '#0c0a0b'; ctx.beginPath(); ctx.roundRect(BW / 2 - 100, 46, 200, 40, 20); ctx.fill();
   ctx.fillStyle = '#0a0909'; ctx.fillRect(0, 150, BW, 150);                   // magnetic stripe
   sx.fillStyle = 'rgb(0,30,0)'; sx.fillRect(0, 150, BW, 150);
-  ctx.fillStyle = '#fff'; font(ctx, '800 60px', 'semi-expanded');
+  ctx.fillStyle = '#fff'; font(ctx, '700 60px');
   ctx.fillText('If found,', 80, 420); ctx.fillText('please return to', 80, 492);
-  font(ctx, '500 40px'); ctx.fillStyle = 'rgba(255,255,255,0.82)';
-  ['Printo Cards & Technologies', 'C-19, Darussalam Complex', 'Mavoor Road, Calicut 673 004', '0495 406 0457'].forEach((l, i) => ctx.fillText(l, 80, 600 + i * 62));
+  font(ctx, '400 40px'); ctx.fillStyle = 'rgba(255,255,255,0.82)';
+  ['Printo Cards & Technologies', 'C-19, Darussalam Complex', 'Mavoor Road, Calicut 673004', '0495 406 0457'].forEach((l, i) => ctx.fillText(l, 80, 600 + i * 62));
   ctx.fillStyle = '#f2f1ee'; ctx.beginPath(); ctx.roundRect(80, 940, BW - 160, 140, 14); ctx.fill();
-  ctx.fillStyle = '#8b8580'; font(ctx, '500 30px'); ctx.fillText('Signature', 100, 1062);
+  ctx.fillStyle = '#8b8580'; font(ctx, '400 30px'); ctx.fillText('Signature', 100, 1062);
   ctx.fillStyle = ORANGE; ctx.fillRect(0, 1180, BW, BH - 1180);
   ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(80, 1300, BW - 160, 200, 18); ctx.fill();
   barcode(ctx, 120, 1330, BW - 240, 140, 3);
@@ -224,7 +222,7 @@ export function badgeBack() {
 /* ---------------- story: the card that gets printed ---------------- */
 export const ART_W = 1600, ART_H = 1004;
 
-export function memberFront(name = 'Anjali Menon') {
+export function memberFront(name = 'John Doe') {
   const [c, ctx] = make(ART_W, ART_H);
   ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, ART_W, ART_H);
   ctx.globalCompositeOperation = 'multiply';
@@ -234,13 +232,13 @@ export function memberFront(name = 'Anjali Menon') {
   ctx.fillStyle = ORANGE; ctx.beginPath(); ctx.arc(1040, 560, 90, 0, Math.PI * 2); ctx.fill();
   ctx.globalCompositeOperation = 'source-over';
   ctx.fillStyle = INK; ctx.textAlign = 'left';
-  font(ctx, '900 150px', 'expanded', -6);
+  font(ctx, '700 150px', -2);
   ctx.fillText('Coastline', 86, 250);
   ctx.fillText('Club', 86, 390);
   nfcArcs(ctx, 1500, 150, 90, INK, 14);
-  fitText(ctx, name, 900, 80, (s) => `800 ${s}px`, 'semi-expanded');
+  fitText(ctx, name, 900, 80, (s) => `700 ${s}px`);
   ctx.fillText(name, 90, 850);
-  font(ctx, '700 44px', 'condensed', 6);
+  font(ctx, '700 44px', 6);
   ctx.fillText('MEMBER  0427 1180', 90, 930);
   return c;
 }
@@ -252,9 +250,9 @@ export function memberBack() {
   ctx.fillStyle = '#fff'; ctx.fillRect(90, 340, 960, 130);
   ctx.strokeStyle = '#d8d4cf'; ctx.lineWidth = 3;
   for (let x = 90; x < 1050; x += 22) { ctx.beginPath(); ctx.moveTo(x, 340); ctx.lineTo(x + 40, 470); ctx.stroke(); }
-  ctx.fillStyle = INK; font(ctx, '500 38px');
+  ctx.fillStyle = INK; font(ctx, '400 38px');
   ctx.fillText('Coastline Club membership card. Show it at the front desk.', 90, 580);
-  ctx.fillStyle = '#6a6466'; font(ctx, '500 32px');
+  ctx.fillStyle = '#6a6466'; font(ctx, '400 32px');
   ctx.fillText('Printed by Printo Cards & Technologies, Calicut', 90, 900);
   barcode(ctx, 1110, 780, 400, 150, 5);
   return c;
@@ -267,7 +265,7 @@ export function uvMask() {
   ctx.strokeStyle = '#fff'; ctx.lineWidth = 12;
   for (let r = 60; r < 900; r += 42) { ctx.beginPath(); ctx.arc(1340, 260, r, 0, Math.PI * 2); ctx.stroke(); }
   ctx.fillStyle = '#fff';
-  font(ctx, '900 150px', 'expanded', -6);
+  font(ctx, '700 150px', -2);
   ctx.fillText('Coastline', 86, 250);
   ctx.fillText('Club', 86, 390);
   return c;
@@ -305,8 +303,8 @@ export function nfcCard() {
     ctx.stroke();
   }
   nfcArcs(ctx, 1480, 170, 100, LIME, 18);
-  ctx.fillStyle = '#fff'; font(ctx, '800 76px', 'semi-expanded'); ctx.fillText('Tap to enter', 90, 900);
-  ctx.globalAlpha = 0.6; font(ctx, '700 40px', 'condensed', 4); ctx.textAlign = 'right'; ctx.fillText('NTAG 215', ART_W - 90, 900);
+  ctx.fillStyle = '#fff'; font(ctx, '700 76px'); ctx.fillText('Tap to enter', 90, 900);
+  ctx.globalAlpha = 0.6; font(ctx, '700 40px', 4); ctx.textAlign = 'right'; ctx.fillText('NTAG 215', ART_W - 90, 900);
   ctx.globalAlpha = 1;
   return c;
 }
@@ -328,15 +326,15 @@ export function woodCard() {
     ctx.stroke();
   }
   ctx.fillStyle = 'rgba(80,45,15,0.58)'; ctx.textAlign = 'center';
-  font(ctx, '900 150px', 'expanded', -4); ctx.fillText('Room 204', ART_W / 2, 560);
-  font(ctx, '600 46px', 'normal', 8); ctx.fillText('GUEST KEY', ART_W / 2, 660);
+  font(ctx, '700 150px', -1); ctx.fillText('Room 204', ART_W / 2, 560);
+  font(ctx, '600 46px', 8); ctx.fillText('GUEST KEY', ART_W / 2, 660);
   return c;
 }
 
 export function loyaltyCard() {
   const [c, ctx] = make(ART_W, ART_H);
   ctx.fillStyle = LIME; ctx.fillRect(0, 0, ART_W, ART_H);
-  ctx.fillStyle = INK; font(ctx, '900 124px', 'expanded', -5); ctx.fillText('Stamp card', 90, 220);
+  ctx.fillStyle = INK; font(ctx, '700 124px', -2); ctx.fillText('Stamp card', 90, 220);
   font(ctx, '600 44px'); ctx.fillText('Your 10th coffee is on us', 92, 300);
   for (let i = 0; i < 10; i++) {
     const x = 170 + (i % 5) * 190, y = 590 + Math.floor(i / 5) * 190;
@@ -354,7 +352,7 @@ export function giftCard() {
   ctx.fillStyle = C; ctx.beginPath(); ctx.arc(1480, 700, 380, 0, Math.PI * 2); ctx.fill();
   ctx.fillStyle = Y; ctx.beginPath(); ctx.arc(900, 760, 220, 0, Math.PI * 2); ctx.fill();
   ctx.globalCompositeOperation = 'source-over';
-  ctx.fillStyle = INK; font(ctx, '900 170px', 'expanded', -6);
+  ctx.fillStyle = INK; font(ctx, '700 170px', -2);
   ctx.fillText('Gift', 90, 760); ctx.fillText('card', 90, 910);
   return c;
 }
@@ -363,7 +361,7 @@ export function giftCard() {
 export function strap() {
   const [c, ctx] = make(1024, 128);
   ctx.fillStyle = '#373435'; ctx.fillRect(0, 0, 1024, 128);
-  ctx.fillStyle = LIME; font(ctx, '900 76px', 'expanded', 2);
+  ctx.fillStyle = LIME; font(ctx, '700 76px', 2);
   ctx.textBaseline = 'middle';
   ctx.fillText('printo', 40, 68);
   ctx.fillText('printo', 552, 68);

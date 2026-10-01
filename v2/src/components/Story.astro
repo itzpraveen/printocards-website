@@ -45,7 +45,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
     <div class="chapters">
       <article class="chapter" data-i="0">
         <p class="num">01 of 05</p>
-        <h2 class="display" data-press="125">A blank, to start.</h2>
+        <h2 class="display" data-press>A blank, to start.</h2>
         <p class="lead">Every card starts as white PVC, cut to 86 × 54 mm and 0.76 mm thick. That's CR80, the size of the bank card in your wallet, so it fits every holder, lanyard and reader.</p>
         <dl class="specs">
           <dt>Materials</dt><dd>PVC, composite PVC/PET, wood</dd>
@@ -58,7 +58,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
 
       <article class="chapter" data-i="1">
         <p class="num">02 of 05</p>
-        <h2 class="display" data-press="125">Colour, on both sides.</h2>
+        <h2 class="display" data-press>Colour, on both sides.</h2>
         <p class="lead">Full colour, edge to edge, front and back. Pre-printed runs for hospitals, shops and clubs. Personalised runs where every card gets its own name, photo, number or code.</p>
         <ul class="inks">
           <li><i style="background:#00AEEF"></i>Cyan</li>
@@ -71,7 +71,7 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
 
       <article class="chapter" data-i="2">
         <p class="num">03 of 05</p>
-        <h2 class="display" data-press="125">Choose how it feels.</h2>
+        <h2 class="display" data-press>Choose how it feels.</h2>
         <p class="lead">The same design, finished four ways.<span class="motion-only"> Pick one and tilt the card to see it catch the light.</span></p>
         <fieldset class="finishes" data-finishes>
           <legend class="sr-only">Card finish</legend>
@@ -82,14 +82,14 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
         <p class="finish-note" data-finish-note aria-live="polite">{finishes[0].note}</p>
         <label class="try">
           <span>Try your name</span>
-          <input type="text" data-try-name value="Anjali Menon" maxlength="22" autocomplete="off" spellcheck="false" />
+          <input type="text" data-try-name value="John Doe" maxlength="22" autocomplete="off" spellcheck="false" />
         </label>
         <img class="still" src={asset("/images/pvc-privilege-card.webp")} alt="A gold privilege card with a gloss finish" loading="lazy" width="1200" height="1200" />
       </article>
 
       <article class="chapter" data-i="3" id="chip">
         <p class="num">04 of 05</p>
-        <h2 class="display" data-press="125">Some cards carry a chip.</h2>
+        <h2 class="display" data-press>Some cards carry a chip.</h2>
         <p class="lead">Inside sits a copper antenna and a tiny chip. Tap it on a reader to open a door, check in a guest or log attendance.</p>
         <dl class="chips">
           <div><dt>Proximity RFID</dt><dd>125 kHz, TK4100</dd></div>

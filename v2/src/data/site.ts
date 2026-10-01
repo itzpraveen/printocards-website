@@ -9,35 +9,43 @@ export const site = {
   url: 'https://printocards.com',
   title: 'Biggest PVC Card Manufacturer in Kerala | Printo Cards, Calicut',
   description:
-    'Printo Cards & Technologies, the biggest PVC card manufacturer in Kerala: PVC ID cards, NFC and RFID smart cards, hotel key cards, lanyards and card printers from Calicut. ISO 9001:2015 certified, 16+ years.',
+    'Printo Cards & Technologies, the biggest PVC card manufacturer in Kerala: PVC ID cards, NFC and RFID smart cards, hotel key cards, lanyards and card printers from Calicut. ISO 9001:2015 certified, 20+ years.',
 };
 
 export const contact = {
-  whatsapp: '919207806661',
-  whatsappDisplay: '+91 92078 06661',
+  whatsapp: '919207806665',
+  whatsappDisplay: '+91 92078 06665',
   office: { display: '0495 406 0457', tel: '+914954060457' },
   mobiles: [
-    { display: '+91 92078 06661', tel: '+919207806661' },
+    { display: '+91 92078 06665', tel: '+919207806665' },
     { display: '+91 94955 32310', tel: '+919495532310' },
     { display: '+91 92078 06662', tel: '+919207806662' },
   ],
   emails: ['sales@printocards.com', 'printogroup@gmail.com'],
   officeAddress: {
-    lines: ['C-19, 3rd Floor, Darussalam Complex', 'Mavoor Road, Calicut 673 004', 'Kerala, India'],
-    street: 'C-19, 3rd Floor, Darussalam Complex, Mavoor Road',
+    lines: ['3rd Floor, 5/3421, C-19, Darussalam Complex', 'Mavoor Road, Calicut, Kozhikode', 'Kerala 673004'],
+    street: '3rd Floor, 5/3421, C-19, Darussalam Complex, Mavoor Road',
     locality: 'Kozhikode',
     postalCode: '673004',
   },
   factoryAddress: {
-    lines: ['CP25 A, Omanoor 673 645', 'Kerala, India'],
-    street: 'CP25 A, Omanoor',
-    locality: 'Omanoor',
+    lines: ['CP XIV/25A, Omanoor, Pallipuraya', 'Malappuram, Kerala 673645'],
+    street: 'CP XIV/25A, Omanoor, Pallipuraya',
+    locality: 'Malappuram',
     postalCode: '673645',
   },
 };
 
 export const waLink = (text: string) =>
   `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`;
+
+// Public profiles. The footer lists them with WhatsApp and Gmail; the structured data lists them as sameAs.
+export const profiles = [
+  { name: 'Instagram', href: 'https://www.instagram.com/printocards/' },
+  { name: 'Facebook', href: 'https://www.facebook.com/PrintoCardsAndTechnologies' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/company/printo-cards-and-technologies' },
+  { name: 'IndiaMART', href: 'https://www.indiamart.com/printocardstechnologies' },
+];
 
 export type Product = { name: string; image: string; spec: string };
 export type Family = { id: string; name: string; image: string; summary: string; products: Product[] };

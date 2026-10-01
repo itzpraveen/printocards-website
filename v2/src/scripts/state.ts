@@ -1,7 +1,7 @@
 // Choices a visitor makes in the story (finish, name) travel to the quote form.
 export type Finish = 'glossy' | 'matte' | 'frosted' | 'uv';
 
-export const DEFAULT_NAME = 'Anjali Menon';
+export const DEFAULT_NAME = 'John Doe';
 
 export const state = {
   finish: 'glossy' as Finish,
