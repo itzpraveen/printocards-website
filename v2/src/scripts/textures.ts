@@ -109,7 +109,7 @@ export function badgeFront(assets: Assets, name = 'John Doe') {
   const bg = ctx.createLinearGradient(0, 0, 0, BH);
   bg.addColorStop(0, '#2c2829'); bg.addColorStop(1, '#191617');
   ctx.fillStyle = bg; ctx.fillRect(0, 0, BW, BH);
-  guilloche(ctx, 250, 48, 'rgba(242,107,53,0.11)', 'rgba(255,255,255,0.045)');
+  guilloche(ctx, 250, 48, 'rgba(203,219,58,0.09)', 'rgba(255,255,255,0.045)');
 
   // punched slot
   ctx.fillStyle = '#0c0a0b'; ctx.beginPath(); ctx.roundRect(BW / 2 - 100, 46, 200, 40, 20); ctx.fill();
@@ -179,8 +179,8 @@ export function badgeFront(assets: Assets, name = 'John Doe') {
   fx.fillRect(0, fy, BW, fh);
   sx.fillStyle = 'rgb(0,40,235)'; sx.fillRect(0, fy, BW, fh);
 
-  // orange footer: staff number, validity, QR
-  ctx.fillStyle = ORANGE; ctx.fillRect(0, 1126, BW, BH - 1126);
+  // lime footer: staff number, validity, QR. Lime, not orange, so the card stands out on the orange hero
+  ctx.fillStyle = LIME; ctx.fillRect(0, 1126, BW, BH - 1126);
   ctx.fillStyle = INK;
   font(ctx, '600 38px'); ctx.fillText('Staff ID', 80, 1250);
   font(ctx, '700 124px', -1); ctx.fillText('0427', 72, 1382);
@@ -203,7 +203,7 @@ export function badgeBack() {
   const bg = ctx.createLinearGradient(0, 0, 0, BH);
   bg.addColorStop(0, '#2c2829'); bg.addColorStop(1, '#191617');
   ctx.fillStyle = bg; ctx.fillRect(0, 0, BW, BH);
-  guilloche(ctx, 520, 40, 'rgba(242,107,53,0.09)', 'rgba(255,255,255,0.04)');
+  guilloche(ctx, 520, 40, 'rgba(203,219,58,0.07)', 'rgba(255,255,255,0.04)');
   ctx.fillStyle = '#0c0a0b'; ctx.beginPath(); ctx.roundRect(BW / 2 - 100, 46, 200, 40, 20); ctx.fill();
   ctx.fillStyle = '#0a0909'; ctx.fillRect(0, 150, BW, 150);                   // magnetic stripe
   sx.fillStyle = 'rgb(0,30,0)'; sx.fillRect(0, 150, BW, 150);
@@ -213,7 +213,7 @@ export function badgeBack() {
   ['Printo Cards & Technologies', 'C-19, Darussalam Complex', 'Mavoor Road, Calicut 673004', '0495 406 0457'].forEach((l, i) => ctx.fillText(l, 80, 600 + i * 62));
   ctx.fillStyle = '#f2f1ee'; ctx.beginPath(); ctx.roundRect(80, 940, BW - 160, 140, 14); ctx.fill();
   ctx.fillStyle = '#8b8580'; font(ctx, '400 30px'); ctx.fillText('Signature', 100, 1062);
-  ctx.fillStyle = ORANGE; ctx.fillRect(0, 1180, BW, BH - 1180);
+  ctx.fillStyle = LIME; ctx.fillRect(0, 1180, BW, BH - 1180);
   ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(80, 1300, BW - 160, 200, 18); ctx.fill();
   barcode(ctx, 120, 1330, BW - 240, 140, 3);
   return { color: c, surface: s };
@@ -306,28 +306,6 @@ export function nfcCard() {
   ctx.fillStyle = '#fff'; font(ctx, '700 76px'); ctx.fillText('Tap to enter', 90, 900);
   ctx.globalAlpha = 0.6; font(ctx, '700 40px', 4); ctx.textAlign = 'right'; ctx.fillText('NTAG 215', ART_W - 90, 900);
   ctx.globalAlpha = 1;
-  return c;
-}
-
-export function woodCard() {
-  const [c, ctx] = make(ART_W, ART_H);
-  ctx.fillStyle = '#c4935f'; ctx.fillRect(0, 0, ART_W, ART_H);
-  let r = 3;
-  const rand = () => ((r = (r * 9301 + 49297) % 233280) / 233280);
-  for (let i = 0; i < 140; i++) {
-    const y0 = rand() * ART_H * 1.2 - 100;
-    ctx.strokeStyle = rand() > 0.5 ? 'rgba(120,70,30,0.22)' : 'rgba(230,190,140,0.25)';
-    ctx.lineWidth = 2 + rand() * 7;
-    ctx.beginPath();
-    for (let x = -20; x <= ART_W + 20; x += 30) {
-      const y = y0 + Math.sin(x / 260 + i) * 22 + Math.sin(x / 90 + i * 2) * 5;
-      x === -20 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-  }
-  ctx.fillStyle = 'rgba(80,45,15,0.58)'; ctx.textAlign = 'center';
-  font(ctx, '700 150px', -1); ctx.fillText('Room 204', ART_W / 2, 560);
-  font(ctx, '600 46px', 8); ctx.fillText('GUEST KEY', ART_W / 2, 660);
   return c;
 }
 

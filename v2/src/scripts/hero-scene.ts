@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { cardGeometry, makeRenderer, studioEnvironment, loopWhileVisible, clamp01, CARD_W, CARD_H } from './card';
-import { loadAssets, texture, badgeFront, badgeBack, nfcCard, woodCard, strap } from './textures';
+import { loadAssets, texture, badgeFront, badgeBack, nfcCard, strap } from './textures';
 
 const FOV = 30;
 const TAN = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -93,7 +93,6 @@ export async function initHero(hero: HTMLElement) {
   };
   const floaters: Floater[] = [
     { mesh: mk(nfcCard(), 0.35), z: -5, desk: [0.86, 0.3], mob: [0.88, 0.1], rot: new THREE.Euler(0.25, -0.6, -0.28), phase: 0.3, speed: 0.8, base: new THREE.Vector3() },
-    { mesh: mk(woodCard(), 0.7), z: -15, desk: [0.47, 0.36], mob: [0.13, 0.15], rot: new THREE.Euler(0.4, 0.62, 0.42), phase: 1.9, speed: 0.6, base: new THREE.Vector3() },
   ];
   floaters.forEach((f) => { f.mesh.scale.setScalar(0.62); scene.add(f.mesh); });
 
@@ -332,7 +331,10 @@ export async function initHero(hero: HTMLElement) {
     if (!mobile) camOffset.lerp(pointer, 0.05);
     // the light follows the pointer so the foil and gold chip catch it; it drifts on its own on touch screens
     key.position.set(-8 + camOffset.x * 16, 12 - camOffset.y * 10, 14);
-    if (!mobile) { hero.style.setProperty('--gx', `${68 + camOffset.x * 16}%`); hero.style.setProperty('--gy', `${32 + camOffset.y * 18}%`); }
+    if (!mobile) {
+      hero.style.setProperty('--gx', `${68 + camOffset.x * 16}%`); hero.style.setProperty('--gy', `${32 + camOffset.y * 18}%`);
+      hero.style.setProperty('--px', camOffset.x.toFixed(3)); hero.style.setProperty('--py', camOffset.y.toFixed(3));
+    }
     scene.environmentRotation.y = camOffset.x * 1.1 + Math.sin(t * 0.3) * 0.35;
     camera.position.set(camOffset.x * 0.9, -camOffset.y * 0.6 - p * vh * 0.32, camZ);
     renderer.render(scene, camera);

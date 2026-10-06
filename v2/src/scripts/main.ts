@@ -26,6 +26,8 @@ const hero = $('[data-hero]')!;
 const syncNav = () => nav.classList.toggle('is-pill', window.scrollY > hero.offsetHeight * 0.7);
 addEventListener('scroll', syncNav, { passive: true });
 syncNav();
+// the brand card's float and sheen loop only while the hero is on screen
+new IntersectionObserver(([e]) => hero.classList.toggle('is-away', !e.isIntersecting)).observe(hero);
 
 const menu = $<HTMLDialogElement>('[data-menu]')!;
 $$('[data-menu-open]').forEach((b) => b.addEventListener('click', () => { menu.showModal(); lenis?.stop(); }));

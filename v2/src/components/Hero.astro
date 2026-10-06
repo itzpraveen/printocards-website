@@ -14,7 +14,19 @@ const wa = waLink('Hi Printo, I would like a quote for cards.');
       <polygon points="0.83,0 1.57,0 2.45,100 1.71,100" fill="#373435" />
     </svg>
     <span class="hs-clip"></span>
-    <img class="hs-card" data-hero-card src={asset("/images/badge-front.webp")} srcset={`${asset("/images/badge-front-360.webp")} 360w, ${asset("/images/badge-front.webp")} 640w`} sizes="(max-width: 760px) 42vw, 24vh" alt="" width="640" height="1019" fetchpriority="high" />
+    <img class="hs-card" data-hero-card src={asset("/images/badge-front.webp")} srcset={`${asset("/images/badge-front-360.webp")} 360w, ${asset("/images/badge-front.webp")} 640w`} sizes="(max-width: 760px) 36vw, 24vh" alt="" width="640" height="1019" fetchpriority="high" />
+  </div>
+
+  <!-- The original colour logo, printed onto a blank white card as the page opens. The logo's
+       orange chip needs a white surface, and a printed card is what Printo makes. -->
+  <div class="hero-brand" aria-hidden="true">
+    <div class="hb-float">
+      <div class="hb-card">
+        <div class="hb-print"><img src={asset("/brand/printo-logo.svg")} alt="" width="477" height="162" /></div>
+        <span class="hb-head"></span>
+        <span class="hb-sheen"></span>
+      </div>
+    </div>
   </div>
 
   <canvas class="hero-canvas" data-hero-canvas aria-hidden="true"></canvas>
