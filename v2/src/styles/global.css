@@ -476,11 +476,11 @@ address { font-style: normal; }
 }
 @media (max-width: 760px) {
   body { font-size: 16.5px; }
-  .nav { top: 12px; gap: 16px; padding: 7px 7px 7px 22px; border-radius: 999px; background: rgba(255,255,255,.94); box-shadow: 0 6px 24px -12px rgba(35,31,32,.3); }
+  .nav { top: 12px; gap: 16px; padding: 7px 7px 7px 22px; border-radius: 999px; background: #fff; box-shadow: 0 6px 24px -12px rgba(35,31,32,.3); }
   .nav-main { padding: 0; background: none; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .nav-logo img { height: 38px; }
   .nav .burger { width: 40px; height: 40px; }
-  .hero { display: flex; flex-direction: column; justify-content: flex-end; padding-top: max(48svh, calc(25svh + 33.5vw + 24px)); padding-bottom: 28px; }
+  .hero { display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--top) + var(--art) + 24px); padding-bottom: 28px; }
   .hero-copy, .hero-row { display: contents; }
   .hero-title { order: 2; padding-inline: var(--gutter); }
   .hero-poster { margin-left: -.04em; font-size: clamp(40px, 12.5vw, 58px); line-height: .95; white-space: normal; text-wrap: balance; }
@@ -492,10 +492,19 @@ address { font-style: normal; }
   .hero-foot { order: 5; position: relative; bottom: auto; margin-top: 26px; }
   .facts { gap: 6px 16px; font-size: 12.5px; }
   .scrollcue { display: none; }
-  /* badge to the right, the brand card tucked behind its left edge */
-  .hero { --ch: calc(36vw * 86 / 54); --cx: 72%; --cy: 25svh; --bw: 52vw; }
-  .hero-brand { top: calc(var(--cy) + var(--ch) * .1); left: 14px; }
-  .hb-print img { width: 82%; }
+  /* The badge and the brand card share the space between the nav and the headline, centred as a pair.
+     Both scale with --ch, which is capped by the hero height, so on short phones the badge stays
+     below the nav. The badge overlaps the brand card's right margin, never the logo. */
+  .hero {
+    --top: 88px;
+    --ch: min(calc(36vw * 86 / 54), calc(var(--hh) * .29));
+    --art: max(calc(var(--hh) * .48 - var(--top) - 24px), calc(var(--ch) * 1.1));
+    --cx: calc(50% + var(--ch) * .41);
+    --cy: calc(var(--top) + var(--art) / 2 + var(--ch) * .02);
+    --bw: calc(var(--ch) * .9);
+  }
+  .hero-brand { left: calc(var(--cx) - var(--ch) * 1.14); top: calc(var(--cy) + var(--ch) * .12); }
+  .hb-print img { width: 74%; }
   .is-motion .chapters { left: var(--gutter); right: var(--gutter); width: auto; align-items: start; padding-top: 84px; }
   .chapter h2 { font-size: clamp(36px, 10vw, 48px); margin: 8px 0 12px; }
   .chapter .lead { font-size: 15.5px; }
@@ -520,6 +529,12 @@ address { font-style: normal; }
   .sticky-bar { position: fixed; z-index: 45; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: 1.5fr 1fr; gap: 8px; transform: translateY(160%); transition: transform .45s var(--ease); }
   .sticky-bar.is-on { transform: none; }
   .sticky-bar .btn { padding: 15px 10px; box-shadow: 0 10px 30px -10px rgba(0,0,0,.45); }
+}
+
+/* phones held sideways: the badge is small here, so the brand card pairs with it as on phones */
+@media (min-width: 761px) and (max-height: 520px) {
+  .hero { --bw: calc(var(--ch) * .9); }
+  .hero-brand { left: calc(var(--cx) - var(--ch) * 1.14); top: calc(var(--cy) + var(--ch) * .12); }
 }
 
 @media (prefers-reduced-motion: reduce) {

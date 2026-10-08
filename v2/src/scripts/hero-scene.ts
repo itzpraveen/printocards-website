@@ -11,7 +11,7 @@ const STEP = 1 / 120;
 
 type Floater = {
   mesh: THREE.Mesh; z: number;
-  desk: [number, number]; mob: [number, number];
+  desk: [number, number];
   rot: THREE.Euler; phase: number; speed: number; base: THREE.Vector3;
 };
 
@@ -92,7 +92,7 @@ export async function initHero(hero: HTMLElement) {
     return new THREE.Mesh(floatGeo, [face, floatEdge, face]);
   };
   const floaters: Floater[] = [
-    { mesh: mk(nfcCard(), 0.35), z: -5, desk: [0.86, 0.3], mob: [0.88, 0.1], rot: new THREE.Euler(0.25, -0.6, -0.28), phase: 0.3, speed: 0.8, base: new THREE.Vector3() },
+    { mesh: mk(nfcCard(), 0.35), z: -5, desk: [0.86, 0.3], rot: new THREE.Euler(0.25, -0.6, -0.28), phase: 0.3, speed: 0.8, base: new THREE.Vector3() },
   ];
   floaters.forEach((f) => { f.mesh.scale.setScalar(0.62); scene.add(f.mesh); });
 
@@ -144,10 +144,13 @@ export async function initHero(hero: HTMLElement) {
     for (let i = 0; i <= N; i++) { rope[i].set(cx, anchor.y - i * segLen); ropePrev[i].copy(rope[i]); }
     cardP.set(cx, cy); cardPrev.copy(cardP);
 
+    // portrait screens have no free spot for a floater: the nav and its menu button cover the top,
+    // the badge and brand card the rest
     for (const f of floaters) {
+      f.mesh.visible = !mobile;
       const d = camZ - f.z;
       const hh = d * TAN, hw = hh * aspect;
-      const [fx, fy] = mobile ? f.mob : f.desk;
+      const [fx, fy] = f.desk;
       f.base.set((fx - 0.5) * 2 * hw, (0.5 - fy) * 2 * hh, f.z);
     }
   }
