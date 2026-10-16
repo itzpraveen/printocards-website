@@ -485,26 +485,26 @@ address { font-style: normal; }
   .hero-title { order: 2; padding-inline: var(--gutter); }
   .hero-poster { margin-left: -.04em; font-size: clamp(40px, 12.5vw, 58px); line-height: .95; white-space: normal; text-wrap: balance; }
   .hero-sub { margin-top: 10px; font-size: 16px; }
-  .hero-lede { order: 3; padding-inline: var(--gutter); margin-top: 14px; font-size: 15.5px; line-height: 1.5; max-width: 44ch; position: relative; z-index: 3; }
-  .ctas { order: 4; padding-inline: var(--gutter); margin-top: 22px; position: relative; z-index: 3; }
+  /* the button and the facts come straight after the headline, the intro after them */
+  .ctas { order: 3; padding-inline: var(--gutter); margin-top: 20px; position: relative; z-index: 3; }
   .ctas .btn-dark { width: 100%; }
   .ctas .btn-ghost { display: none; }
-  .hero-foot { order: 5; position: relative; bottom: auto; margin-top: 26px; }
-  .facts { gap: 6px 16px; font-size: 12.5px; }
+  .hero-foot { order: 4; position: relative; bottom: auto; margin-top: 14px; }
+  .facts { gap: 6px 16px; font-size: 13.5px; }
   .scrollcue { display: none; }
-  /* The badge and the brand card share the space between the nav and the headline, centred as a pair.
-     Both scale with --ch, which is capped by the hero height, so on short phones the badge stays
-     below the nav. The badge overlaps the brand card's right margin, never the logo. */
+  .hero-lede { order: 5; padding-inline: var(--gutter); margin-top: 22px; font-size: 15.5px; line-height: 1.5; max-width: 44ch; position: relative; z-index: 3; }
+  /* The badge hangs alone, centred between the nav and the headline. The brand card is left out:
+     the nav pill already carries the colour logo, so here it would be the third logo on screen.
+     --ch leaves ~390px for the nav, headline, button and facts, so all of them show on a
+     390x664 iPhone in Safari; --art splits any spare height on tall phones around the badge. */
   .hero {
     --top: 88px;
-    --ch: min(calc(36vw * 86 / 54), calc(var(--hh) * .29));
-    --art: max(calc(var(--hh) * .48 - var(--top) - 24px), calc(var(--ch) * 1.1));
-    --cx: calc(50% + var(--ch) * .41);
+    --ch: min(64vw, calc((var(--hh) - 390px) / 1.1));
+    --art: max(calc(var(--ch) * 1.1), calc(var(--hh) - var(--top) - 24px - 450px));
+    --cx: 50%;
     --cy: calc(var(--top) + var(--art) / 2 + var(--ch) * .02);
-    --bw: calc(var(--ch) * .9);
   }
-  .hero-brand { left: calc(var(--cx) - var(--ch) * 1.14); top: calc(var(--cy) + var(--ch) * .12); }
-  .hb-print img { width: 74%; }
+  .hero-brand { display: none; }
   .is-motion .chapters { left: var(--gutter); right: var(--gutter); width: auto; align-items: start; padding-top: 84px; }
   .chapter h2 { font-size: clamp(36px, 10vw, 48px); margin: 8px 0 12px; }
   .chapter .lead { font-size: 15.5px; }
@@ -531,10 +531,9 @@ address { font-style: normal; }
   .sticky-bar .btn { padding: 15px 10px; box-shadow: 0 10px 30px -10px rgba(0,0,0,.45); }
 }
 
-/* phones held sideways: the badge is small here, so the brand card pairs with it as on phones */
+/* phones held sideways: no brand card, as on phones */
 @media (min-width: 761px) and (max-height: 520px) {
-  .hero { --bw: calc(var(--ch) * .9); }
-  .hero-brand { left: calc(var(--cx) - var(--ch) * 1.14); top: calc(var(--cy) + var(--ch) * .12); }
+  .hero-brand { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
