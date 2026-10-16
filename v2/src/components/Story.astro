@@ -1,0 +1,111 @@
+---
+import { asset } from '../data/url';
+import { waLink } from '../data/site';
+const chipWa = waLink('Hi Printo, I want to check which RFID/NFC card works with my reader or lock. Brand and model: ');
+const finishes = [
+  { id: 'glossy', label: 'Glossy', note: 'Bright colour with a mirror shine.' },
+  { id: 'matte', label: 'Matte', note: 'Soft to the touch, with low glare.' },
+  { id: 'frosted', label: 'Frosted', note: 'Translucent, so light comes through.' },
+  { id: 'uv', label: 'UV spot', note: 'Raised gloss on the areas you choose.' },
+];
+const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Work'];
+---
+<section class="story" id="how-cards-are-made" aria-label="How a Printo card is made" data-story>
+  <div class="story-stage" data-stage data-chapter="0">
+    <canvas class="story-canvas" data-story-canvas aria-hidden="true"></canvas>
+
+    <!-- Print-shop marks drawn around the 3D card, positioned every frame -->
+    <svg class="story-marks" data-marks aria-hidden="true">
+      <g data-crop fill="none" stroke="currentColor" stroke-width="1.5">
+        <path data-c="0" /><path data-c="1" /><path data-c="2" /><path data-c="3" />
+      </g>
+      <g data-dim-w fill="none"><path stroke="currentColor" stroke-width="1.5" /><text text-anchor="middle">86 mm</text></g>
+      <g data-dim-h fill="none"><path stroke="currentColor" stroke-width="1.5" /><text text-anchor="middle">54 mm</text></g>
+      <g data-dim-t fill="none"><path stroke="currentColor" stroke-width="1.5" /><text>0.76 mm thick</text></g>
+    </svg>
+    <div class="layer-labels" data-layer-labels aria-hidden="true">
+      <span>Printed overlay<small>your design, sealed</small></span>
+      <span>PVC core</span>
+      <span class="amber">Antenna and chip<small>a copper coil, the smart part</small></span>
+      <span>Printed back</span>
+    </div>
+
+    <div class="rail" aria-hidden="true">
+      <svg class="regmark" viewBox="0 0 34 34" data-regmark>
+        <path d="M17 17V3A14 14 0 0 1 31 17Z" fill="#00AEEF" />
+        <path d="M17 17h14A14 14 0 0 1 17 31Z" fill="#EC008C" />
+        <path d="M17 17v14A14 14 0 0 1 3 17Z" fill="#FFF212" />
+        <path d="M17 17H3A14 14 0 0 1 17 3Z" fill="currentColor" />
+        <circle cx="17" cy="17" r="14" fill="none" stroke="currentColor" stroke-width="1.5" />
+        <path d="M17 0v34M0 17h34" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <ol>{rail.map((r, i) => <li data-rail={i}><i></i>{r}</li>)}</ol>
+    </div>
+
+    <div class="chapters">
+      <article class="chapter" data-i="0">
+        <p class="num">01 of 05</p>
+        <h2 class="display" data-press>A blank, to start.</h2>
+        <p class="lead">Every card starts as white PVC, cut to 86 × 54 mm and 0.76 mm thick. That's CR80, the size of the bank card in your wallet, so it fits every holder, lanyard and reader.</p>
+        <dl class="specs">
+          <dt>Materials</dt><dd>PVC, composite PVC/PET, wood</dd>
+          <dt>Size</dt><dd>86 × 54 mm (CR80)</dd>
+          <dt>Thickness</dt><dd>30 mil, 0.76 mm</dd>
+          <dt>Blank packs</dt><dd>Boxes of 100, 250 or 500 cards</dd>
+        </dl>
+        <img class="still" src={asset("/images/legacy/standard-blank-cards.webp")} alt="A blank white PVC card held between two fingers" loading="lazy" width="500" height="500" />
+      </article>
+
+      <article class="chapter" data-i="1">
+        <p class="num">02 of 05</p>
+        <h2 class="display" data-press>Colour, on both sides.</h2>
+        <p class="lead">Full colour, edge to edge, front and back. Pre-printed runs for hospitals, shops and clubs. Personalised runs where every card gets its own name, photo, number or code.</p>
+        <ul class="inks">
+          <li><i style="background:#00AEEF"></i>Cyan</li>
+          <li><i style="background:#EC008C"></i>Magenta</li>
+          <li><i style="background:#FFF212"></i>Yellow</li>
+          <li><i style="background:#231F20"></i>Key black</li>
+        </ul>
+        <img class="still" src={asset("/images/pvc-membership-card.webp")} alt="Printed PVC membership cards in blue and white" loading="lazy" width="1200" height="800" />
+      </article>
+
+      <article class="chapter" data-i="2">
+        <p class="num">03 of 05</p>
+        <h2 class="display" data-press>Choose how it feels.</h2>
+        <p class="lead">The same design, finished four ways.<span class="motion-only"> Pick one and tilt the card to see it catch the light.</span></p>
+        <fieldset class="finishes" data-finishes>
+          <legend class="sr-only">Card finish</legend>
+          {finishes.map((f, i) => (
+            <label><input type="radio" name="finish" value={f.id} data-note={f.note} checked={i === 0} /><span>{f.label}</span></label>
+          ))}
+        </fieldset>
+        <p class="finish-note" data-finish-note aria-live="polite">{finishes[0].note}</p>
+        <label class="try">
+          <span>Try your name</span>
+          <input type="text" data-try-name value="John Doe" maxlength="22" autocomplete="off" spellcheck="false" />
+        </label>
+        <img class="still" src={asset("/images/pvc-privilege-card.webp")} alt="A gold privilege card with a gloss finish" loading="lazy" width="1200" height="1200" />
+      </article>
+
+      <article class="chapter" data-i="3" id="chip">
+        <p class="num">04 of 05</p>
+        <h2 class="display" data-press>Some cards carry a chip.</h2>
+        <p class="lead">Inside sits a copper antenna and a tiny chip. Tap it on a reader to open a door, check in a guest or log attendance.</p>
+        <dl class="chips">
+          <div><dt>Proximity RFID</dt><dd>125 kHz, TK4100</dd></div>
+          <div><dt>MIFARE, HF RFID</dt><dd>13.56 MHz</dd></div>
+          <div><dt>NFC</dt><dd>NTAG 213, 215 and 216</dd></div>
+          <div><dt>UHF</dt><dd>Long-range tags, on request</dd></div>
+        </dl>
+        <div class="chip-cta">
+          <a class="btn btn-lime" href={chipWa} target="_blank" rel="noopener">Check my reader or lock</a>
+          <p>Send us the model and we'll match the chip.</p>
+        </div>
+        <img class="still" src={asset("/images/pvc-mifare-card-hf-rfid-card.webp")} alt="An RFID card shown in layers: printed front, core, chip and antenna, and back" loading="lazy" width="1200" height="800" />
+      </article>
+    </div>
+
+    <p class="story-drag" data-story-drag>Drag to tilt</p>
+    <a class="story-skip" href="#products">Skip to products</a>
+  </div>
+</section>

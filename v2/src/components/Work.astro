@@ -1,0 +1,30 @@
+---
+import { asset } from '../data/url';
+import { industries } from '../data/site';
+import { dims } from '../data/dims';
+---
+<section class="work" id="industries" data-work aria-labelledby="work-title">
+  <div class="work-pin" data-work-pin>
+    <div class="work-head wrap">
+      <div>
+        <p class="num">05 of 05</p>
+        <h2 class="display" id="work-title" data-press>Then it goes to work.</h2>
+      </div>
+      <div class="trackbar" aria-hidden="true">
+        <span data-work-label>{industries[0].name}, 1 of {industries.length}</span>
+        <span class="ticks">{industries.map((_, i) => <i data-tick={i} class={i === 0 ? 'on' : ''}></i>)}</span>
+      </div>
+    </div>
+    <ul class="track" data-track tabindex="0" aria-label="Industries, scroll sideways for more">
+      {industries.map((ind) => (
+        <li class={`panel tone-${ind.tone}`} data-panel>
+          <h3 class="panel-place display" data-speed-x>{ind.name}</h3>
+          <div class={`plate fit-${ind.fit}`}>
+            <img src={asset(ind.image)} {...dims(ind.image)} alt={`${ind.lead}: ${ind.uses}`} loading="lazy" data-plate-img />
+          </div>
+          <p class="panel-uses"><b>{ind.lead}</b>{ind.uses}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

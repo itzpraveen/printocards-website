@@ -1,0 +1,55 @@
+---
+import { contact, families } from '../data/site';
+---
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h2 class="display" id="contact-title" data-press>Tell us what you need printed.</h2>
+    <div class="contact-grid">
+      <form class="qform" data-quote novalidate>
+        <div class="field full">
+          <label for="q-product">What do you need?</label>
+          <select id="q-product" name="product" required>
+            <option value="">Choose a product</option>
+            {families.map((f) => (
+              <optgroup label={f.name}>
+                {f.products.map((p) => <option>{p.name}</option>)}
+              </optgroup>
+            ))}
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="q-qty">How many?</label>
+          <input id="q-qty" name="qty" inputmode="numeric" placeholder="e.g. 500" required />
+        </div>
+        <div class="field">
+          <label for="q-date">Needed by <span class="opt">(optional)</span></label>
+          <input id="q-date" name="date" type="date" />
+        </div>
+        <div class="field">
+          <label for="q-name">Your name</label>
+          <input id="q-name" name="name" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="q-org">Organisation <span class="opt">(optional)</span></label>
+          <input id="q-org" name="org" autocomplete="organization" />
+        </div>
+        <div class="field full">
+          <label for="q-notes">Anything else? <span class="opt">(optional)</span></label>
+          <textarea id="q-notes" name="notes" rows="2" data-lenis-prevent placeholder="Finish, sides printed, chip type, delivery town"></textarea>
+        </div>
+        <p class="carry" data-carry hidden></p>
+        <p class="form-error" data-form-error role="alert"></p>
+        <button class="btn btn-dark btn-block" type="submit">Send on WhatsApp</button>
+        <p class="fine">Opens WhatsApp with your message filled in. Nothing is sent until you tap send there.</p>
+      </form>
+
+      <div class="clist">
+        <div><b>WhatsApp</b><a class="big" href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener">{contact.whatsappDisplay}</a></div>
+        <div><b>Office phone</b><a class="big" href={`tel:${contact.office.tel}`}>{contact.office.display}</a></div>
+        <div><b>Mobile</b>{contact.mobiles.map((m) => <a href={`tel:${m.tel}`}>{m.display}</a>)}</div>
+        <div><b>Email</b>{contact.emails.map((e) => <a href={`mailto:${e}`}>{e}</a>)}</div>
+      </div>
+    </div>
+  </div>
+</section>

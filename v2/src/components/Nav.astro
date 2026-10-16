@@ -1,0 +1,49 @@
+---
+import { asset } from '../data/url';
+import { contact, waLink } from '../data/site';
+const links = [
+  { href: '#products', label: 'Products' },
+  { href: '#chip', label: 'Smart cards' },
+  { href: '#industries', label: 'Industries' },
+  { href: '#card-printers', label: 'Card printers' },
+  { href: '#about', label: 'About' },
+];
+const wa = waLink('Hi Printo, I would like a quote for cards.');
+---
+<header class="nav" data-nav>
+  <div class="nav-main">
+  <a class="nav-logo" href="#top" aria-label="Printo Cards & Technologies, back to top">
+    <img src={asset("/brand/printo-logo.svg")} alt="" width="142" height="48" />
+  </a>
+  <nav aria-label="Main">
+    <ul class="nav-links">
+      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+  </nav>
+  </div>
+  <div class="nav-actions">
+    <button class="nav-menu" type="button" data-menu-open aria-haspopup="dialog" aria-label="Menu">
+      <span class="nav-menu-label">Menu</span>
+      <span class="burger" aria-hidden="true"><i></i></span>
+    </button>
+    <a class="btn btn-dark btn-sm" href={wa} target="_blank" rel="noopener">
+      Get a quote
+    </a>
+  </div>
+</header>
+
+<dialog class="menu" data-menu aria-label="Menu" data-lenis-prevent>
+  <div class="menu-inner">
+    <button class="menu-close" type="button" data-menu-close aria-label="Close menu">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+    <ul>
+      {links.map((l) => <li><a href={l.href} data-menu-link>{l.label}</a></li>)}
+      <li><a href="#contact" data-menu-link>Contact</a></li>
+    </ul>
+    <div class="menu-contact">
+      <a href={`tel:${contact.office.tel}`}>{contact.office.display}</a>
+      <a href={`mailto:${contact.emails[0]}`}>{contact.emails[0]}</a>
+    </div>
+  </div>
+</dialog>

@@ -1,0 +1,41 @@
+---
+import { asset } from '../data/url';
+import { families, productCount, waLink } from '../data/site';
+import { dims } from '../data/dims';
+---
+<section class="range wrap" id="products" aria-labelledby="range-title" data-range>
+  <div class="range-head">
+    <h2 class="display" id="range-title" data-press>Everything around the card.</h2>
+    <p>{productCount} products in five families, from blank cards to the printers that personalise them. Open a family to see each product.</p>
+  </div>
+
+  <div class="fams">
+    {families.map((f) => (
+      <div class="fam" data-fam data-img={asset(f.image)}>
+        <h3 class="fam-title">
+          <button class="fam-row" type="button" aria-expanded="false" aria-controls={`fam-${f.id}`} data-fam-row>
+            <span class="fam-count">{f.products.length}</span>
+            <span class="fam-name">{f.name}</span>
+            <span class="fam-sum">{f.summary}</span>
+            <span class="fam-go" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12" /></svg>
+            </span>
+          </button>
+        </h3>
+        <div class="fam-panel" id={`fam-${f.id}`} data-fam-panel hidden>
+          <ul class="products">
+            {f.products.map((p) => (
+              <li class="product">
+                <div class="product-img"><img src={asset(p.image)} {...dims(p.image)} alt={p.name} loading="lazy" /></div>
+                <h4>{p.name}</h4>
+                <p>{p.spec}</p>
+                <a href={waLink(`Hi Printo, I'd like a quote for ${p.name}.`)} target="_blank" rel="noopener">Ask about {p.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="range-float" data-range-float aria-hidden="true"><img alt="" width="260" height="196" /></div>
+</section>

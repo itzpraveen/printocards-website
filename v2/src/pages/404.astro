@@ -1,0 +1,27 @@
+---
+import { asset } from '../data/url';
+import Base from '../layouts/Base.astro';
+import { waLink } from '../data/site';
+---
+<Base title="Page not found | Printo Cards" path="/404" noindex>
+  <main id="main" class="notfound">
+    <a class="nf-logo" href={asset("/")} aria-label="Printo Cards & Technologies, home"><img src={asset("/brand/printo-logo.svg")} alt="" width="142" height="48" /></a>
+    <p class="nf-code">404</p>
+    <h1 class="display">This card isn't in the deck.</h1>
+    <p class="nf-text">The page you're looking for has moved or doesn't exist. Everything we make is on the home page.</p>
+    <div class="nf-actions">
+      <a class="btn btn-dark" href={asset("/")}>Go to the home page</a>
+      <a class="btn btn-ghost" href={waLink('Hi Printo, I could not find a page on your website.')} target="_blank" rel="noopener">Ask us on WhatsApp</a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .notfound { min-height: 100svh; background: var(--orange); padding: 28px var(--pad) 64px; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+  .nf-logo { position: absolute; top: 20px; left: var(--pad); background: rgba(255,255,255,.94); border-radius: 999px; padding: 12px 28px; }
+  .nf-logo img { height: 34px; width: auto; }
+  .nf-code { font-weight: 800; font-stretch: 75%; font-size: 18px; }
+  .notfound h1 { font-size: clamp(44px, 8vw, 120px); max-width: 12ch; }
+  .nf-text { font-size: 18px; max-width: 44ch; }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+</style>

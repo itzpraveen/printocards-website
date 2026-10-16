@@ -1,0 +1,103 @@
+---
+import { asset, isPreview } from '../data/url';
+import '../styles/global.css';
+import { site, contact, faqs, profiles } from '../data/site';
+
+interface Props { title?: string; description?: string; path?: string; faq?: boolean; noindex?: boolean }
+const { title = site.title, description = site.description, path = '/', faq = false, noindex = false } = Astro.props;
+// Absolute URLs follow the build's site + base (printocards.com in production, GitHub Pages for previews)
+const origin = Astro.site ?? new URL(site.url);
+const abs = (p: string) => new URL(asset(p), origin).href;
+const canonical = abs(path);
+const ogImage = abs('/og.jpg');
+const home = abs('/');
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${home}#business`,
+  name: site.name,
+  url: home,
+  image: ogImage,
+  logo: abs('/brand/printo-logo.svg'),
+  description: site.description,
+  telephone: contact.office.tel,
+  email: contact.emails[0],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.officeAddress.street,
+    addressLocality: contact.officeAddress.locality,
+    postalCode: contact.officeAddress.postalCode,
+    addressRegion: 'Kerala',
+    addressCountry: 'IN',
+  },
+  department: {
+    '@type': 'LocalBusiness',
+    name: `${site.name} factory`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: contact.factoryAddress.street,
+      addressLocality: contact.factoryAddress.locality,
+      postalCode: contact.factoryAddress.postalCode,
+      addressRegion: 'Kerala',
+      addressCountry: 'IN',
+    },
+  },
+  areaServed: 'IN',
+  sameAs: profiles.map((p) => p.href),
+  contactPoint: contact.mobiles.map((m) => ({ '@type': 'ContactPoint', telephone: m.tel, contactType: 'sales' })),
+};
+
+const faqPage = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#F26B35" />
+    <link rel="icon" type="image/svg+xml" href={asset("/favicon.svg")} />
+    <link rel="apple-touch-icon" href={asset("/apple-touch-icon.png")} />
+    {(noindex || isPreview) && <meta name="robots" content="noindex" />}
+    <style is:inline set:html={[400, 600, 700].map((w) => `@font-face{font-family:'Titillium Web';src:url('${asset(`/fonts/titillium-web-${w}.woff2`)}') format('woff2');font-weight:${w};font-style:normal;font-display:swap}`).join('')} />
+    <link rel="preload" href={asset("/fonts/titillium-web-700.woff2")} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={asset("/fonts/titillium-web-400.woff2")} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Printo logo printed on a white card beside a Printo security ID badge on a lanyard, with the headline End-to-end card solutions" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="geo.region" content="IN-KL" />
+    <meta name="geo.placename" content="Kozhikode" />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+    {faq && <script type="application/ld+json" set:html={JSON.stringify(faqPage)} />}
+    <script is:inline>
+      // Decide the motion tier before first paint so no layout jumps later.
+      (function () {
+        var d = document.documentElement;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var gl = false;
+        gl = 'WebGL2RenderingContext' in window; // three.js needs WebGL2; a cheap check, no context created
+        d.classList.add(reduce || !gl ? 'is-static' : 'is-motion');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>
