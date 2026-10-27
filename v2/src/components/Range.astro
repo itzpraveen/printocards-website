@@ -2,6 +2,7 @@
 import { asset } from '../data/url';
 import { families, productCount, waLink } from '../data/site';
 import { dims } from '../data/dims';
+import PrintOptions from './PrintOptions.astro';
 ---
 <section class="range wrap" id="products" aria-labelledby="range-title" data-range>
   <div class="range-head">
@@ -33,6 +34,7 @@ import { dims } from '../data/dims';
               </li>
             ))}
           </ul>
+          {f.printOptions && <PrintOptions />}
         </div>
       </div>
     ))}

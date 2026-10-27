@@ -48,7 +48,7 @@ export const profiles = [
 ];
 
 export type Product = { name: string; image: string; spec: string };
-export type Family = { id: string; name: string; image: string; summary: string; products: Product[] };
+export type Family = { id: string; name: string; image: string; summary: string; products: Product[]; printOptions?: boolean };
 
 export const families: Family[] = [
   {
@@ -69,6 +69,7 @@ export const families: Family[] = [
     name: 'PVC cards',
     image: '/images/pvc-id-cards.webp',
     summary: 'ID cards, Zebra and Pacto ID blanks, pre-printed, hospital OP, privilege, loyalty, membership, gift',
+    printOptions: true,
     products: [
       { name: 'PVC ID cards', image: '/images/pvc-id-cards.webp', spec: 'Glossy, matte, frosted or UV. Holder or lanyard attached' },
       { name: 'Zebra PVC blank cards', image: '/images/zebra-pvc-blank-cards.webp', spec: '86 × 54 mm, 30 mil, glossy. Box of 500' },
@@ -118,6 +119,21 @@ export const families: Family[] = [
     ],
   },
 ];
+
+// Extras a printed card can carry, shown under the PVC cards family. The client asked for this list
+// on 2026-10-27, modelled on the "Print options" of vigorprinting.com/plastic-cards.html.
+export const printOptions = [
+  { id: 'foil', name: 'Hot foil stamping' },
+  { id: 'magstripe', name: 'Magnetic stripe and encoding' },
+  { id: 'emboss', name: 'Embossing' },
+  { id: 'punch', name: 'Hole punch and slot' },
+  { id: 'laminate', name: 'Lamination' },
+  { id: 'codes', name: 'Barcodes and QR codes' },
+  { id: 'spotuv', name: 'Spot UV' },
+  { id: 'scratch', name: 'Scratch-off panel' },
+  { id: 'signature', name: 'Signature panel' },
+  { id: 'pantone', name: 'Pantone colours' },
+] as const;
 
 export const productCount = families.reduce((n, f) => n + f.products.length, 0);
 

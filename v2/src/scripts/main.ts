@@ -169,7 +169,7 @@ $<HTMLInputElement>('[data-try-name]')?.addEventListener('input', (e) => setName
     const row = $<HTMLButtonElement>('[data-fam-row]', fam)!;
     const panel = $('[data-fam-panel]', fam)!;
     row.addEventListener('click', () => {
-      const cards = $$('.product', panel);
+      const cards = $$('.product, .popt', panel);
       gsap.killTweensOf([panel, ...cards]);
       const open = row.getAttribute('aria-expanded') === 'true';
       row.setAttribute('aria-expanded', String(!open));

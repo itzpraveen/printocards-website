@@ -1,0 +1,35 @@
+---
+import { printOptions, waLink } from '../data/site';
+
+// Each icon is a CR80 card outline in black with the option drawn on it in brand colours.
+type Id = (typeof printOptions)[number]['id'];
+const marks: Record<Id, string> = {
+  foil: '<path class="f-amber" d="M28 9.5l2.6 6.9 6.9 2.6-6.9 2.6L28 28.5l-2.6-6.9-6.9-2.6 6.9-2.6z"/><path class="f-amber" d="M41.5 8.5l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/>',
+  magstripe: '<path class="f-black" d="M4 9h48v7H4z"/><path class="s-orange" d="M10 23.5h4l2-3 3 6 3-6 3 6 3-6 2 3h4"/>',
+  emboss: '<g class="f-orange" stroke="none"><rect x="11.5" y="18.5" width="7" height="7" rx="1.5"/><rect x="21.5" y="18.5" width="7" height="7" rx="1.5"/><rect x="31.5" y="18.5" width="7" height="7" rx="1.5"/><rect x="41.5" y="18.5" width="5" height="7" rx="1.5"/></g><g class="s-black f-white"><rect x="10" y="16.5" width="7" height="7" rx="1.5"/><rect x="20" y="16.5" width="7" height="7" rx="1.5"/><rect x="30" y="16.5" width="7" height="7" rx="1.5"/><rect x="40" y="16.5" width="5" height="7" rx="1.5"/></g>',
+  punch: '<rect class="s-orange" x="21" y="8" width="14" height="4" rx="2"/><circle class="s-orange" cx="11" cy="11" r="2.5"/><path d="M10 25h18M10 29h11"/>',
+  laminate: '<path class="s-orange f-film" d="M11 1.5h40a4 4 0 0 1 4 4V25l-7 7H11a4 4 0 0 1-4-4V5.5a4 4 0 0 1 4-4z"/><path class="s-orange f-white" d="M55 25l-7 7v-5a2 2 0 0 1 2-2z"/>',
+  codes: '<path class="s-black" d="M10 12v15M12.5 12v15M16 12v15M19 12v15M21 12v15M24.5 12v15M27 12v15" stroke-width="1.5"/><path d="M16.5 12v15" class="s-black" stroke-width="2.5"/><rect class="s-orange" x="34" y="12" width="14" height="14" rx="1"/><path class="f-orange" stroke="none" d="M36.5 14.5h3.5V18h-3.5zM42 14.5h3.5V18H42zM36.5 20h3.5v3.5h-3.5zM43 21h2v2h-2z"/>',
+  spotuv: '<circle class="f-orange" cx="28" cy="19" r="9"/><path class="s-white" d="M23 17.5l5.5-5.5M24.5 22l9-9" stroke-width="2"/>',
+  scratch: '<path class="f-grey" d="M11 14h22l-2 2.25 2 2.25-2 2.25 2 2.25-2 2.25 2 2.25H11z"/><path d="M36.5 18v7M40 18v7M43.5 18v7"/>',
+  signature: '<rect class="f-white" x="9" y="14" width="38" height="11" rx="1.5"/><path class="s-orange" d="M13 22c2-5 3.5-6 4-4s-1 5 1 4 3-6 4.5-4-.5 4 1.5 3.5 2.5-3 4-2.5 1 2 3 1.5 3-1.5 5-1.5"/>',
+  pantone: '<circle class="f-orange" cx="20" cy="19" r="7"/><circle class="f-amber" cx="28" cy="19" r="7"/><circle class="f-lime" cx="36" cy="19" r="7"/>',
+};
+---
+<div class="popts">
+  <div class="popts-head">
+    <h4>Print options</h4>
+    <a href={waLink("Hi Printo, I'd like to ask about print options for PVC cards.")} target="_blank" rel="noopener">Ask about print options</a>
+  </div>
+  <ul class="popt-grid">
+    {printOptions.map((o) => (
+      <li class="popt">
+        <svg viewBox="0 0 56 40" width="56" height="40" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect class="popt-card" x="4" y="4" width="48" height="30" rx="4" />
+          <Fragment set:html={marks[o.id]} />
+        </svg>
+        <span>{o.name}</span>
+      </li>
+    ))}
+  </ul>
+</div>
