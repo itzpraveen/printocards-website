@@ -16,10 +16,16 @@ const marks: Record<Id, string> = {
   pantone: '<circle class="f-orange" cx="20" cy="19" r="7"/><circle class="f-amber" cx="28" cy="19" r="7"/><circle class="f-lime" cx="36" cy="19" r="7"/>',
 };
 ---
-<div class="popts">
+<section class="popts" id="print-options" aria-labelledby="popts-title">
   <div class="popts-head">
-    <h4>Print options</h4>
-    <a href={waLink("Hi Printo, I'd like to ask about print options for PVC cards.")} target="_blank" rel="noopener">Ask about print options</a>
+    <div>
+      <p class="num">05 of 06</p>
+      <h2 class="display" id="popts-title" data-press>Print options.</h2>
+    </div>
+    <div class="popts-side">
+      <p>Extras that go on after the print and finish. Tell us what the card is for and we'll suggest the right ones.</p>
+      <a class="btn btn-dark" href={waLink("Hi Printo, I'd like to ask about print options for my cards.")} target="_blank" rel="noopener">Ask about print options</a>
+    </div>
   </div>
   <ul class="popt-grid">
     {printOptions.map((o) => (
@@ -28,8 +34,9 @@ const marks: Record<Id, string> = {
           <rect class="popt-card" x="4" y="4" width="48" height="30" rx="4" />
           <Fragment set:html={marks[o.id]} />
         </svg>
-        <span>{o.name}</span>
+        <h3>{o.name}</h3>
+        <p>{o.note}</p>
       </li>
     ))}
   </ul>
-</div>
+</section>

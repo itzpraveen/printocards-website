@@ -48,7 +48,7 @@ export const profiles = [
 ];
 
 export type Product = { name: string; image: string; spec: string };
-export type Family = { id: string; name: string; image: string; summary: string; products: Product[]; printOptions?: boolean };
+export type Family = { id: string; name: string; image: string; summary: string; products: Product[] };
 
 export const families: Family[] = [
   {
@@ -69,7 +69,6 @@ export const families: Family[] = [
     name: 'PVC cards',
     image: '/images/pvc-id-cards.webp',
     summary: 'ID cards, Zebra and Pacto ID blanks, pre-printed, hospital OP, privilege, loyalty, membership, gift',
-    printOptions: true,
     products: [
       { name: 'PVC ID cards', image: '/images/pvc-id-cards.webp', spec: 'Glossy, matte, frosted or UV. Holder or lanyard attached' },
       { name: 'Zebra PVC blank cards', image: '/images/zebra-pvc-blank-cards.webp', spec: '86 × 54 mm, 30 mil, glossy. Box of 500' },
@@ -120,19 +119,20 @@ export const families: Family[] = [
   },
 ];
 
-// Extras a printed card can carry, shown under the PVC cards family. The client asked for this list
-// on 2026-10-27, modelled on the "Print options" of vigorprinting.com/plastic-cards.html.
+// Extras a printed card can carry, shown as their own section after the story. The client asked for
+// this list on 2026-10-27, modelled on the "Print options" of vigorprinting.com/plastic-cards.html,
+// and on 2026-10-30 asked for it on the home page, open like the finish and chip chapters.
 export const printOptions = [
-  { id: 'foil', name: 'Hot foil stamping' },
-  { id: 'magstripe', name: 'Magnetic stripe and encoding' },
-  { id: 'emboss', name: 'Embossing' },
-  { id: 'punch', name: 'Hole punch and slot' },
-  { id: 'laminate', name: 'Lamination' },
-  { id: 'codes', name: 'Barcodes and QR codes' },
-  { id: 'spotuv', name: 'Spot UV' },
-  { id: 'scratch', name: 'Scratch-off panel' },
-  { id: 'signature', name: 'Signature panel' },
-  { id: 'pantone', name: 'Pantone colours' },
+  { id: 'foil', name: 'Hot foil stamping', note: 'Metallic foil pressed onto a logo or text.' },
+  { id: 'magstripe', name: 'Magnetic stripe and encoding', note: 'A stripe on the back, encoded with your data.' },
+  { id: 'emboss', name: 'Embossing', note: 'Raised names and numbers, as on a bank card.' },
+  { id: 'punch', name: 'Hole punch and slot', note: 'A hole or slot for a lanyard or clip.' },
+  { id: 'laminate', name: 'Lamination', note: 'A clear film that protects the print.' },
+  { id: 'codes', name: 'Barcodes and QR codes', note: 'A different code on every card, from your list.' },
+  { id: 'spotuv', name: 'Spot UV', note: 'A raised gloss layer on the areas you pick.' },
+  { id: 'scratch', name: 'Scratch-off panel', note: 'Hides a PIN or code until it is scratched.' },
+  { id: 'signature', name: 'Signature panel', note: 'A strip that takes a pen signature.' },
+  { id: 'pantone', name: 'Pantone colours', note: 'Brand colours matched to a Pantone shade.' },
 ] as const;
 
 export const productCount = families.reduce((n, f) => n + f.products.length, 0);

@@ -169,7 +169,7 @@ $<HTMLInputElement>('[data-try-name]')?.addEventListener('input', (e) => setName
     const row = $<HTMLButtonElement>('[data-fam-row]', fam)!;
     const panel = $('[data-fam-panel]', fam)!;
     row.addEventListener('click', () => {
-      const cards = $$('.product, .popt', panel);
+      const cards = $$('.product', panel);
       gsap.killTweensOf([panel, ...cards]);
       const open = row.getAttribute('aria-expanded') === 'true';
       row.setAttribute('aria-expanded', String(!open));
@@ -212,6 +212,11 @@ $<HTMLInputElement>('[data-try-name]')?.addEventListener('input', (e) => setName
     addEventListener('scroll', hideFloat, { passive: true });
     document.documentElement.addEventListener('mouseleave', hideFloat);
   }
+}
+
+/* ---------- print options: tiles land in turn ---------- */
+if (motion) {
+  gsap.from('.popt', { y: 30, opacity: 0, duration: 0.55, ease: 'power3.out', stagger: 0.05, scrollTrigger: { trigger: '.popt-grid', start: 'top 85%', once: true } });
 }
 
 /* ---------- print in-house: printers at different speeds, a card ejects ---------- */
