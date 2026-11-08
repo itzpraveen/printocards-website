@@ -17,12 +17,13 @@ const wa = waLink('Hi Printo, I would like a quote for cards.');
     <img class="hs-card" data-hero-card src={asset("/images/badge-front.webp")} srcset={`${asset("/images/badge-front-360.webp")} 360w, ${asset("/images/badge-front.webp")} 640w`} sizes="(max-width: 760px) 36vw, 24vh" alt="" width="640" height="1019" fetchpriority="high" />
   </div>
 
-  <!-- The original colour logo, printed onto a blank white card as the page opens. The logo's
-       orange chip needs a white surface, and a printed card is what Printo makes. -->
+  <!-- The client's 20-years emblem (2026-11-09, in place of the logo), printed onto a blank white
+       card as the page opens. Its orange ribbon needs a white surface on the orange hero, and a
+       printed card is what Printo makes. Lazy, so phones, where the card is hidden, skip it. -->
   <div class="hero-brand" aria-hidden="true">
     <div class="hb-float">
       <div class="hb-card">
-        <div class="hb-print"><img src={asset("/brand/printo-logo.svg")} alt="" width="477" height="162" /></div>
+        <div class="hb-print"><img src={asset("/brand/printo-20-years.webp")} srcset={`${asset("/brand/printo-20-years-520.webp")} 520w, ${asset("/brand/printo-20-years.webp")} 1000w`} sizes="25vh" alt="" width="1000" height="737" loading="lazy" decoding="async" /></div>
         <span class="hb-head"></span>
         <span class="hb-sheen"></span>
       </div>

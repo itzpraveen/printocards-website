@@ -55,13 +55,24 @@ export const families: Family[] = [
     id: 'card-printers',
     name: 'Card printers',
     image: '/images/zebra-zc-300.webp',
-    summary: 'Evolis Primacy 2, Evolis Agilia, Evolis Zenius, Zebra ZC 300, IDP Solid 510D',
+    summary: 'Evolis Primacy 2, Evolis Agilia, Evolis Zenius, Evolis Asmi, Zebra ZC 300, IDP Solid 510D',
     products: [
       { name: 'Evolis Primacy 2', image: '/images/evolis-primacy-2.webp', spec: 'For regular ID and membership card printing' },
       { name: 'Evolis Agilia', image: '/images/evolis.webp', spec: 'Retransfer printing, edge to edge' },
       { name: 'Evolis Zenius', image: '/images/evolis-zenius.webp', spec: 'Compact, for small-volume runs' },
+      { name: 'Evolis Asmi', image: '/images/evolis-asmi.webp', spec: 'Colour printing at 300 dpi' },
       { name: 'Zebra ZC 300', image: '/images/zebra-zc-300.webp', spec: 'For ID, access and personalised cards' },
       { name: 'IDP Solid 510D', image: '/images/solid-idp-510d.webp', spec: 'For everyday PVC card personalisation' },
+    ],
+  },
+  // Asked for on 2026-11-09 as its own family, straight under the card printers, with the photo the client sent.
+  {
+    id: 'printer-consumables',
+    name: 'Card printer consumables and accessories',
+    image: '/images/printer-consumables.webp',
+    summary: 'Ribbons, cleaning cards and cleaning kits for Evolis, Zebra and Datacard printers',
+    products: [
+      { name: 'Printer consumables', image: '/images/printer-consumables.webp', spec: 'Colour and monochrome ribbons, cleaning cards and cleaning kits' },
     ],
   },
   {
@@ -85,9 +96,9 @@ export const families: Family[] = [
     id: 'smart-cards',
     name: 'Smart cards',
     image: '/images/pvc-nfc-card.webp',
-    summary: 'MIFARE and HF RFID, proximity, NFC, hotel key cards, wooden cards',
+    summary: 'LF / HF smart cards, proximity, NFC, hotel key cards, wooden cards',
     products: [
-      { name: 'MIFARE and HF RFID cards', image: '/images/pvc-mifare-card-hf-rfid-card.webp', spec: '13.56 MHz. Printed or blank' },
+      { name: 'LF / HF smart cards', image: '/images/pvc-mifare-card-hf-rfid-card.webp', spec: 'LF 125 kHz or HF 13.56 MHz. Printed or blank' },
       { name: 'RFID proximity cards', image: '/images/pvc-rfid-proximity-card.webp', spec: 'TK4100, 125 kHz. Printed or blank' },
       { name: 'NFC cards', image: '/images/pvc-nfc-card.webp', spec: 'NTAG 213, 215 or 216. Printed or blank' },
       { name: 'Hotel key cards', image: '/images/pvc-hotel-key-cards.webp', spec: 'LF or HF, printed with your hotel branding' },
@@ -98,11 +109,11 @@ export const families: Family[] = [
     id: 'card-accessories',
     name: 'Card accessories',
     image: '/images/multicolour-lanyards.webp',
-    summary: 'Multicolour lanyards, card holders, yoyo reels',
+    summary: 'Multicolour lanyards, card holders, yoyo retractable reels',
     products: [
       { name: 'Multicolour lanyards', image: '/images/multicolour-lanyards.webp', spec: '12, 16, 20 or 25 mm. Dog, side-lever, J or plastic hook' },
       { name: 'Card holders', image: '/images/card-holders.webp', spec: 'Plastic, acrylic, polycarbonate or metal. Horizontal or vertical' },
-      { name: 'Yoyo reels', image: '/images/yoyo.webp', spec: 'Round or oval, epoxy or UV. Five colours' },
+      { name: 'Yoyo retractable reels', image: '/images/yoyo.webp', spec: 'Round or oval, epoxy or UV. Five colours' },
     ],
   },
   {
@@ -138,11 +149,12 @@ export const printOptions = [
 export const productCount = families.reduce((n, f) => n + f.products.length, 0);
 
 export const industries = [
-  { name: 'Offices', tone: 'orange', image: '/images/multicolour-lanyards.webp', fit: 'cover', lead: 'Staff ID, access and visitor passes', uses: 'PVC ID cards, RFID access cards, lanyards, holders and yoyo reels' },
+  { name: 'Offices', tone: 'orange', image: '/images/multicolour-lanyards.webp', fit: 'cover', lead: 'Staff ID, access and visitor passes', uses: 'PVC ID cards, RFID access cards, lanyards, holders and yoyo retractable reels' },
   { name: 'Hospitals', tone: 'black', image: '/images/hospital-op-cards.webp', fit: 'contain', lead: 'Patient registration and OP cards', uses: 'Pre-printed OP cards, staff ID cards and visitor badges' },
   { name: 'Hotels', tone: 'lime', image: '/images/pvc-hotel-key-cards.webp', fit: 'contain', lead: 'Room keys guests remember', uses: 'PVC and wooden key cards, LF and HF' },
   { name: 'Schools', tone: 'charcoal', image: '/images/pvc-id-cards.webp', fit: 'cover', lead: 'Student and staff ID', uses: 'PVC ID cards, lanyards, card holders and RFID cards' },
   { name: 'Gyms and clubs', tone: 'amber', image: '/images/pvc-rfid-proximity-card.webp', fit: 'contain', lead: 'Membership and entry', uses: 'Membership cards, proximity cards and RFID wristbands' },
+  { name: 'Game centres', tone: 'lime', image: '/images/rfid-silicon-wristband.webp', fit: 'contain', lead: 'Play cards and entry', uses: 'LF / HF smart cards, RFID wristbands, and membership and gift cards' },
   { name: 'Shops', tone: 'black', image: '/images/pvc-gift-card.webp', fit: 'contain', lead: 'Loyalty, gift and privilege', uses: 'Loyalty, gift and privilege cards, and keychains' },
   { name: 'Events', tone: 'orange', image: '/images/event-badge.webp', fit: 'contain', lead: 'Badges, passes and wristbands', uses: 'Event badges, button badges, RFID wristbands and lanyards' },
 ] as const;
@@ -166,7 +178,7 @@ export const faqs = [
   },
   {
     q: 'Do you sell card printers and supplies?',
-    a: 'Yes. We supply Evolis Primacy 2, Evolis Agilia, Evolis Zenius, Zebra ZC 300 and IDP Solid 510D printers, plus Zebra and Pacto ID blank cards and printer ribbons.',
+    a: 'Yes. We supply Evolis Primacy 2, Evolis Agilia, Evolis Zenius, Evolis Asmi, Zebra ZC 300 and IDP Solid 510D printers, plus Zebra and Pacto ID blank cards, ribbons and cleaning kits.',
   },
   {
     q: 'Where are you based?',

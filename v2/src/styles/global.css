@@ -176,8 +176,8 @@ address { font-style: normal; }
 .hs-straps { position: absolute; top: 0; width: calc(var(--ch) * .512); left: calc(var(--cx) - var(--ch) * .256); height: calc(var(--cy) - var(--ch) * .54); }
 .hs-clip { position: absolute; width: calc(var(--ch) * .07); height: calc(var(--ch) * .08); left: calc(var(--cx) - var(--ch) * .035); top: calc(var(--cy) - var(--ch) * .575); background: #77777a; border-radius: 3px; }
 
-/* brand card: the logo printed onto a white CR80 card, level with the badge, in the space left of it.
-   It deals in, a print head lays the logo down, then a holographic sheen passes every few seconds.
+/* brand card: the 20-years emblem printed onto a white CR80 card, level with the badge, in the space left of it.
+   It deals in, a print head lays the emblem down, then a holographic sheen passes every few seconds.
    --px and --py follow the pointer once the 3D scene runs, so the card tilts with the badge's light. */
 /* below ~1000px the intro and buttons stack, so the text block is ~70px taller (1023 leaves room for a scrollbar) */
 @media (max-width: 1023px) { .hero { --block: calc(.9 * var(--fs) + 52px + 203px + clamp(78px, 11vh, 116px)); } }
@@ -191,7 +191,7 @@ address { font-style: normal; }
   transform: rotateY(calc(14deg + var(--px, 0) * 10deg)) rotateX(calc(6deg - var(--py, 0) * 8deg)) rotate(-4deg);
 }
 .hb-print { position: absolute; inset: 0; display: grid; place-items: center; }
-.hb-print img { width: 76%; height: auto; }
+.hb-print img { width: 68%; height: auto; }
 .hb-head { position: absolute; inset: 0; opacity: 0; }
 /* the print head: a dark line with wet cyan, magenta and yellow ink trailing behind it */
 .hb-head::before { content: ''; position: absolute; top: 0; bottom: 0; right: 100%; width: 18%; background: linear-gradient(90deg, rgba(255,242,18,0), rgba(255,242,18,.4) 35%, rgba(236,0,140,.28) 70%, rgba(0,174,239,.42) 97%, var(--black) 97%); }
@@ -371,7 +371,7 @@ address { font-style: normal; }
   transition: background-color .3s, color .3s;
 }
 .fam-count { font-size: 15px; font-weight: 700; }
-.fam-name { font-size: clamp(30px, 3.3vw, 46px); font-weight: 700; letter-spacing: -0.01em; line-height: 1; }
+.fam-name { font-size: clamp(30px, 3.3vw, 46px); font-weight: 700; letter-spacing: -0.01em; line-height: 1; text-wrap: balance; }
 .fam-sum { font-size: 14.5px; color: var(--ink-2); line-height: 1.45; font-weight: 400; }
 .fam-go { width: 44px; height: 44px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px currentColor; display: grid; place-items: center; transition: transform .35s var(--ease), background-color .3s; }
 .fam-row[aria-expanded="true"] .fam-go { transform: rotate(45deg); }
@@ -530,7 +530,7 @@ address { font-style: normal; }
   .scrollcue { display: none; }
   .hero-lede { order: 5; padding-inline: var(--gutter); margin-top: 22px; font-size: 15.5px; line-height: 1.5; max-width: 44ch; position: relative; z-index: 3; }
   /* The badge hangs alone, centred between the nav and the headline. The brand card is left out:
-     the nav pill already carries the colour logo, so here it would be the third logo on screen.
+     beside the badge it would crowd the screen and push the button below the fold.
      --ch leaves ~390px for the nav, headline, button and facts, so all of them show on a
      390x664 iPhone in Safari; --art splits any spare height on tall phones around the badge. */
   .hero {

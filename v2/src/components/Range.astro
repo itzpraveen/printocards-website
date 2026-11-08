@@ -1,12 +1,14 @@
 ---
 import { asset } from '../data/url';
 import { families, productCount, waLink } from '../data/site';
+const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const familyCount = words[families.length] ?? families.length;
 import { dims } from '../data/dims';
 ---
 <section class="range wrap" id="products" aria-labelledby="range-title" data-range>
   <div class="range-head">
     <h2 class="display" id="range-title" data-press>Everything around the card.</h2>
-    <p>{productCount} products in five families, from blank cards to the printers that personalise them. Open a family to see each product.</p>
+    <p>{productCount} products in {familyCount} families, from blank cards to the printers that personalise them. Open a family to see each product.</p>
   </div>
 
   <div class="fams">
