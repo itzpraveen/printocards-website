@@ -7,12 +7,13 @@ npm ci
 npm run dev            # http://localhost:4321
 npm run build          # production build in dist/, for printocards.com
 npm run preview        # serve dist/
-npm run deploy:pages   # publish the preview to GitHub Pages
+npm run deploy:production   # publish to https://printocards.com
 ```
 
-- **Preview:** https://itzpraveen.github.io/printocards-website/ (noindex, so it stays out of search results).
-- **Production:** `npm run build` targets https://printocards.com at the domain root. It is indexable and includes a sitemap.
-- **Hosting:** the site is fully static, so `dist/` can go on any host.
+- **Production:** https://printocards.com, live since 2026-11-13. GitHub Pages serves the `gh-pages` branch of this repo. `npm run deploy:production` builds for the domain root (indexable, with a sitemap) and publishes it with the `CNAME` file that keeps the domain attached.
+- **DNS** is at GoDaddy: four A records to GitHub Pages (185.199.108–111.153) and `www` as a CNAME to `itzpraveen.github.io`. Mail (MX, SPF) is Google Workspace and is separate.
+- **Old addresses:** `/about/`, `/services/` and `/contact/` from the WordPress site redirect to the matching sections (`redirects` in `astro.config.mjs`).
+- **No preview address any more.** The old one, itzpraveen.github.io/printocards-website, now redirects to the domain. Never push a sub-path build to `gh-pages`: it would break the live site. To preview, run `npm run build && npm run preview` locally, or publish a build with `SITE_URL`, `BASE_PATH` and `PUBLIC_PREVIEW=1` set to a different repo.
 
 ## How it is put together
 
