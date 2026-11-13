@@ -154,7 +154,7 @@ export const industries = [
   { name: 'Hotels', tone: 'lime', image: '/images/pvc-hotel-key-cards.webp', fit: 'contain', lead: 'Room keys guests remember', uses: 'PVC and wooden key cards, LF and HF' },
   { name: 'Schools', tone: 'charcoal', image: '/images/pvc-id-cards.webp', fit: 'cover', lead: 'Student and staff ID', uses: 'PVC ID cards, lanyards, card holders and RFID cards' },
   { name: 'Gyms and clubs', tone: 'amber', image: '/images/pvc-rfid-proximity-card.webp', fit: 'contain', lead: 'Membership and entry', uses: 'Membership cards, proximity cards and RFID wristbands' },
-  { name: 'Game centres', tone: 'lime', image: '/images/rfid-silicon-wristband.webp', fit: 'contain', lead: 'Play cards and entry', uses: 'LF / HF smart cards, RFID wristbands, and membership and gift cards' },
+  { name: 'Game centres', tone: 'lime', image: '/images/game-centre-play-card.webp', fit: 'contain', lead: 'Play cards and entry', uses: 'LF / HF smart cards, RFID wristbands, and membership and gift cards' },
   { name: 'Shops', tone: 'black', image: '/images/pvc-gift-card.webp', fit: 'contain', lead: 'Loyalty, gift and privilege', uses: 'Loyalty, gift and privilege cards, and keychains' },
   { name: 'Events', tone: 'orange', image: '/images/event-badge.webp', fit: 'contain', lead: 'Badges, passes and wristbands', uses: 'Event badges, button badges, RFID wristbands and lanyards' },
 ] as const;

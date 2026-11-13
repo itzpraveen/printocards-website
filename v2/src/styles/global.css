@@ -529,18 +529,24 @@ address { font-style: normal; }
   .facts { gap: 6px 16px; font-size: 13.5px; }
   .scrollcue { display: none; }
   .hero-lede { order: 5; padding-inline: var(--gutter); margin-top: 22px; font-size: 15.5px; line-height: 1.5; max-width: 44ch; position: relative; z-index: 3; }
-  /* The badge hangs alone, centred between the nav and the headline. The brand card is left out:
-     beside the badge it would crowd the screen and push the button below the fold.
+  /* The badge and the 20-years card hang as a centred pair between the nav and the headline.
+     The card sits left of the badge and takes no height of its own, so the button stays above
+     the fold. The badge overlaps the card's blank right margin only, never the emblem.
      --ch leaves ~390px for the nav, headline, button and facts, so all of them show on a
      390x664 iPhone in Safari; --art splits any spare height on tall phones around the badge. */
   .hero {
     --top: 88px;
     --ch: min(64vw, calc((var(--hh) - 390px) / 1.1));
     --art: max(calc(var(--ch) * 1.1), calc(var(--hh) - var(--top) - 24px - 450px));
-    --cx: 50%;
+    --wb: calc(var(--ch) * .628);
+    --bw: min(44vw, calc(var(--ch) * .72));
+    --lap: calc(var(--ch) * .035);
+    --side: calc((100vw - var(--bw) - var(--wb) + var(--lap)) / 2);
+    --cx: calc(100vw - var(--side) - var(--wb) / 2);
     --cy: calc(var(--top) + var(--art) / 2 + var(--ch) * .02);
   }
-  .hero-brand { display: none; }
+  .hero-brand { left: var(--side); top: calc(var(--cy) + var(--ch) * .1); }
+  .hb-print img { width: 76%; }
   .is-motion .chapters { left: var(--gutter); right: var(--gutter); width: auto; align-items: start; padding-top: 84px; }
   .chapter h2 { font-size: clamp(36px, 10vw, 48px); margin: 8px 0 12px; }
   .chapter .lead { font-size: 15.5px; }
@@ -567,9 +573,11 @@ address { font-style: normal; }
   .sticky-bar .btn { padding: 15px 10px; box-shadow: 0 10px 30px -10px rgba(0,0,0,.45); }
 }
 
-/* phones held sideways: no brand card, as on phones */
+/* phones held sideways: the badge is small here, so the 20-years card moves in beside it
+   instead of sitting alone at the left edge */
 @media (min-width: 761px) and (max-height: 520px) {
-  .hero-brand { display: none; }
+  .hero { --bw: calc(var(--ch) * 1.15); }
+  .hero-brand { left: calc(var(--cx) - var(--ch) * .314 - var(--bw) - var(--ch) * .14); }
 }
 
 @media (prefers-reduced-motion: reduce) {

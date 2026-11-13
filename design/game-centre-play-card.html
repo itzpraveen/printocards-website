@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'TW'; font-weight: 700; src: url('../v2/public/fonts/titillium-web-700.woff2') format('woff2'); }
+  @font-face { font-family: 'TW'; font-weight: 600; src: url('../v2/public/fonts/titillium-web-600.woff2') format('woff2'); }
+  html, body { margin: 0; background: #fff; }
+  .stage { width: 1200px; height: 800px; display: grid; place-items: center; perspective: 2600px; background: #fff; }
+  .card {
+    position: relative; width: 880px; height: 552px; border-radius: 34px; overflow: hidden;
+    transform: rotateX(8deg) rotateY(-7deg) rotate(-7deg);
+    box-shadow: 0 2px 0 #cfcfd6, 0 5px 0 #b9b9c2, 0 46px 60px -22px rgba(30, 16, 80, .45), 0 18px 24px -14px rgba(30, 16, 80, .35);
+    font-family: 'TW', sans-serif; font-weight: 700; color: #fff;
+  }
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .gloss { position: absolute; inset: 0; background: linear-gradient(112deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 72%, rgba(255,255,255,.1) 100%); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="card">
+    <svg viewBox="0 0 900 565" preserveAspectRatio="none" font-family="TW, sans-serif" font-weight="700">
+      <defs>
+        <radialGradient id="sky" cx="50%" cy="34%" r="80%">
+          <stop offset="0" stop-color="#6a3df0"/>
+          <stop offset=".45" stop-color="#3a1aa8"/>
+          <stop offset="1" stop-color="#170a52"/>
+        </radialGradient>
+        <linearGradient id="floor" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#ff3d77"/>
+          <stop offset="1" stop-color="#ff9a2e"/>
+        </linearGradient>
+        <linearGradient id="floor2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#ffc021"/>
+          <stop offset="1" stop-color="#ffe45c"/>
+        </linearGradient>
+        <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff3b3b"/>
+          <stop offset="1" stop-color="#d81226"/>
+        </linearGradient>
+        <linearGradient id="disc" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#22d3f5"/>
+          <stop offset="1" stop-color="#0d7fe0"/>
+        </linearGradient>
+        <clipPath id="discclip"><circle cx="450" cy="150" r="96"/></clipPath>
+      </defs>
+
+      <rect width="900" height="565" fill="url(#sky)"/>
+
+      <!-- sunburst behind the emblem -->
+      <g opacity=".16" fill="#fff">
+        <path d="M450 150 L-200 -60 L-200 40 Z"/>
+        <path d="M450 150 L-200 190 L-200 320 Z"/>
+        <path d="M450 150 L-120 620 L40 620 Z"/>
+        <path d="M450 150 L250 640 L400 640 Z"/>
+        <path d="M450 150 L560 640 L720 640 Z"/>
+        <path d="M450 150 L930 620 L1090 560 Z"/>
+        <path d="M450 150 L1100 250 L1100 370 Z"/>
+        <path d="M450 150 L1100 -20 L1100 80 Z"/>
+        <path d="M450 150 L700 -80 L820 -80 Z"/>
+        <path d="M450 150 L380 -80 L500 -80 Z"/>
+        <path d="M450 150 L100 -80 L220 -80 Z"/>
+      </g>
+
+      <!-- confetti -->
+      <g>
+        <circle cx="96" cy="78" r="13" fill="#ffd21f"/>
+        <circle cx="212" cy="170" r="7" fill="#22d3f5"/>
+        <circle cx="770" cy="64" r="9" fill="#ff4f8b"/>
+        <circle cx="664" cy="150" r="6" fill="#ffd21f"/>
+        <circle cx="840" cy="176" r="12" fill="none" stroke="#9cf23c" stroke-width="5"/>
+        <circle cx="150" cy="250" r="10" fill="none" stroke="#ff4f8b" stroke-width="5"/>
+        <path d="M262 62 l7 16 17 2 -13 12 4 17 -15 -9 -15 9 4 -17 -13 -12 17 -2z" fill="#fff"/>
+        <path d="M716 232 l5 12 13 1 -10 9 3 13 -11 -7 -11 7 3 -13 -10 -9 13 -1z" fill="#ffd21f"/>
+        <path d="M52 176 l4 9 10 1 -8 7 3 10 -9 -6 -9 6 3 -10 -8 -7 10 -1z" fill="#9cf23c"/>
+        <path d="M590 52 q12 -14 24 0 t24 0 t24 0" fill="none" stroke="#22d3f5" stroke-width="6" stroke-linecap="round"/>
+        <path d="M300 250 q10 -12 20 0 t20 0" fill="none" stroke="#ffd21f" stroke-width="6" stroke-linecap="round"/>
+        <rect x="822" y="100" width="16" height="16" rx="3" fill="#22d3f5" transform="rotate(24 830 108)"/>
+        <rect x="168" y="118" width="14" height="14" rx="3" fill="#ff4f8b" transform="rotate(-18 175 125)"/>
+      </g>
+
+      <!-- floor waves -->
+      <path d="M0 418 C150 372 300 452 470 410 S760 366 900 404 V565 H0Z" fill="url(#floor)"/>
+      <path d="M0 470 C170 432 330 500 520 462 S790 438 900 468 V565 H0Z" fill="url(#floor2)"/>
+
+      <!-- emblem: a joystick in a disc, with a name ribbon -->
+      <circle cx="450" cy="150" r="112" fill="#fff"/>
+      <circle cx="450" cy="150" r="104" fill="#ffd21f"/>
+      <circle cx="450" cy="150" r="96" fill="url(#disc)"/>
+      <g clip-path="url(#discclip)">
+        <path d="M330 196 C390 170 500 214 580 184 V260 H330Z" fill="#0a5fc4" opacity=".55"/>
+        <!-- joystick -->
+        <ellipse cx="450" cy="196" rx="62" ry="15" fill="#170a52" opacity=".35"/>
+        <path d="M392 166 h116 a10 10 0 0 1 10 10 v12 a10 10 0 0 1 -10 10 h-116 a10 10 0 0 1 -10 -10 v-12 a10 10 0 0 1 10 -10z" fill="#170a52"/>
+        <rect x="443" y="104" width="14" height="66" rx="7" fill="#fff"/>
+        <circle cx="450" cy="92" r="25" fill="#ff3b3b"/>
+        <circle cx="442" cy="84" r="8" fill="#fff" opacity=".55"/>
+        <circle cx="494" cy="181" r="8" fill="#ffd21f"/>
+        <circle cx="408" cy="181" r="8" fill="#9cf23c"/>
+      </g>
+      <g transform="rotate(-3 450 232)">
+        <path d="M262 206 h376 l-18 30 18 30 h-376 l18 -30z" fill="#170a52"/>
+        <rect x="284" y="200" width="332" height="66" rx="8" fill="#fff"/>
+        <text x="450" y="246" text-anchor="middle" font-size="42" letter-spacing="3" fill="#2a1296">GAME ZONE</text>
+      </g>
+      <g transform="rotate(-3 450 290)">
+        <rect x="346" y="274" width="208" height="30" rx="15" fill="#ff3b3b"/>
+        <text x="450" y="296" text-anchor="middle" font-size="18" letter-spacing="2.5" fill="#fff">FAMILY FUN CENTRE</text>
+      </g>
+
+      <!-- main banner -->
+      <g transform="rotate(-5 250 420)">
+        <path d="M-30 330 H468 L440 470 H-30Z" fill="#170a52" opacity=".35" transform="translate(8 10)"/>
+        <path d="M-30 330 H468 L440 470 H-30Z" fill="url(#red)"/>
+        <text x="38" y="408" font-size="79" letter-spacing="1" fill="#fff">PLAY CARD</text>
+        <text x="44" y="452" font-size="31" letter-spacing="3" fill="#ffd21f">TAP AND PLAY</text>
+      </g>
+
+      <!-- tags -->
+      <g transform="rotate(-9 700 330)">
+        <path d="M566 286 H842 L830 340 H554Z" fill="#170a52" opacity=".35" transform="translate(6 8)"/>
+        <path d="M566 286 H842 L830 340 H554Z" fill="#19a54a"/>
+        <text x="698" y="326" text-anchor="middle" font-size="34" letter-spacing="1.5" fill="#fff">ARCADE GAMES</text>
+      </g>
+      <g transform="rotate(-9 720 392)">
+        <path d="M604 352 H900 L888 406 H592Z" fill="#170a52" opacity=".35" transform="translate(6 8)"/>
+        <path d="M604 352 H900 L888 406 H592Z" fill="#7a2be0"/>
+        <text x="742" y="392" text-anchor="middle" font-size="34" letter-spacing="1.5" fill="#fff">RIDES AND VR</text>
+      </g>
+
+      <!-- tap tile -->
+      <g transform="rotate(-9 760 478)">
+        <rect x="690" y="424" width="150" height="104" rx="20" fill="#170a52" opacity=".35" transform="translate(6 8)"/>
+        <rect x="690" y="424" width="150" height="104" rx="20" fill="url(#red)"/>
+        <g fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round">
+          <path d="M738 462 a20 20 0 0 1 0 28"/>
+          <path d="M754 450 a38 38 0 0 1 0 52"/>
+          <path d="M770 438 a56 56 0 0 1 0 76"/>
+        </g>
+        <circle cx="722" cy="476" r="7" fill="#fff"/>
+      </g>
+
+      <!-- card number -->
+      <text x="40" y="538" font-size="22" font-weight="600" letter-spacing="4" fill="#3a1a00" opacity=".8">0042 7781 9305</text>
+    </svg>
+    <div class="gloss"></div>
+  </div>
+</div>
+</body>
+</html>

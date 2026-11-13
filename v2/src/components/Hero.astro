@@ -19,11 +19,11 @@ const wa = waLink('Hi Printo, I would like a quote for cards.');
 
   <!-- The client's 20-years emblem (2026-11-09, in place of the logo), printed onto a blank white
        card as the page opens. Its orange ribbon needs a white surface on the orange hero, and a
-       printed card is what Printo makes. Lazy, so phones, where the card is hidden, skip it. -->
+       printed card is what Printo makes. Shown at every size, phones included (2026-11-13). -->
   <div class="hero-brand" aria-hidden="true">
     <div class="hb-float">
       <div class="hb-card">
-        <div class="hb-print"><img src={asset("/brand/printo-20-years.webp")} srcset={`${asset("/brand/printo-20-years-520.webp")} 520w, ${asset("/brand/printo-20-years.webp")} 1000w`} sizes="25vh" alt="" width="1000" height="737" loading="lazy" decoding="async" /></div>
+        <div class="hb-print"><img src={asset("/brand/printo-20-years.webp")} srcset={`${asset("/brand/printo-20-years-520.webp")} 520w, ${asset("/brand/printo-20-years.webp")} 1000w`} sizes="(max-width: 760px) 30vw, 25vh" alt="" width="1000" height="737" loading="lazy" decoding="async" /></div>
         <span class="hb-head"></span>
         <span class="hb-sheen"></span>
       </div>
