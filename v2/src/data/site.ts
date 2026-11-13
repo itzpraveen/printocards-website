@@ -146,6 +146,9 @@ export const printOptions = [
   { id: 'pantone', name: 'Pantone colours', note: 'Brand colours matched to a Pantone shade.' },
 ] as const;
 
+/** The WhatsApp glyph, as the path of a 24x24 icon. */
+export const WA = 'M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.2c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .3-3.3-.7a11.4 11.4 0 0 1-4.5-4c-.4-.5-1.1-1.6-1.1-3s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.4.8 1.4 1.8 2.3 1.3 1.1 2.3 1.5 2.7 1.6.3.2.5.1.7-.1l1-1.2c.2-.3.4-.3.7-.2l2 1c.3.1.5.2.6.3 0 .2 0 .8-.2 1.3Z';
+
 export const productCount = families.reduce((n, f) => n + f.products.length, 0);
 
 export const industries = [

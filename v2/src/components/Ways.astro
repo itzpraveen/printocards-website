@@ -16,7 +16,7 @@ import { dims } from '../data/dims';
       <div class="way">
         <h3>Print in-house</h3>
         <p>Card printers, ribbons and blank cards for teams that issue cards every day.</p>
-        <p class="brands"><span>Evolis</span><span>Zebra</span><span>IDP</span><span>Pacto ID</span></p>
+        <a class="btn btn-ghost-light" href={waLink('Hi Printo, I would like help choosing a card printer.')} target="_blank" rel="noopener">Help me choose a printer</a>
         <div class="printers">
           <figure class="pr" data-speed="0.75"><img src={asset("/images/evolis-primacy-2.webp")} {...dims("/images/evolis-primacy-2.webp")} alt="Evolis Primacy 2 card printer" loading="lazy" /><figcaption>Evolis Primacy 2</figcaption></figure>
           <figure class="pr pr-mid" data-speed="1.15">
@@ -25,7 +25,7 @@ import { dims } from '../data/dims';
           </figure>
           <figure class="pr" data-speed="0.95"><img src={asset("/images/solid-idp-510d.webp")} {...dims("/images/solid-idp-510d.webp")} alt="IDP Solid 510D card printer" loading="lazy" /><figcaption>IDP Solid 510D</figcaption></figure>
         </div>
-        <a class="btn btn-ghost-light" href={waLink('Hi Printo, I would like help choosing a card printer.')} target="_blank" rel="noopener">Help me choose a printer</a>
+        <p class="brands"><span>Evolis</span><span>Zebra</span><span>IDP</span><span>Pacto ID</span></p>
       </div>
     </div>
   </div>
