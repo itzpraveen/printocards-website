@@ -18,7 +18,7 @@ export const contact = {
   whatsapp: '919207806665',
   whatsappDisplay: '+91 92078 06665',
   office: { display: '0495 406 0457', tel: '+914954060457' },
-  /** The phone bar's Call button dials this, not the office landline (client, 2026-11-16). */
+  /** The Call button, menu and footer dial this, not the office landline (client, 2026-11-16). */
   main,
   mobiles: [
     main,

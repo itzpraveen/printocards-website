@@ -39,7 +39,7 @@ const connect = [
         <span class="gap">Factory: {contact.factoryAddress.lines[0]}</span>
         {contact.factoryAddress.lines.slice(1).map((l) => <span>{l}</span>)}
       </address>
-      <p><a href={`tel:${contact.office.tel}`}>{contact.office.display}</a><br /><a href={`mailto:${contact.emails[0]}`}>{contact.emails[0]}</a></p>
+      <p><a href={`tel:${contact.main.tel}`}>{contact.main.display}</a><br /><a href={`mailto:${contact.emails[0]}`}>{contact.emails[0]}</a></p>
     </div>
     <div>
       <b>Connect</b>
