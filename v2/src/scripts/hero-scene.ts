@@ -239,10 +239,11 @@ export async function initHero(hero: HTMLElement) {
   const overCard = (e: PointerEvent) => { setNdc(e); return ray.intersectObject(idCard, false).length > 0; };
   const worldAt = (e: PointerEvent) => { setNdc(e); ray.ray.intersectPlane(plane, hit); return hit; };
   let interacted = false;
+  let lost = false; // WebGL context dropped: the still badge is showing, so the card can't be grabbed
 
   hero.addEventListener('pointerdown', (e) => {
     if (e.button !== 0 || (e.target as Element).closest('a, button, input')) return;
-    if (!overCard(e)) return;
+    if (lost || !overCard(e)) return;
     interacted = true;
     if (e.pointerType === 'touch') {
       // on touch screens a tap flicks the card instead of hijacking the scroll
@@ -271,7 +272,7 @@ export async function initHero(hero: HTMLElement) {
       if (d > max) target.set(anchor.x + (dx / d) * max, anchor.y + (dy / d) * max);
       target.y = Math.max(target.y, -vh / 2 + 3);
     } else if (e.pointerType === 'mouse') {
-      hero.classList.toggle('is-hover-card', overCard(e));
+      hero.classList.toggle('is-hover-card', !lost && overCard(e));
     }
   });
   const release = (e: PointerEvent) => {
@@ -296,11 +297,24 @@ export async function initHero(hero: HTMLElement) {
   const proj = new THREE.Vector3();
   let first = true;
   let t0 = -1;
-  // if the GPU drops the context, show the still badge again; rebuild lighting when it returns
-  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); hero.classList.remove('is-ready'); first = true; });
-  canvas.addEventListener('webglcontextrestored', () => { scene.environment = studioEnvironment(renderer); });
+  // If the GPU drops the context (iOS Safari does this under memory pressure or after a tab
+  // switch), show the still badge again and stop drawing until the context comes back.
+  // The frame loop must not re-mark the hero ready meanwhile, or the still hides over a blank canvas.
+  canvas.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    lost = true;
+    dragging = false;
+    hero.classList.remove('is-ready', 'is-dragging', 'is-hover-card');
+    hint?.classList.remove('is-on');
+  });
+  canvas.addEventListener('webglcontextrestored', () => {
+    scene.environment = studioEnvironment(renderer);
+    lost = false;
+    first = true;
+  });
 
   loopWhileVisible(hero, (dt, t) => {
+    if (lost) return;
     acc += dt;
     let n = 0;
     while (acc >= STEP && n++ < 8) { step(t); acc -= STEP; }
