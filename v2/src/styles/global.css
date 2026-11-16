@@ -643,6 +643,12 @@ address { font-style: normal; }
   .hero-brand { left: calc(var(--cx) - var(--ch) * .314 - var(--bw) - var(--ch) * .14); }
 }
 
+/* calm (Reduce Motion): content fades in as it arrives (main.ts adds .calm, then .is-in). Opacity only.
+   The !important longhands beat the reset below, which zeroes every transition; the delay stays inline. */
+.is-calm .calm { opacity: 0; }
+.is-calm .calm.is-in { opacity: 1; transition-property: opacity !important; transition-duration: .7s !important; transition-timing-function: ease !important; }
+@media print { .calm { opacity: 1 !important; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }

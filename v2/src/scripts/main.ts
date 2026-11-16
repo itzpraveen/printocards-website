@@ -82,6 +82,28 @@ if (motion) {
   heads.forEach((el) => io.observe(el));
 }
 
+/* ---------- calm (Reduce Motion): things fade in as they arrive, nothing moves ---------- */
+// Opacity only. Only things still below the screen are hidden, so nothing on view blinks out, and each one
+// is hidden right as it is observed, so content stays visible if this never runs.
+if (document.documentElement.classList.contains('is-calm') && 'IntersectionObserver' in window) {
+  const items = $$('[data-press], .chapter .still, .popt, [data-panel], [data-fam], .way-shot, .pr, .ticket, .proof-photo')
+    .filter((el) => !el.closest('.hero') && el.getBoundingClientRect().top > innerHeight);
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) {
+      if (!en.isIntersecting) continue;
+      en.target.classList.add('is-in');
+      io.unobserve(en.target);
+    }
+  }, { rootMargin: '0px 0px -8% 0px' });
+  items.forEach((el) => {
+    // a row of tiles arrives in turn: up to five steps of 60 ms
+    const row = [...(el.parentElement?.children ?? [])].filter((c) => items.includes(c as HTMLElement));
+    el.style.transitionDelay = `${Math.min(5, row.indexOf(el)) * 60}ms`;
+    el.classList.add('calm');
+    io.observe(el);
+  });
+}
+
 /* ---------- story chapters (DOM side; the 3D side reads story.s) ---------- */
 const storySec = $('[data-story]')!;
 const stage = $('[data-stage]', storySec)!;

@@ -93,6 +93,8 @@ const faqPage = {
         var gl = false;
         gl = 'WebGL2RenderingContext' in window; // three.js needs WebGL2; a cheap check, no context created
         d.classList.add(reduce || !gl ? 'is-static' : 'is-motion');
+        // Reduce Motion asks for less movement, not none: those visitors also get gentle fades (opacity only)
+        if (reduce) d.classList.add('is-calm');
       })();
     </script>
   </head>
