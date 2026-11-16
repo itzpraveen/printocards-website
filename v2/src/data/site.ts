@@ -12,12 +12,16 @@ export const site = {
     'Printo Cards & Technologies, the biggest PVC card manufacturer in Kerala: PVC ID cards, NFC and RFID smart cards, hotel key cards, lanyards and card printers from Calicut. ISO 9001:2015 certified, 20+ years.',
 };
 
+const main = { display: '+91 92078 06665', tel: '+919207806665' };
+
 export const contact = {
   whatsapp: '919207806665',
   whatsappDisplay: '+91 92078 06665',
   office: { display: '0495 406 0457', tel: '+914954060457' },
+  /** The phone bar's Call button dials this, not the office landline (client, 2026-11-16). */
+  main,
   mobiles: [
-    { display: '+91 92078 06665', tel: '+919207806665' },
+    main,
     { display: '+91 94955 32310', tel: '+919495532310' },
     { display: '+91 92078 06662', tel: '+919207806662' },
   ],

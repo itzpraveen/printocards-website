@@ -30,6 +30,9 @@ body {
   overflow-x: clip;
 }
 img, svg, canvas { display: block; max-width: 100%; }
+/* Without this, an image whose CSS sets only a width keeps its height="" attribute as a fixed
+   height and stretches (the chapter photos did, on iPhones without the 3D card). */
+img { height: auto; }
 a { color: inherit; }
 button, input, select, textarea { font: inherit; color: inherit; }
 ul, ol { list-style: none; }
