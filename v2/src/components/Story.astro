@@ -84,7 +84,13 @@ const rail = ['Blank', 'Print', 'Finish', 'Chip', 'Options', 'Work'];
           <span>Try your name</span>
           <input type="text" data-try-name value="John Doe" maxlength="22" autocomplete="off" spellcheck="false" />
         </label>
-        <img class="still" src={asset("/images/pvc-privilege-card.webp")} alt="A gold privilege card with a gloss finish" loading="lazy" width="1200" height="1200" />
+        <!-- without the 3D card, the photo previews the chosen finish (an effect laid over the card only) -->
+        <div class="still finish-still" data-finish-still data-finish="glossy">
+          <div class="fin-frame">
+            <img src={asset("/images/pvc-privilege-card.webp")} alt="A gold privilege card in the chosen finish" loading="lazy" width="1200" height="1200" />
+            <span class="fin" aria-hidden="true"></span>
+          </div>
+        </div>
       </article>
 
       <article class="chapter" data-i="3" id="chip">

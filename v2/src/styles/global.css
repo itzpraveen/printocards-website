@@ -293,6 +293,46 @@ address { font-style: normal; }
 .is-static .chapter[data-i="3"] { background: var(--black); color: #fff; }
 .is-static .chapter h2 { margin: 8px 0 12px; }
 
+/* Finish preview on the chapter-03 photo, for when there is no 3D card (Reduce Motion, no WebGL, or a
+   dropped context). The effect sits over the card's area of the photo only, so the white around it stays white.
+   Insets and corners are measured from pvc-privilege-card.webp (the card spans 22-1173 x 259-936 of 1200 x 1200). */
+.finish-still { overflow: hidden; }
+/* the photo has wide white bands above and below the card: crop most of them (the effect layer moves with the image) */
+.fin-frame { position: relative; margin-block: -18%; }
+.fin-frame img { width: 100%; transition: filter .45s ease; }
+/* filters keep white as white (contrast down, brightness up), so only the card changes */
+[data-finish="glossy"] .fin-frame img { filter: saturate(1.12) contrast(1.04); }
+[data-finish="matte"] .fin-frame img, [data-finish="uv"] .fin-frame img { filter: saturate(.68) contrast(.86) brightness(1.07); }
+[data-finish="frosted"] .fin-frame img { filter: saturate(.55) contrast(.76) brightness(1.13) blur(1.2px); }
+.fin {
+  position: absolute; left: 1.83%; right: 2.17%; top: 21.58%; bottom: 21.92%;
+  border-radius: 3.6% / 6.2%; overflow: hidden; pointer-events: none;
+  transition: background-color .45s ease, box-shadow .45s ease;
+}
+.fin::after { content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; }
+/* glossy: a mirror highlight across the card */
+[data-finish="glossy"] .fin::after { opacity: 1; background: linear-gradient(118deg, transparent 16%, rgba(255,255,255,.55) 29%, rgba(255,255,255,.14) 37%, transparent 48%, transparent 64%, rgba(255,255,255,.26) 71%, transparent 79%); }
+/* frosted: milky and translucent, the edges catch the light */
+[data-finish="frosted"] .fin { background-color: rgba(255,255,255,.28); box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); }
+/* UV spot: a matte card with gloss only on the artwork (the logotype and the company band) */
+[data-finish="uv"] .fin::after {
+  opacity: 1;
+  background: linear-gradient(118deg, rgba(255,255,255,.1) 28%, rgba(255,255,255,.75) 45%, rgba(255,255,255,.2) 55%, rgba(255,255,255,.08) 70%);
+  -webkit-mask-image: radial-gradient(ellipse 36% 19% at 51% 59%, #000 62%, transparent 100%), radial-gradient(ellipse 28% 9% at 47% 15%, #000 60%, transparent 100%);
+  mask-image: radial-gradient(ellipse 36% 19% at 51% 59%, #000 62%, transparent 100%), radial-gradient(ellipse 28% 9% at 47% 15%, #000 60%, transparent 100%);
+}
+/* without the 3D card there is nothing to tilt or print a name on */
+.story.is-fallback .try, .story.is-fallback .motion-only { display: none; }
+/* phones: the story stage is one screen tall, so each chapter fills the space between the nav and the
+   bottom bar, and its photo shrinks to what the text leaves */
+@media (max-width: 760px) {
+  .story.is-fallback .chapters { padding-bottom: calc(84px + env(safe-area-inset-bottom)); grid-template-rows: minmax(0, 1fr); }
+  .story.is-fallback .chapter { height: 100%; display: flex; flex-direction: column; }
+  .story.is-fallback .chapter .still { flex: 0 1 auto; min-height: 0; max-height: 40svh; }
+  .story.is-fallback .chapter img.still { object-fit: contain; }
+  .story.is-fallback .finish-still { flex-shrink: 0; } /* cropping would cut the card it previews */
+}
+
 /* ---------- print options: open on the page, between the story and the work ---------- */
 .popts { background: var(--orange); padding-block: clamp(72px, 10vw, 120px); padding-left: max(clamp(var(--gutter), 12.5vw, 190px), var(--pad)); padding-right: var(--pad); }
 .popts-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; margin-bottom: 44px; }

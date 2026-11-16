@@ -117,13 +117,24 @@ if (motion) {
 }
 
 const finishNote = $('[data-finish-note]');
+const finishStill = $('[data-finish-still]'); // the photo shown when there's no 3D card previews the finish too
 $$<HTMLInputElement>('input[name="finish"]').forEach((r) =>
   r.addEventListener('change', () => {
     if (!r.checked) return;
     setFinish(r.value as Finish);
     if (finishNote) finishNote.textContent = r.dataset.note ?? '';
+    finishStill?.setAttribute('data-finish', r.value);
   }),
 );
+// a browser that restores form state on reload can bring back a finish other than the default
+{
+  const picked = $<HTMLInputElement>('input[name="finish"]:checked');
+  if (picked && picked.value !== 'glossy') {
+    setFinish(picked.value as Finish);
+    finishStill?.setAttribute('data-finish', picked.value);
+    if (finishNote) finishNote.textContent = picked.dataset.note ?? '';
+  }
+}
 $<HTMLInputElement>('[data-try-name]')?.addEventListener('input', (e) => setName((e.target as HTMLInputElement).value.trim() || DEFAULT_NAME));
 
 /* ---------- industries: pinned sideways track on desktop, swipe on phones ---------- */
@@ -248,6 +259,42 @@ if (motion) {
 /* ---------- sectors: drift with the scroll instead of looping on their own ---------- */
 if (motion) {
   gsap.fromTo('.sectors-track', { xPercent: 0 }, { xPercent: -30, ease: 'none', scrollTrigger: { trigger: '.sectors', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+}
+
+/* ---------- FAQ: slide open and shut where CSS can't (Safari has no interpolate-size) ---------- */
+// The page opens the answer itself so the first frame is already animating. Setting `open` from script
+// keeps the one-open-at-a-time behaviour of details[name]; the one that closes as a result just snaps shut.
+if (motion && !CSS.supports('interpolate-size', 'allow-keywords')) {
+  $$<HTMLDetailsElement>('.qs details').forEach((d) => {
+    const body = d.querySelector<HTMLElement>('p');
+    const summary = d.querySelector('summary');
+    if (!body || !summary) return;
+    type Slide = Animation & { closing?: boolean };
+    let anim: Slide | null = null;
+    const settle = () => { body.style.overflow = ''; anim = null; };
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      // a click mid-slide reverses it from where it is
+      const closing = anim ? !anim.closing : d.open;
+      const cs = getComputedStyle(body);
+      const now = d.open ? { height: `${body.offsetHeight}px`, paddingBottom: cs.paddingBottom, opacity: Number(cs.opacity) } : null;
+      anim?.cancel();
+      if (!d.open) d.open = true;
+      const pad = getComputedStyle(body).paddingBottom;
+      body.style.overflow = 'hidden';
+      const shut = { height: '0px', paddingBottom: '0px', opacity: 0 };
+      const full = { height: `${body.scrollHeight}px`, paddingBottom: pad, opacity: 1 };
+      const ease = 'cubic-bezier(.2, .7, .1, 1)';
+      if (closing) {
+        anim = body.animate([now ?? full, shut], { duration: 300, easing: ease }) as Slide;
+        anim.closing = true;
+        anim.onfinish = () => { d.open = false; settle(); };
+      } else {
+        anim = body.animate([now ?? shut, full], { duration: 380, easing: ease }) as Slide;
+        anim.onfinish = settle;
+      }
+    });
+  });
 }
 
 /* ---------- quote form → WhatsApp ---------- */
