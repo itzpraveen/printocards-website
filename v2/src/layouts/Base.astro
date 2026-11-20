@@ -11,8 +11,9 @@ const abs = (p: string) => new URL(asset(p), origin).href;
 const canonical = abs(path);
 const ogImage = abs('/og.jpg');
 const home = abs('/');
-// Google Tag Manager (loads GA4 and Microsoft Clarity). Production builds only, so dev servers
-// and preview builds don't report visits.
+// Google Tag Manager (loads GA4 and Microsoft Clarity), as the snippet Tag Manager's own install
+// dialog gives; its "Test your website" check looks for that snippet. Production builds only, so
+// dev servers and preview builds don't report visits.
 const GTM_ID = 'GTM-M44VDR2';
 const gtm = import.meta.env.PROD && !isPreview;
 
@@ -64,7 +65,10 @@ const faqPage = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     {gtm && (
-      <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`} />
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}></script>
+        <script is:inline set:html={"window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());"} />
+      </>
     )}
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -106,7 +110,6 @@ const faqPage = {
     </script>
   </head>
   <body>
-    {gtm && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>}
     <a class="skip" href="#main">Skip to content</a>
     <slot />
   </body>
